@@ -131,10 +131,15 @@ header .menu-toggle {
         background: white;
         z-index: 1000;
         padding: 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: all 0.3s ease;
     }
 
     header ul.active {
         display: flex;
+        transform: translateY(0);
+        opacity: 1;
     }
 
     header ul li {
