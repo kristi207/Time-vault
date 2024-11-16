@@ -1,9 +1,9 @@
-/* Universal reset */
-/* * {
+/* Universal Reset */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-} */
+}
 
 body {
     padding: 0;
@@ -12,67 +12,54 @@ body {
     font-family: 'Lora', serif;
 }
 
-/* Header styles */
-/* header {
-    background: rgb(176, 223, 229);
+/* Header Styles */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1em;
+    background: transparent;
     height: 66px;
-} */
+}
 
 header * {
     color: rgb(103, 26, 3);
 }
 
 header .logo {
-    font-size: -1em;
-    float: left;
-    height: inherit;
-    margin-left: 6em;
-    /* border: 1px solid black;*/
-} 
-
-header .logo-text {
-    margin: 9px;
+    font-size: 1.5em;
     font-family: 'Great Vibes', cursive;
 }
 
 header .logo-text span {
     color: rgb(248, 207, 157);
 }
+
 header ul {
-    display: flex; /* Use flex to layout navbar items horizontally */
-    justify-content: center; /* Center the items in the navbar */
+    display: flex;
+    justify-content: center;
     margin: 0;
     padding: 0;
     list-style: none;
+    font-family: 'Candal', sans-serif;
     flex-grow: 1;
-    font-family: 'Candal', sans-serif;/* Allow the ul to grow and push other content to the sides */
 }
-
- header ul li {
-    margin: 0 8px; /* Add spacing between items if needed */
-}
- 
-
-/* header ul {
-    float: right;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    margin-left: -10em; 
-    /* border: 1px solid black; 
-} */
 
 header ul li {
-    float: left;
     position: relative;
+    margin: 0 8px;
 }
 
 header ul li ul {
     position: absolute;
     top: 66px;
     right: 10px;
-    width: 100px;
     display: none;
+    background: white;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 120px;
 }
 
 header ul li:hover ul {
@@ -81,16 +68,14 @@ header ul li:hover ul {
 
 header ul li ul li {
     width: 100%;
-    right: 0;
-    float: left;
 }
 
 header ul li ul li a {
     padding: 10px;
     color: black;
+    display: block;
     background: white;
-    position: relative;
-    float: left;
+    text-decoration: none;
 }
 
 header ul li ul li a.logout {
@@ -106,25 +91,69 @@ header ul li a {
     padding: 21px;
     font-size: 1.1em;
     text-decoration: none;
-    position: relative; /* Added position relative */
+    position: relative;
 }
 
-/* Hover effect for line below text */
+/* Hover Line Effect */
 header ul li a.hover-line::after {
     content: "";
     position: absolute;
     width: 0;
     height: 2px;
-    bottom: -3px; /* Position the line below the text */
+    bottom: -3px;
     left: 0;
-    background-color:rgb(103, 26, 3);
+    background-color: rgb(103, 26, 3);
     transition: width 0.3s ease;
 }
 
 header ul li a.hover-line:hover::after {
-    width: 100%; /* Expands the line to full width of text */
+    width: 100%;
 }
 
+/* Menu Toggle */
 header .menu-toggle {
     display: none;
+    font-size: 1.8em;
+    cursor: pointer;
+    color: rgb(103, 26, 3);
+    margin-right: 1em;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    header ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 66px;
+        left: 0;
+        width: 100%;
+        background: white;
+        z-index: 1000;
+        padding: 0;
+    }
+
+    header ul.active {
+        display: flex;
+    }
+
+    header ul li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    header ul li ul {
+        position: relative;
+        top: 0;
+    }
+
+    header ul li ul li a {
+        padding: 10px;
+        background: white;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
 }
