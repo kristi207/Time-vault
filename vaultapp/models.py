@@ -53,7 +53,7 @@ class PublicLetter(models.Model):
     is_published = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Public Letter: {self.title or self.original_letter.title or 'Untitled'}"
+        return f"Public Letter: {self.title or self.original_letter.title} or 'The Letter From {self.shared_date}'"
 
 
 class LetterReaction(models.Model):
