@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<!-- prasansha : I have created the django project where i have kept the home.html inside 
- the tempaltes folder in vaultapp. so if you want to make changes go there @kristi 
- @Deepshova you can create admin panel from here    -->
- <!-- hiiiii deepshov ahave made changes -->
+
 <html lang="en">
 
 <head>
@@ -18,23 +15,26 @@
 
 
     <!--Custom Styling-->
-    <link rel="stylesheet" href="static/CSS/style.css">
+    <link rel="stylesheet" href="/static/CSS/style.css">
 
     <!-- <link rel="stylesheet" href="CSS\style.css"> -->
-    <title>Blog</title>
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
 </head>
 
 <body>
     <header>
-        <div class="logo">
+        <!-- <div class="logo">
             <h1 class="logo-text">Aura<span>Blog</span></h1>
-        </div>
+        </div> -->
         <i class="fa fa-bars menu-toggle"></i>
         <ul class="nav">
-            <li><a href="#" class="hover-line">Home</a></li>
-            <li><a href="#" class="hover-line">About</a></li>
+            <li><a href="{% url 'home' %}" class="hover-line">Home</a></li>
+            <li><a href="{% url 'about' %}" class="hover-line">About</a></li>
             <li><a href="#" class="hover-line">Services</a></li>
-            <li><a href="#"class="hover-line">Futura</a></li>
+            <li><a href="#" class="hover-line">Futura</a></li>
             <!-- <li><a href="#">Sign-up</a>
             </li>
             <li><a href="#">Login</a>
@@ -53,5 +53,10 @@
         </ul>
     </header>
 </body>
+{% block content %}
+{% endblock content %}
 
+<footer style="text-align: center;">
+  <em>All rights reserved by @PKD</em>  
+</footer>
 </html>

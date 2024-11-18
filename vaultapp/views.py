@@ -1,10 +1,7 @@
 from django.shortcuts import render
-#from django.http import HttpResponse
-from django.shortcuts import render
-# Create your views here.
+
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'vaultapp/home.html')
 
 def about(request):
-    #return HttpResponse("About")
-    return render(request,'about.html')
+    return render(request,'vaultapp/about.html')
