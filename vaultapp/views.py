@@ -5,3 +5,6 @@ def home(request):
 
 def about(request):
     return render(request,'vaultapp/about.html')
+
+def post(request):
+    return render(request,'vaultapp/post.html')
