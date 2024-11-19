@@ -1,4 +1,4 @@
-/* Universal Reset */
+/* General Reset */
 * {
     margin: 0;
     padding: 0;
@@ -6,111 +6,103 @@
 }
 
 body {
-    padding: 0;
-    margin: 0;
+    padding: 0px;
+    margin: 0px;
     background: white;
     font-family: 'Lora', serif;
 }
 
 /* Header Styles */
 header {
+    background: white; /* Optional background */
+    height: 66px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 1em;
-    background: transparent;
-    height: 66px;
 }
 
-header * {
-    color: rgb(103, 26, 3);
-}
-
+/* Logo Section */
 header .logo {
-    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+}
+
+header .logo-text {
+    margin-left: 10px;
     font-family: 'Great Vibes', cursive;
+    font-size: 1.5em;
 }
 
 header .logo-text span {
-    color: rgb(248, 207, 157);
+    color: rgb(0, 1, 17);
 }
 
+/* Navigation Menu */
 header ul {
     display: flex;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
+    font-family: 'Great Vibes', cursive;
+    gap: 1em; /* Adds space between items */
     list-style: none;
-    font-family: 'Candal', sans-serif;
-    flex-grow: 1;
 }
 
 header ul li {
     position: relative;
-    margin: 0 8px;
 }
 
 header ul li ul {
     position: absolute;
-    top: 66px;
-    right: 10px;
+    top: 100%; /* Align submenu below the parent item */
+    right: 0;
+    width: 150px;
     display: none;
     background: white;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 120px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
 }
 
 header ul li:hover ul {
     display: block;
 }
 
-header ul li ul li {
-    width: 100%;
-}
-
 header ul li ul li a {
+    display: block;
     padding: 10px;
     color: black;
-    display: block;
-    background: white;
     text-decoration: none;
-}
-
-header ul li ul li a.logout {
-    color: brown;
+    background: white;
 }
 
 header ul li ul li a:hover {
     background: rgb(173, 177, 177);
 }
 
+/* Link Styles */
 header ul li a {
     display: block;
-    padding: 21px;
+    padding: 10px 15px;
     font-size: 1.1em;
     text-decoration: none;
+    color: rgb(103, 26, 3);
     position: relative;
 }
 
-/* Hover Line Effect */
-header ul li a.hover-line::after {
+/* Hover Effect */
+.hover-line::after {
     content: "";
     position: absolute;
     width: 0;
     height: 2px;
     bottom: -3px;
     left: 0;
-    background-color: rgb(103, 26, 3);
+    background-color:  rgb(103, 26, 3);
     transition: width 0.3s ease;
 }
 
-header ul li a.hover-line:hover::after {
+.hover-line:hover::after {
     width: 100%;
 }
 
-/* Menu Toggle */
+/* Menu Toggle for Mobile */
 header .menu-toggle {
     display: none;
     font-size: 1.8em;
@@ -119,46 +111,44 @@ header .menu-toggle {
     margin-right: 1em;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 768px) {
+    header {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
     header ul {
-        display: none;
         flex-direction: column;
-        position: absolute;
-        top: 66px;
-        left: 0;
+        display: none; /* Hide menu by default on small screens */
         width: 100%;
-        background: white;
-        z-index: 1000;
-        padding: 0;
-        transform: translateY(-100%);
-        opacity: 0;
-        transition: all 0.3s ease;
     }
 
     header ul.active {
-        display: flex;
-        transform: translateY(0);
-        opacity: 1;
+        display: flex; /* Show menu when active */
     }
 
     header ul li {
-        width: 100%;
-        text-align: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        width: auto; /* Let items take their natural width */
+        text-align: left; /* Align text to the left */
+    }
+    header ul li a {
+        padding: 15px; /* Adjust padding for better spacing */
+        width: 100%; /* Optional: Make links clickable across full width */
     }
 
-    header ul li ul {
-        position: relative;
-        top: 0;
-    }
-
-    header ul li ul li a {
-        padding: 10px;
-        background: white;
-    }
-
-    .menu-toggle {
+    header .menu-toggle {
         display: block;
     }
+    header ul li ul {
+        position: absolute;
+        top: 100%; /* Align submenu below the parent item */
+        left: 0; /* Align submenu to the left of the parent item */
+        width: 150px;
+        display: none;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+        border-radius: 4px;
+    }
+    
 }
