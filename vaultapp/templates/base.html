@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load static %}
+<!-- here is the description of recent changes:
+1. create another html file inside templates >vaultapp it is connected with base.html
+2. i have created model for letters, public letters, reaction, comments 
+3. since @deepshova had already created the superuser username:admin password: admin i 
+    registered model in admin so we can control everything
+4. @deepshova you can create post.html section to show the list of data -->
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!--lgoogle fonts-->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:wght@400;700&display=swap">
+
+
+    <!--Custom Styling-->
+    <link rel="stylesheet" href="/static/CSS/style.css">
+
+    <!-- <link rel="stylesheet" href="CSS\style.css"> -->
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+</head>
+
+<body>
+    <header>
+        <!-- <div class="logo">
+            <h1 class="logo-text">Aura<span>Blog</span></h1>
+        </div> -->
+        <i class="fa fa-bars menu-toggle"></i>
+        <ul class="nav">
+            <li><a href="{% url 'home' %}" class="hover-line">Home</a></li>
+            <li><a href="{% url 'about' %}" class="hover-line">About</a></li>
+            <li><a href="{% url 'post' %}" class="hover-line">Read Letters</a></li>
+            <li><a href="#" class="hover-line">Futura</a></li>
+            <!-- <li><a href="#">Sign-up</a>
+            </li>
+            <li><a href="#">Login</a>
+            </li> -->
+            <li><a href="#">
+                    <i class="fa fa-user"></i>
+                    PKD
+                    <i class="fa fa-chevron-down" style="font-size: .8em;"></i>
+                </a>
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#" class="logout">Logout</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </header>
+</body>
+{% block content %}
+{% endblock content %}
+
+<footer style="text-align: center;">
+  <em>All rights reserved by @PKD</em>  
+</footer>
+</html>
