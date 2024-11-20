@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ post.title }}
+{% endblock title %}
+
+{% block content %}
+<div class="post-detail">
+    <h1>{{ post.title }}</h1>
+    {% if post.feature_photo %}
+    <img src="{{ post.feature_photo.url }}" alt="Feature Photo" class="slider-image">
+    {% else %}
+    <img src="{% static 'vaultapp/images/5.jpg' %}" alt="Default Image" class="slider-image-unique">
+    {% endif %}
+    <p>{{ post.description }}</p>
+    <p><strong>Shared by:</strong> {{ post.nickname }}</p>
+    <p><strong>Shared on:</strong> {{ post.shared_date|date:"F j, Y" }}</p>
+</div>
+{% endblock content %}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
+
 <!-- here is the description of recent changes:
 1. create another html file inside templates >vaultapp it is connected with base.html
 2. i have created model for letters, public letters, reaction, comments 
@@ -11,6 +11,7 @@
 <html lang="en">
 
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- font awesome -->
@@ -22,7 +23,10 @@
 
 
     <!--Custom Styling-->
-    <link rel="stylesheet" href="/static/CSS/style.css">
+    <link rel="stylesheet" href="{% static 'vaultapp/CSS/style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'vaultapp/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'vaultapp/css/slick-theme.css' %}"> -->
+ 
 
     <!-- <link rel="stylesheet" href="CSS\style.css"> -->
     <title>
@@ -33,14 +37,14 @@
 
 <body>
     <header>
-        <!-- <div class="logo">
-            <h1 class="logo-text">Aura<span>Blog</span></h1>
-        </div> -->
+        <div class="logo">
+            <h1 class="logo-text"><span>AuraBlog</span></h1>
+        </div>
         <i class="fa fa-bars menu-toggle"></i>
         <ul class="nav">
             <li><a href="{% url 'home' %}" class="hover-line">Home</a></li>
             <li><a href="{% url 'about' %}" class="hover-line">About</a></li>
-            <li><a href="{% url 'post' %}" class="hover-line">Read Letters</a></li>
+            <li><a href="{% url 'post_list' %}" class="hover-line">Read Letters</a></li>
             <li><a href="#" class="hover-line">Futura</a></li>
             <!-- <li><a href="#">Sign-up</a>
             </li>
@@ -64,6 +68,7 @@
 {% endblock content %}
 
 <footer style="text-align: center;">
-  <em>All rights reserved by @PKD</em>  
+    <em>All rights reserved by @PKD</em>
 </footer>
+
 </html>

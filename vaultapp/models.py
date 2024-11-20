@@ -47,13 +47,15 @@ class PublicLetter(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)  # Blog title
     description = models.TextField(null=True, blank=True)  # Blog description/introduction
     tags = models.CharField(max_length=255, null=True, blank=True)  # Comma-separated tags
+    # Feature photo for the public letter/blog
+    feature_photo = models.ImageField(upload_to='public_letters/photos/', null=True, blank=True)
     # Date when the letter was made public
     shared_date = models.DateTimeField(auto_now_add=True)
     # Whether the blog is active/published
     is_published = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Public Letter: {self.title or self.original_letter.title} or 'The Letter From {self.shared_date}'"
+        return f"Public Letter: {self.title or self.original_letter.title or 'The Letter From {self.shared_date}'}"
 
 
 class LetterReaction(models.Model):

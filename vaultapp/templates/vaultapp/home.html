@@ -1,7 +1,104 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
 home
 {% endblock title %}
 {% block content %}
-<p1>this is home page</p1>
+<div class="post-slider">
+    <h1 class="slider-title">Trending Posts</h1>
+    <!-- Left Arrow -->
+    <i class="fas fa-chevron-left prev"></i>
+    <!-- Right Arrow -->
+    <i class="fas fa-chevron-right next"></i>
+    <div class="post-wrapper multiple-items">
+
+        <!-- Add your posts here -->
+        <div class="post">
+            <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="slider-image">
+            <div class="post-info">
+                <h4><a href="single.html">One day your life will flash before your eyes</a></h4>
+                <i class="far fa-user"> PKD</i>
+                &nbsp;
+                <i class="far fa-calendar"> Mar 16, 2018</i>
+            </div>
+        </div>
+        <div class="post">
+            <img src="{% static 'vaultapp/images/6.jpg' %}" alt="" class="slider-image">
+            <div class="post-info">
+                <h4><a href="single.html">Sometimes the smallest things take up the most room in your heart</a></h4>
+                <i class="far fa-user"> PKD</i>
+                &nbsp;
+                <i class="far fa-calendar"> Mar 16, 2018</i>
+            </div>
+        </div>
+        <div class="post">
+            <img src="{% static 'vaultapp/images/.jpg' %}" alt="" class="slider-image">
+            <div class="post-info">
+                <h4><a href="single.html">Our lives are defined by opportunities</a></h4>
+                <i class="far fa-user"> PKD</i>
+                &nbsp;
+                <i class="far fa-calendar"> Mar 16, 2018</i>
+            </div>
+        </div>
+        <div class="post">
+            <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="slider-image">
+            <div class="post-info">
+                <h4><a href="single.html">Don’t cry because it’s over, smile because it happened</a></h4>
+                <i class="far fa-user"> PKD</i>
+                &nbsp;
+                <i class="far fa-calendar"> Mar 16, 2018</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- //Post Slider
+
+
+</div>
+//Page wrapper-->
+<!-- <div class="Mail">
+    <h1 class="slider-title">FUTURA</h1>
+
+</div> -->
+<div class="email-section">
+    <h2>FUTURA</h2>
+    <h3>Make sure you get your letter</h3>
+    <form class="email-form">
+        <input type="email" placeholder="Please enter an email" required>
+        <button type="submit">
+            <span class="icon">&#9993;</span> <!-- Envelope icon -->
+        </button>
+    </form>
+</div>
+
+
+
+
+<!-- jQuery -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.multiple-items').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            arrows: true,
+            prevArrow: $('.prev'),
+            nextArrow: $('.next'),
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    });
+</script>
+
 {% endblock content%}

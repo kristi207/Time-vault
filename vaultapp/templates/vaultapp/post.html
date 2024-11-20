@@ -1,7 +1,34 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}
-post
+Post
 {% endblock title %}
+
 {% block content %}
-<p1>this is post section </p1>
-{% endblock content%}
+<div class="post-wrapper-unique multiple-items">
+    <!-- Loop through the posts -->
+    {% for public_letter in object_list %}
+    <div class="post-unique">
+        <!-- Display feature photo if available -->
+        {% if public_letter.feature_photo %}
+        <img src="{{ public_letter.feature_photo.url }}" alt="Feature Photo" class="slider-image-unique">
+        {% else %}
+        <img src="{% static 'vaultapp/images/5.jpg' %}" alt="Default Image" class="slider-image-unique">
+        {% endif %}
+
+        <div class="post-info-unique">
+            <h4>{{ public_letter.title }}</h4>
+            <p class="my-2">{{ public_letter.description|truncatewords:30 }}</p>
+            <i class="far fa-user"> {{ public_letter.nickname }}</i>
+            &nbsp;
+            <i class="far fa-calendar"> {{ public_letter.shared_date|date:"F j, Y" }}</i>
+        </div>
+        
+        <div class="card-footer p-0 text-center">
+            <a href="{% url 'post_detail' public_letter.id %}" class="btn btn-outline-dark btn-sm">READ MORE</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,560 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: white;
+    font-family: 'Lora', serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Great-vibes', cursive;
+    color: #20014a;
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header Styles */
+header {
+    background: white;
+    height: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1em;
+}
+
+/* Logo Section */
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.5em;
+}
+
+header .logo-text span {
+    color: rgb(1, 3, 40);
+}
+
+/* Navigation Menu */
+.nav {
+    display: flex;
+    list-style: none;
+    font-family: 'Lora', serif;
+    gap: 1rem;
+}
+
+.nav li {
+    position: relative;
+}
+
+.nav li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    /* Position below parent */
+    left: 0;
+    background: white;
+    list-style: none;
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav li ul li {
+    padding: 0.5rem 1rem;
+}
+
+.nav li ul li a {
+    text-decoration: none;
+    color: rgb(6, 1, 49);
+}
+
+.nav li:hover ul {
+    display: block;
+    /* Show submenu on hover (desktop) */
+}
+
+.nav li a {
+    text-decoration: none;
+    color: rgb(4, 1, 66);
+    padding: 10px 15px;
+    display: inline-block;
+    position: relative;
+}
+
+/* Hover Effect */
+.hover-line::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -3px;
+    left: 0;
+    background-color: rgb(1, 6, 42);
+    transition: width 0.3s ease;
+}
+
+.hover-line:hover::after {
+    width: 100%;
+}
+
+.post-wrapper a:hover {
+    color: #d90505;
+}
+
+/*Post slider*/
+.post-slider {
+    position: relative;
+}
+
+.post-slider .slider-title {
+    text-align: center;
+    margin: 30px;
+}
+
+.post-slider .next {
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    font-size: 2em;
+    color: #20014a;
+    cursor: pointer;
+}
+
+.post-slider .prev {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    font-size: 2em;
+    color: #20014a;
+    cursor: pointer;
+}
+
+.post-slider .post-wrapper {
+    width: 100%; /* Ensure it takes full width */
+    height: 350px;
+    margin: 0px auto;
+    overflow: hidden;
+    padding: 10px 0px 10px 0px;
+    display: flex;
+    justify-content: space-between; /* Align posts properly */
+}
+
+.slider-image {
+    width: 100%;
+    height: auto;
+}
+
+.post-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post {
+    width: 300px;  /* Adjust as per your layout */
+    padding: 20px;
+    margin: 0 10px;
+    display: inline-block;
+    background: rgb(230, 207, 207);
+    border-radius: 5px;
+    box-shadow: 1rem 1rem 1rem -1rem gray;
+}
+
+.post-slider .post-wrapper .post .post-info {
+    height: 130px;
+    padding: 0px 5px;
+}
+
+.post-slider .post-wrapper .post .slider-image {
+    width: 100%;
+    height: 270px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+/* Email Section */
+.email-section {
+    background-color: #ebe3e3;
+    /* White background for email section */
+    padding: 40px 20px;
+    /* Increased padding for more space */
+    text-align: center;
+    color: #333;
+    /* Dark text color */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Slight shadow for depth */
+    margin-top: 40px;
+    /* Space between posts and email section */
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Header styling */
+.email-section h2 {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #1e3cb7;
+    /* Blue color for heading */
+}
+
+/* Form styling */
+.email-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 20px;
+}
+
+.email-form input {
+    padding: 12px;
+    width: 300px;
+    font-size: 1em;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    color: #333;
+    background-color: #f8f7f7;
+    transition: border-color 0.3s;
+}
+
+.email-form input:focus {
+    border-color: #010823;
+    /* Blue border on focus */
+    outline: none;
+}
+
+.email-form button {
+    background-color: #040965;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 15px;
+    cursor: pointer;
+    font-size: 1em;
+    color: rgb(239, 201, 201);
+    transition: background-color 0.3s ease;
+}
+
+.email-form button:hover {
+    background-color: #8b9fe3;
+    /* Darker blue on hover */
+}
+
+.email-form .icon {
+    font-size: 1.5em;
+    margin-right: 5px;
+}
+
+
+/* Menu Toggle for Mobile */
+.menu-toggle {
+    display: none;
+    /* Hidden by default on larger screens */
+    font-size: 1.8em;
+    cursor: pointer;
+    color: rgb(239, 225, 221);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    header {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .menu-toggle {
+        display: block;
+        /* Show toggle icon on mobile */
+    }
+
+    .nav {
+        display: none;
+        /* Hidden by default */
+        flex-direction: column;
+        width: 100%;
+        background: white;
+    }
+
+    .nav.showing {
+        display: flex;
+        /* Show when menu-toggle is clicked */
+    }
+
+    .nav li {
+        text-align: center;
+        width: 100%;
+    }
+
+    .nav li ul {
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Submenu takes full width */
+    }
+}
+/* Adjust the size and positioning of the arrows */
+.prev, .next {
+    font-size: 30px;
+    color: #20014a;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.prev:hover, .next:hover {
+    color: #d90505; /* Hover color */
+}
+
+/* Ensure the arrows are visible on the slider */
+.slick-prev, .slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    color: transparent;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.slick-prev {
+    left: -25px;
+}
+
+.slick-next {
+    right: -25px;
+}
+
+.slick-prev:focus, .slick-next:focus {
+    outline: none;
+}
+
+/* Arrow Hover Effects */
+.slick-prev:hover, .slick-next:hover {
+    color: #d90505;
+}
+
+/* Slick Theme CSS */
+.slick-prev:before, .slick-next:before {
+    font-family: "slick";
+    font-size: 30px;
+    color: #20014a;
+}
+
+.slick-prev {
+    left: -25px;
+}
+
+.slick-next {
+    right: -25px;
+}
+
+
+/* Slick CSS */
+.slick-slider {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list {
+    position: relative;
+    display: block;
+    overflow: hidden;
+}
+
+.slick-track {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.slick-slide {
+    display: block;
+    /* Adjust the width according to the number of slides */
+    float: left;
+    height: auto;
+    min-height: 1px;
+}
+
+.slick-prev, .slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    color: transparent;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.slick-prev {
+    left: 15px;
+}
+
+.slick-next {
+    right: 15px;
+}
+
+.slick-prev:focus, .slick-next:focus {
+    outline: none;
+}
+
+/* Slick Theme CSS */
+.slick-prev:before, .slick-next:before {
+    font-family: "slick";
+    font-size: 30px;
+    color: #20014a;
+}
+
+.slick-prev {
+    left: -25px;
+}
+
+.slick-next {
+    right: -25px;
+}
+
+.slick-prev:focus, .slick-next:focus {
+    outline: none;
+}
+
+/* Arrow Hover Effects */
+.slick-prev:hover, .slick-next:hover {
+    color: #d90505;
+}
+
+/* Add additional styles for the slider images */
+.slick-slide img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+/* CSS for unique post classes */
+.post-wrapper-unique {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.post-unique {
+    width: 100%;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.slider-image-unique {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.post-info-unique {
+    padding: 15px;
+}
+
+.post-info-unique h4 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.post-info-unique h4 a {
+    text-decoration: none;
+    color: #333;
+}
+
+.post-info-unique h4 a:hover {
+    color: #007bff;
+}
+
+.post-info-unique p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.post-info-unique .far {
+    color: #777;
+    font-size: 14px;
+}
+
+.card-footer-unique {
+    padding: 10px;
+    background-color: #f8f9fa;
+    text-align: center;
+    border-top: 1px solid #f0f0f0;
+}
+
+.card-footer-unique a {
+    text-decoration: none;
+    color: #007bff;
+    padding: 10px 20px;
+    border: 1px solid #007bff;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.card-footer-unique a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.card-footer-unique a:active {
+    background-color: #0056b3;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .post-wrapper-unique {
+        flex-direction: column;
+        align-items: center;
+    }
+}
