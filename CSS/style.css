@@ -210,7 +210,7 @@ header .logo-text span {
   }
   
   .email-form input:focus {
-    border-color: #1e3cb7; /* Blue border on focus */
+    border-color: #010823; /* Blue border on focus */
     outline: none;
   }
   
