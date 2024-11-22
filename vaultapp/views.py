@@ -21,4 +21,17 @@ def post_detail(request, id):
     post = PublicLetter.objects.get(id=id)
     return render(request, 'vaultapp/post_detail.html', {'post': post})
 
+def signup(request):
+    if request.method == 'POST':
+        # Process form data (handle the signup process)
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
+        # Here you can create a user or handle the signup logic
+        print(f"Received Signup - Name: {name}, Email: {email}, Password: {password}")
+
+        # Redirect to a success page (or homepage, or wherever you want)
+      
+
+    return render(request, 'signup.html')  # Render the signup form
