@@ -694,6 +694,7 @@ body .logo-text span {
     font-family: 'Arial', sans-serif;
 }
 
+
 /* 
 #signup {
     display: flex;
@@ -707,9 +708,9 @@ body .logo-text span {
 #signin .form-container {
     background: #ffffff;
     padding: 20px 30px;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
+    max-width: 500px;
     width: 100%;
     text-align: center;
 }
@@ -718,11 +719,11 @@ body .logo-text span {
     font-size: 18px;
     font-family: 'Lora', serif;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-#signin .input-group {
-    margin-bottom: 15px;
+#signin .input-group  {
+    margin-bottom: 25px;
     text-align: left;
 }
 
@@ -731,8 +732,9 @@ body .logo-text span {
     font-family: 'Lora', serif;
     color: #555;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
+
 
 /* Button styling */
 #signin .btn {
@@ -758,6 +760,24 @@ body .logo-text span {
     transform: scale(1.05);
     /* Adds a hover effect */
 }
+
+#signin input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #1b7bb2;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Lora', serif;
+    box-sizing: border-box;
+}
+
+#signin input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0
+}
+
+
 
 
 
