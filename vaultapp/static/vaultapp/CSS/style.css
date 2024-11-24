@@ -560,7 +560,7 @@ header .logo-text span {
 }
 
 /*form-container signup*/
-/*
+
 .form-container{
     body {
         font-family: 'Arial', sans-serif;
@@ -648,10 +648,10 @@ header .logo-text span {
       }
       
       /* Responsive Design */
-     /* @media (max-width: 768px) {
+     @media (max-width: 768px) {
         h1 {
           font-size: 1.8rem;
         }
-      }*/
+      }
       
-    
+}

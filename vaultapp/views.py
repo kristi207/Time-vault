@@ -34,4 +34,4 @@ def signup(request):
         # Redirect to a success page (or homepage, or wherever you want)
       
 
-    return render(request, 'signup.html')  # Render the signup form
+    return render(request, 'vaultapp/signup.html')  # Render the signup form
