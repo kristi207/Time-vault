@@ -35,3 +35,18 @@ def signup(request):
       
 
     return render(request, 'vaultapp/signup.html')  # Render the signup form
+
+def signin(request):
+    if request.method == 'POST':
+        # Process form data (handle the signup process)
+       
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        # Here you can create a user or handle the signup logic
+        print(f"Received Signup -  Email: {email}, Password: {password}")
+
+        # Redirect to a success page (or homepage, or wherever you want)
+      
+
+    return render(request, 'vaultapp/signin.html')  # Render the signup form

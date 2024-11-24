@@ -30,5 +30,5 @@ urlpatterns = [
     path('posts/', views.post_list, name='post_list'),
     path('post/<int:id>/', views.post_detail, name='post_detail'),
     path('signup/', views.signup, name='signup'), 
-   
+   path('signin/', views.signin, name='signin'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
