@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from vaultapp.models import PublicLetter
+from vaultapp.models import PublicLetter,LetterReaction,Comment
 
 def home(request):
     return render(request, 'vaultapp/home.html')
@@ -19,7 +19,33 @@ def post_list(request):
 
 def post_detail(request, id):
     post = PublicLetter.objects.get(id=id)
-    return render(request, 'vaultapp/post_detail.html', {'post': post})
+    reactions = LetterReaction.objects.filter(public_letter=post).values('reaction_type').annotate(count=models.Count('reaction_type'))
+    comments = Comment.objects.filter(public_letter=post, parent_comment__isnull=True).prefetch_related('replies')
+    recommended_blogs = PublicLetter.objects.filter(is_published=True).exclude(id=id)[:5]  # Fetch 5 recommended blogs
+
+    context = {
+        'post': post,
+        'reactions': {reaction['reaction_type']: reaction['count'] for reaction in reactions},
+        'comments': comments,
+        'recommended_blogs': recommended_blogs,
+    }
+    return render(request, 'post_detail.html', context)
+
+def add_reaction(request, id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        reaction_type = request.POST.get('REACTION_CHOICES')
+        public_letter = PublicLetter.objects.get(PublicLetter, id=id)
+        LetterReaction.objects.create(public_letter=public_letter, reaction_type=reaction_type, user=request.user)
+    return render('post_detail', id=id)
+
+def add_comment(request, pk):
+    if request.method == 'POST' and request.user.is_authenticated:
+        content = request.POST.get('content')
+        parent_comment_id = request.POST.get('parent_comment_id')
+        public_letter = PublicLetter.objects.get(PublicLetter, id=id)
+        parent_comment = Comment.objects.filter(pk=parent_comment_id).first()
+        Comment.objects.create(public_letter=public_letter, content=content, user=request.user, parent_comment=parent_comment)
+    return render('post_detail', id=id)
 
 def signup(request):
     if request.method == 'POST':
