@@ -51,6 +51,20 @@ header .logo-text span {
     color: rgb(1, 3, 40);
 }
 
+body .logo {
+    display: flex;
+    align-items: center;
+}
+
+body .logo-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.5em;
+}
+
+body .logo-text span {
+    color: rgb(1, 3, 40);
+}
+
 /* Navigation Menu */
 .nav {
     display: flex;
@@ -146,13 +160,15 @@ header .logo-text span {
 }
 
 .post-slider .post-wrapper {
-    width: 100%; /* Ensure it takes full width */
+    width: 100%;
+    /* Ensure it takes full width */
     height: 350px;
     margin: 0px auto;
     overflow: hidden;
     padding: 10px 0px 10px 0px;
     display: flex;
-    justify-content: space-between; /* Align posts properly */
+    justify-content: space-between;
+    /* Align posts properly */
 }
 
 .slider-image {
@@ -167,7 +183,8 @@ header .logo-text span {
 }
 
 .post {
-    width: 300px;  /* Adjust as per your layout */
+    width: 300px;
+    /* Adjust as per your layout */
     padding: 20px;
     margin: 0 10px;
     display: inline-block;
@@ -311,8 +328,10 @@ header .logo-text span {
         /* Submenu takes full width */
     }
 }
+
 /* Adjust the size and positioning of the arrows */
-.prev, .next {
+.prev,
+.next {
     font-size: 30px;
     color: #20014a;
     position: absolute;
@@ -330,12 +349,15 @@ header .logo-text span {
     right: 10px;
 }
 
-.prev:hover, .next:hover {
-    color: #d90505; /* Hover color */
+.prev:hover,
+.next:hover {
+    color: #d90505;
+    /* Hover color */
 }
 
 /* Ensure the arrows are visible on the slider */
-.slick-prev, .slick-next {
+.slick-prev,
+.slick-next {
     font-size: 0;
     line-height: 0;
     position: absolute;
@@ -355,17 +377,20 @@ header .logo-text span {
     right: -25px;
 }
 
-.slick-prev:focus, .slick-next:focus {
+.slick-prev:focus,
+.slick-next:focus {
     outline: none;
 }
 
 /* Arrow Hover Effects */
-.slick-prev:hover, .slick-next:hover {
+.slick-prev:hover,
+.slick-next:hover {
     color: #d90505;
 }
 
 /* Slick Theme CSS */
-.slick-prev:before, .slick-next:before {
+.slick-prev:before,
+.slick-next:before {
     font-family: "slick";
     font-size: 30px;
     color: #20014a;
@@ -414,7 +439,8 @@ header .logo-text span {
     min-height: 1px;
 }
 
-.slick-prev, .slick-next {
+.slick-prev,
+.slick-next {
     font-size: 0;
     line-height: 0;
     position: absolute;
@@ -434,12 +460,14 @@ header .logo-text span {
     right: 15px;
 }
 
-.slick-prev:focus, .slick-next:focus {
+.slick-prev:focus,
+.slick-next:focus {
     outline: none;
 }
 
 /* Slick Theme CSS */
-.slick-prev:before, .slick-next:before {
+.slick-prev:before,
+.slick-next:before {
     font-family: "slick";
     font-size: 30px;
     color: #20014a;
@@ -453,12 +481,14 @@ header .logo-text span {
     right: -25px;
 }
 
-.slick-prev:focus, .slick-next:focus {
+.slick-prev:focus,
+.slick-next:focus {
     outline: none;
 }
 
 /* Arrow Hover Effects */
-.slick-prev:hover, .slick-next:hover {
+.slick-prev:hover,
+.slick-next:hover {
     color: #d90505;
 }
 
@@ -468,6 +498,7 @@ header .logo-text span {
     width: 100%;
     object-fit: cover;
 }
+
 /* CSS for unique post classes */
 .post-wrapper-unique {
     display: flex;
@@ -559,99 +590,85 @@ header .logo-text span {
     }
 }
 
-/*form-container signup*/
+/* css for the signup  */
+/* CSS for the signup container */
+#signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ffffff;  
+    font-family: 'Arial', sans-serif;
+}
+/* 
+#signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    font-family: 'Arial', sans-serif;
+} */
 
-.form-container{
-    body {
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(to bottom, #00aaff, #004466);
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      
-      .container {
-        max-width: 400px;
-        width: 90%;
-        background-color: #ffffff;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        text-align: center;
-        color: #333;
-      }
-      
-      h1 {
-        font-size: 2rem;
-        color: #00aaff;
-        margin-bottom: 10px;
-      }
-      
-      p {
-        margin: 10px 0;
-        font-size: 1rem;
-        color: #555;
-      }
-      
-      .input-group {
-        margin: 15px 0;
-        text-align: left;
-      }
-      
-      .input-group label {
-        display: block;
-        font-size: 0.9rem;
-        margin-bottom: 5px;
-        color: #555;
-      }
-      
-      .input-group input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 1rem;
-      }
-      
-      .btn {
-        width: 100%;
-        padding: 10px;
-        background-color: #00aaff;
-        color: white;
-        font-size: 1rem;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-      
-      .btn:hover {
-        background-color: #0077aa;
-      }
-      
-      .footer-text {
-        margin-top: 15px;
-        font-size: 0.9rem;
-      }
-      
-      .footer-text a {
-        color: #00aaff;
-        text-decoration: none;
-      }
-      
-      .footer-text a:hover {
-        text-decoration: underline;
-      }
-      
-      /* Responsive Design */
-     @media (max-width: 768px) {
-        h1 {
-          font-size: 1.8rem;
-        }
-      }
-      
+#signup .form-container {
+    background: #ffffff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+#signup p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#signup .input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+#signup label {
+    font-size: 14px;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+/* Button styling */
+#signup .btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #040965; /* Dark blue background */
+    color: #ffffff; /* White font color */
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  #signup .btn:hover {
+    background-color: #000745; /* Slightly darker shade on hover */
+    transform: scale(1.05); /* Adds a hover effect */
+  }
+  
+
+#signup input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #1b7bb2;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+#signup input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0
 }
