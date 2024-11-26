@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from vaultapp.models import PublicLetter,LetterReaction,Comment
+from django.db import models
+
 
 def home(request):
     return render(request, 'vaultapp/home.html')
