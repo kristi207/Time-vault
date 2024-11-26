@@ -682,6 +682,31 @@ body .logo-text span {
     border-color: #4a90e2;
     box-shadow: 0 0
 }
+#signup .message-container {
+    margin-top: 20px;
+}
+
+#signup .message-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#signup .message-container li {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+#signup .message-container .success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#signup .message-container .error {
+    background-color: #f44336;
+    color: white;
+}
+
 
 /* css for the signin  */
 /* CSS for the signin container */
@@ -776,6 +801,31 @@ body .logo-text span {
     border-color: #4a90e2;
     box-shadow: 0 0
 }
+#signin .message-container {
+    margin-top: 20px;
+}
+
+#signin .message-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#signin .message-container li {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+#signin .message-container .success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#signin .message-container .error {
+    background-color: #f44336;
+    color: white;
+}
+
 
 
 
