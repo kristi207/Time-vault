@@ -1,77 +1,265 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-home
 {% endblock title %}
 {% block content %}
-<div class="post-slider">
-    <h1 class="slider-title">Trending Posts</h1>
-    <!-- Left Arrow -->
-    <i class="fas fa-chevron-left prev"></i>
-    <!-- Right Arrow -->
-    <i class="fas fa-chevron-right next"></i>
-    <div class="post-wrapper multiple-items">
 
-        <!-- Add your posts here -->
-        <div class="post">
-            <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="slider-image">
-            <div class="post-info">
-                <h4><a href="single.html">One day your life will flash before your eyes</a></h4>
-                <i class="far fa-user"> PKD</i>
-                &nbsp;
-                <i class="far fa-calendar"> Mar 16, 2018</i>
+
+<div class="page-wrapper">
+    <div class="post-slider">
+        <h1 class="slider-title">Trending Posts</h1>
+        <!-- Left Arrow -->
+        <i class="fas fa-chevron-left prev"></i>
+        <!-- Right Arrow -->
+        <i class="fas fa-chevron-right next"></i>
+        <div class="post-wrapper multiple-items">
+    
+            <!-- Add your posts here -->
+            <div class="post">
+                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="slider-image">
+                <div class="post-info">
+                    <h4><a href="single.html">One day your life will flash before your eyes</a></h4>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                </div>
             </div>
-        </div>
-        <div class="post">
-            <img src="{% static 'vaultapp/images/6.jpg' %}" alt="" class="slider-image">
-            <div class="post-info">
-                <h4><a href="single.html">Sometimes the smallest things take up the most room in your heart</a></h4>
-                <i class="far fa-user"> PKD</i>
-                &nbsp;
-                <i class="far fa-calendar"> Mar 16, 2018</i>
+            <div class="post">
+                <img src="{% static 'vaultapp/images/6.jpg' %}" alt="" class="slider-image">
+                <div class="post-info">
+                    <h4><a href="single.html">Sometimes the smallest things take up the most room in your heart</a></h4>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                </div>
             </div>
-        </div>
-        <div class="post">
-            <img src="{% static 'vaultapp/images/.jpg' %}" alt="" class="slider-image">
-            <div class="post-info">
-                <h4><a href="single.html">Our lives are defined by opportunities</a></h4>
-                <i class="far fa-user"> PKD</i>
-                &nbsp;
-                <i class="far fa-calendar"> Mar 16, 2018</i>
+            <div class="post">
+                <img src="{% static 'vaultapp/images/.jpg' %}" alt="" class="slider-image">
+                <div class="post-info">
+                    <h4><a href="single.html">Our lives are defined by opportunities</a></h4>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                </div>
             </div>
-        </div>
-        <div class="post">
-            <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="slider-image">
-            <div class="post-info">
-                <h4><a href="single.html">Don’t cry because it’s over, smile because it happened</a></h4>
-                <i class="far fa-user"> PKD</i>
-                &nbsp;
-                <i class="far fa-calendar"> Mar 16, 2018</i>
+            <div class="post">
+                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="slider-image">
+                <div class="post-info">
+                    <h4><a href="single.html">Don’t cry because it’s over, smile because it happened</a></h4>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                </div>
             </div>
         </div>
     </div>
+    
+    <!-- //Post Slider
+    
+    
+    </div>
+    //Page wrapper-->
+    <!-- <div class="Mail">
+        <h1 class="slider-title">FUTURA</h1>
+    
+    </div> -->
+    
+    {% comment %} Content  {% endcomment %}
+    <div class="content clearfix">
+        {% comment %} Main content {% endcomment %}
+        <div class="main-content">
+            <h1 class="recent-post-title">Recent Posts</h1>
+    
+            <div class="post">
+                
+                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
+                <div class="post-preview">
+                    <h2>
+                        <a href="single.html">Don’t cry because it’s over, smile because it happened</a>
+                    </h2>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <p class="preview-text">
+                        Dummy text in HTML is called "Lorem ipsum" and is used to fill empty spaces in a layout before content is added. It's commonly used in web development, graphic design, and publishing.
+                    </p>
+                    <a href="single.html" class="btn read-more">Read More</a>
+    
+                </div>
+            </div>
+    
+            <div class="post">
+                
+                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
+                <div class="post-preview">
+                    <h2>
+                        <a href="single.html">Don’t cry because it’s over, smile because it happened</a>
+                    </h2>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <p class="preview-text">
+                        Dummy text in HTML is called "Lorem ipsum" and is used to fill empty spaces in a layout before content is added. It's commonly used in web development, graphic design, and publishing.
+                    </p>
+                    <a href="single.html" class="btn read-more">Read More</a>
+    
+                </div>
+            </div>
+    
+            <div class="post">
+                
+                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
+                <div class="post-preview">
+                    <h2>
+                        <a href="single.html">Don’t cry because it’s over, smile because it happened</a>
+                    </h2>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <p class="preview-text">
+                        Dummy text in HTML is called "Lorem ipsum" and is used to fill empty spaces in a layout before content is added. It's commonly used in web development, graphic design, and publishing.
+                    </p>
+                    <a href="single.html" class="btn read-more">Read More</a>
+    
+                </div>
+            </div>
+    
+            <div class="post">
+                
+                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
+                <div class="post-preview">
+                    <h2>
+                        <a href="single.html">Don’t cry because it’s over, smile because it happened</a>
+                    </h2>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <p class="preview-text">
+                        Dummy text in HTML is called "Lorem ipsum" and is used to fill empty spaces in a layout before content is added. It's commonly used in web development, graphic design, and publishing.
+                    </p>
+                    <a href="single.html" class="btn read-more">Read More</a>
+    
+                </div>
+            </div>
+    
+            <div class="post">
+                
+                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
+                <div class="post-preview">
+                    <h2>
+                        <a href="single.html">Don’t cry because it’s over, smile because it happened</a>
+                    </h2>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <p class="preview-text">
+                        Dummy text in HTML is called "Lorem ipsum" and is used to fill empty spaces in a layout before content is added. It's commonly used in web development, graphic design, and publishing.
+                    </p>
+                    <a href="single.html" class="btn read-more">Read More</a>
+    
+                </div>
+            </div>
+            <div class="post">
+                
+                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
+                <div class="post-preview">
+                    <h2>
+                        <a href="single.html">Don’t cry because it’s over, smile because it happened</a>
+                    </h2>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <p class="preview-text">
+                        Dummy text in HTML is called "Lorem ipsum" and is used to fill empty spaces in a layout before content is added. It's commonly used in web development, graphic design, and publishing.
+                    </p>
+                    <a href="single.html" class="btn read-more">Read More</a>
+    
+                </div>
+            </div>
+    
+            <div class="post">
+                
+                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
+                <div class="post-preview">
+                    <h2>
+                        <a href="single.html">Don’t cry because it’s over, smile because it happened</a>
+                    </h2>
+                    <i class="far fa-user"> PKD</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <p class="preview-text">
+                        Dummy text in HTML is called "Lorem ipsum" and is used to fill empty spaces in a layout before content is added. It's commonly used in web development, graphic design, and publishing.
+                    </p>
+                    <a href="single.html" class="btn read-more">Read More</a>
+                </div>
+            </div>
+        </div>    
+    </div>
+        
+    
+    <div class="email-section">
+        <h2>FUTURA</h2>
+        <h3>Wanna write a letter to future self???</h3>
+        <form class="email-form">
+            <input type="email" placeholder="Please enter an email" required>
+            <button type="submit">
+                <span class="icon">&#9993;</span> <!-- Envelope icon -->
+            </button>
+        </form>
+    </div>
+    
 </div>
 
-<!-- //Post Slider
 
+{% comment %} Footer {% endcomment %}
+<div class="footer">
+    <div class="footer-content">
+        <div class="footer-section about">
+            <h1 class="logo-text"><span>AuraBlog</span> </h1>
+            <p>
+                "Welcome to AuraBlog, where dreams meet plans and sass meets purpose. Let’s create a future so bold, even destiny takes notes. Ready to level up?"
+            </p>
+            <div class="contact">
+                <span><i class ="fas fa-phone"></i> &nbsp; 123456</span>
+                <span><i class ="fas fa-envelope"></i> &nbsp; info@aurablog.com</span>
+            </div>
+            <div class="socials">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-section links">
+            <h2>Quick Links</h2>
+            <br>
+            <ul>
+                <a href ="#"><li>Events</li></a>
+                <a href ="#"><li>Team</li></a>
+                <a href ="#"><li>Mentores</li></a>
+                <a href ="#"><li>Gallery</li></a>
+                <a href ="#"><li>Teams and Conditions</li></a>
+            </ul>  
 
+        </div>
+        <div class="footer-section contact-form">
+            <h2>Contact us </h2>
+            <br>
+            <form action="home.html" method="post">
+                <input type="email" name="email" class="text-input contact-input" placeholder="Your email adress...">
+                <textarea name="message"  class="text-input contact-input" placeholder="Your message..."></textarea>
+                <button type="submit" class="btn btn-big contact-btn">
+                    <i class="fas fa-envelope"></i>
+                    Send
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        &copy; yourthoughtsmatter.com | Designed by AuraBLog
+    </div>
 </div>
-//Page wrapper-->
-<!-- <div class="Mail">
-    <h1 class="slider-title">FUTURA</h1>
-
-</div> -->
-<div class="email-section">
-    <h2>FUTURA</h2>
-    <h3>Make sure you get your letter</h3>
-    <form class="email-form">
-        <input type="email" placeholder="Please enter an email" required>
-        <button type="submit">
-            <span class="icon">&#9993;</span> <!-- Envelope icon -->
-        </button>
-    </form>
-</div>
-
 
 
 
@@ -101,4 +289,4 @@ home
     });
 </script>
 
-{% endblock content%}
+{% endblock %}
