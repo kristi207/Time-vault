@@ -74,6 +74,20 @@ header .logo-text span {
     color: rgb(1, 3, 40);
 }
 
+body .logo {
+    display: flex;
+    align-items: center;
+}
+
+body .logo-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.5em;
+}
+
+body .logo-text span {
+    color: rgb(1, 3, 40);
+}
+
 /* Navigation Menu */
 .nav {
     display: flex;
@@ -174,13 +188,15 @@ header .logo-text span {
 }
 
 .post-slider .post-wrapper {
-    width: 100%; /* Ensure it takes full width */
+    width: 100%;
+    /* Ensure it takes full width */
     height: 350px;
     margin: 0px auto;
     overflow: hidden;
     padding: 10px 0px 10px 0px;
     display: flex;
-    justify-content: space-between; /* Align posts properly */
+    justify-content: space-between;
+    /* Align posts properly */
 }
 
 .slider-image {
@@ -195,7 +211,8 @@ header .logo-text span {
 }
 
 .post {
-    width: 300px;  /* Adjust as per your layout */
+    width: 300px;
+    /* Adjust as per your layout */
     padding: 20px;
     margin: 0 10px;
     display: inline-block;
@@ -480,8 +497,10 @@ footer .footer-bottom {
         /* Submenu takes full width */
     }
 }
+
 /* Adjust the size and positioning of the arrows */
-.prev, .next {
+.prev,
+.next {
     font-size: 30px;
     color: #20014a;
     position: absolute;
@@ -499,12 +518,15 @@ footer .footer-bottom {
     right: 10px;
 }
 
-.prev:hover, .next:hover {
-    color: #d90505; /* Hover color */
+.prev:hover,
+.next:hover {
+    color: #d90505;
+    /* Hover color */
 }
 
 /* Ensure the arrows are visible on the slider */
-.slick-prev, .slick-next {
+.slick-prev,
+.slick-next {
     font-size: 0;
     line-height: 0;
     position: absolute;
@@ -524,17 +546,20 @@ footer .footer-bottom {
     right: -25px;
 }
 
-.slick-prev:focus, .slick-next:focus {
+.slick-prev:focus,
+.slick-next:focus {
     outline: none;
 }
 
 /* Arrow Hover Effects */
-.slick-prev:hover, .slick-next:hover {
+.slick-prev:hover,
+.slick-next:hover {
     color: #d90505;
 }
 
 /* Slick Theme CSS */
-.slick-prev:before, .slick-next:before {
+.slick-prev:before,
+.slick-next:before {
     font-family: "slick";
     font-size: 30px;
     color: #20014a;
@@ -577,13 +602,13 @@ footer .footer-bottom {
 
 .slick-slide {
     display: block;
-    /* Adjust the width according to the number of slides */
     float: left;
     height: auto;
     min-height: 1px;
 }
 
-.slick-prev, .slick-next {
+.slick-prev,
+.slick-next {
     font-size: 0;
     line-height: 0;
     position: absolute;
@@ -603,12 +628,14 @@ footer .footer-bottom {
     right: 15px;
 }
 
-.slick-prev:focus, .slick-next:focus {
+.slick-prev:focus,
+.slick-next:focus {
     outline: none;
 }
 
 /* Slick Theme CSS */
-.slick-prev:before, .slick-next:before {
+.slick-prev:before,
+.slick-next:before {
     font-family: "slick";
     font-size: 30px;
     color: #20014a;
@@ -622,21 +649,24 @@ footer .footer-bottom {
     right: -25px;
 }
 
-.slick-prev:focus, .slick-next:focus {
+.slick-prev:focus,
+.slick-next:focus {
     outline: none;
 }
 
 /* Arrow Hover Effects */
-.slick-prev:hover, .slick-next:hover {
-    color: #d90505;
+.slick-prev:hover,
+.slick-next:hover {
+    color: #05809c;
 }
 
-/* Add additional styles for the slider images */
+/*  additional styles for the slider images */
 .slick-slide img {
     display: block;
     width: 100%;
     object-fit: cover;
 }
+
 /* CSS for unique post classes */
 .post-wrapper-unique {
     display: flex;
@@ -726,4 +756,399 @@ footer .footer-bottom {
         flex-direction: column;
         align-items: center;
     }
+}
+
+/* css for postdetail */
+/* for feature photo adjustment */
+.content-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between main content and sidebar */
+}
+
+.main-content {
+    flex: 3; /* Main content takes 3 parts of the space */
+    max-width: 70%; /* Ensure it doesn’t get too wide */
+}
+
+.sidebar {
+    flex: 1; /* Sidebar takes 1 part of the space */
+    max-width: 30%; /* Ensure it stays proportional */
+    padding: 10px;
+    background-color: #f5f5f5; /* Optional: Light background for distinction */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.sidebar h2 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.sidebar ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 8px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #20014a; /* Link color */
+    font-weight: bold;
+}
+
+.sidebar a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+#post_detail .slider-image {
+    display: block;
+    max-width: 100%; /* Ensures the image is responsive */
+    height: auto; /* Maintains the aspect ratio */
+    margin: 0 auto; /* Centers the image */
+    border-radius: 10px; /* Gives a slight rounded corner for a polished look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+}
+
+#post_detail .slider-image-unique {
+    display: left;
+    max-width: 8in; /* Same responsiveness for the default image */
+    height: 4in;
+    margin: 0 auto;
+    border-radius: 10px;
+    opacity: 0.9; /* Slightly transparent to indicate it's a placeholder */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    filter: grayscale(50%); /* Adds a grayscale effect for a placeholder feel */
+}
+
+@media screen and (min-width: 768px) {
+    #post_detail .slider-image, .slider-image-unique {
+        max-width: 80%; /* Adjust for larger screens */
+    }
+}
+
+
+/* css for the signup  */
+#signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+
+
+
+#signup .form-container {
+    background: #ffffff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+#signup p {
+    font-size: 18px;
+    font-family: 'Lora', serif;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#signup .input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+#signup label {
+    font-size: 14px;
+    font-family: 'Lora', serif;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Button styling for signup */
+#signup .btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #040965;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: 'Lora', serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#signup .btn:hover {
+    background-color: #000745;
+    transform: scale(1.05);
+}
+
+
+#signup input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #1b7bb2;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Lora', serif;
+    box-sizing: border-box;
+}
+
+#signup input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0
+}
+#signup .message-container {
+    margin-top: 20px;
+}
+
+#signup .message-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#signup .message-container li {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+#signup .message-container .success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#signup .message-container .error {
+    background-color: #f44336;
+    color: white;
+}
+
+
+/* css for the signin  */
+#signin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+
+
+
+#signin .form-container {
+    background: #ffffff;
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+#signin p {
+    font-size: 18px;
+    font-family: 'Lora', serif;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+#signin .input-group  {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+#signin label {
+    font-size: 14px;
+    font-family: 'Lora', serif;
+    color: #555;
+    display: block;
+    margin-bottom: 10px;
+}
+
+
+/* Button styling */
+#signin .btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #040965;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: 'Lora', serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#signin .btn:hover {
+    background-color: #000745;
+    transform: scale(1.05);
+}
+
+#signin input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #1b7bb2;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Lora', serif;
+    box-sizing: border-box;
+}
+
+#signin input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0
+}
+#signin .message-container {
+    margin-top: 20px;
+}
+
+#signin .message-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#signin .message-container li {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+#signin .message-container .success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#signin .message-container .error {
+    background-color: #f44336;
+    color: white;
+}
+
+/* css for the comment section  */
+#comment .comments-section {
+    margin-top: 20px;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+#comment .comments-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+#comment .comment {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+
+#comment .comment p {
+    margin: 5px 0;
+}
+
+#comment .comment small {
+    color: #777;
+}
+
+#comment .replies {
+    margin-left: 20px;
+    margin-top: 10px;
+    border-left: 2px solid #ddd;
+    padding-left: 10px;
+}
+
+#comment .reply {
+    margin-bottom: 10px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+#comment textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#comment textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+#comment button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#comment button:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for reaction buttons */
+.reaction-button {
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.3s;
+}
+
+.reaction-button:hover {
+    transform: scale(1.1);
+}
+
+/* Styling for the reaction icons */
+.reaction-icon {
+    font-size: 24px;  /* Adjust the size of the emoji/icon */
+    display: inline-block;
+    margin-right: 8px;  /* Space between the icon and the count */
+}
+
+/* Define the specific reactions */
+.reaction-icon.like::before {
+    content: '👍';  /* Unicode character for thumbs up */
+}
+
+.reaction-icon.love::before {
+    content: '❤️';  /* Unicode character for heart */
+}
+
+.reaction-icon.inspired::before {
+    content: '✨';  /* Unicode character for sparkles */
+}
+
+.reaction-icon.wow::before {
+    content: '😮';  /* Unicode character for surprised face */
 }

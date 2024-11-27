@@ -3,18 +3,94 @@
 
 {% block title %}
 {{ post.title }}
+
 {% endblock title %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'your_styles.css' %}">
+</head>
 
 {% block content %}
-<div class="post-detail">
-    <h1>{{ post.title }}</h1>
-    {% if post.feature_photo %}
-    <img src="{{ post.feature_photo.url }}" alt="Feature Photo" class="slider-image">
-    {% else %}
-    <img src="{% static 'vaultapp/images/5.jpg' %}" alt="Default Image" class="slider-image-unique">
-    {% endif %}
-    <p>{{ post.description }}</p>
-    <p><strong>Shared by:</strong> {{ post.nickname }}</p>
-    <p><strong>Shared on:</strong> {{ post.shared_date|date:"F j, Y" }}</p>
+<div class="content-container">
+    <!-- Main content section -->
+    <div class="main-content">
+        <div id="post_detail" class="post-detail">
+            <h1>{{ post.title }}</h1>
+            {% if post.feature_photo %}
+            <img src="{{ post.feature_photo.url }}" alt="Feature Photo" class="slider-image">
+            {% else %}
+            <img src="{% static 'vaultapp/images/5.jpg' %}" alt="Default Image" class="slider-image-unique">
+            {% endif %}
+            <p>{{ post.description }}</p>
+            <p><strong>Shared by:</strong> {{ post.nickname }}</p>
+            <p><strong>Shared on:</strong> {{ post.shared_date|date:"F j, Y" }}</p>
+        </div>
+
+        <!-- Reaction Section -->
+        <div id="reaction" class="letter-reactions">
+            <h2>Reactions</h2>
+            <div class="reaction-icons">
+                {% for reaction, count in reactions.items %}
+                <button class="reaction-button" data-reaction="{{ reaction }}">
+                    <i class="reaction-icon {{ reaction }}"></i> {{ count }}
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+        
+
+        <!-- Comment Section -->
+        <div id="comment" class="comments-section">
+            <h2>Comments</h2>
+            {% for comment in comments %}
+            <div class="comment">
+                <p><strong>{{ comment.user.username }}:</strong></p>
+                <p>{{ comment.content }}</p>
+                <p><small>{{ comment.created_at|date:"F j, Y H:i" }}</small></p>
+            </div>
+            {% endfor %}
+            <form method="POST" 
+                  action="{% url 'add_comment' post.id %}" 
+                  {% if not user.is_authenticated %} onsubmit="showLoginPrompt('comment'); return false;" {% endif %}>
+                {% csrf_token %}
+                <textarea name="content" placeholder="Add a comment..." required></textarea>
+                <button type="submit">Post Comment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sidebar section -->
+    <aside class="sidebar">
+        <div class="recommended-blogs">
+            <h2>Recommended Blogs</h2>
+            <ul>
+                {% for blog in recommended_blogs %}
+                <li>
+                    <a href="{% url 'post_detail' blog.id %}">{{ blog.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
 </div>
+
+<!-- Login Prompt Modal -->
+<div id="loginPrompt" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeLoginPrompt()">&times;</span>
+        <p id="loginPromptText">Please <a href="{% url 'signin' %}">login</a> to <span id="actionType"></span>.</p>
+    </div>
+</div>
+
 {% endblock content %}
+
+<script>
+    function showLoginPrompt(action) {
+        document.getElementById('loginPrompt').style.display = 'block';
+        var promptText = action === 'react' ? 'react to this post' : 'comment on this post';
+        document.getElementById('loginPromptText').innerHTML = 'Please <a href="{% url "signin" %}">login</a> to ' + promptText + '.';
+    }
+
+    function closeLoginPrompt() {
+        document.getElementById('loginPrompt').style.display = 'none';
+    }
+</script>
