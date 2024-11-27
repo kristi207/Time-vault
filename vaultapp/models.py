@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
+# for main letters section
 class Letter(models.Model):
     # Linking the letter to a user
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='letters', null=True, blank=True)
@@ -34,6 +35,8 @@ class Letter(models.Model):
     def __str__(self):
         return f"Letter to {self.recipient_email} scheduled for {self.send_date}"
 
+# read letter section
+
 class PublicLetter(models.Model):
     # Linking to the original letter
     original_letter = models.OneToOneField(
@@ -57,6 +60,7 @@ class PublicLetter(models.Model):
     def __str__(self):
         return f"Public Letter: {self.title or self.original_letter.title or 'The Letter From {self.shared_date}'}"
 
+# rection of letter
 
 class LetterReaction(models.Model):
     # Linking the reaction to a public letter
@@ -76,6 +80,8 @@ class LetterReaction(models.Model):
 
     def __str__(self):
         return f"{self.reaction_type} by {self.user or 'Anonymous'} on {self.public_letter}"
+
+# letter comments
 
 class Comment(models.Model):
     # Linking the comment to a public letter
