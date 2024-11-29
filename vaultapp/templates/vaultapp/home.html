@@ -8,23 +8,23 @@
 <div class="page-wrapper">
     <div class="post-slider">
         <h1 class="slider-title">Trending Posts</h1>
+
         <!-- Left Arrow -->
         <i class="fas fa-chevron-left prev"></i>
         <!-- Right Arrow -->
         <i class="fas fa-chevron-right next"></i>
         <div class="post-wrapper multiple-items">
-    
-            <!-- Add your posts here -->
             <div class="post">
                 <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="slider-image">
                 <div class="post-info">
-                    <h4><a href="single.html">One day your life will flash before your eyes</a></h4>
+                    <h4><a href="single.html">Don’t cry because it’s over, smile because it happened</a></h4>
                     <i class="far fa-user"> PKD</i>
                     &nbsp;
                     <i class="far fa-calendar"> Mar 16, 2018</i>
                 </div>
-            </div>
-            <div class="post">
+            </div> 
+
+            <div class="post"> 
                 <img src="{% static 'vaultapp/images/6.jpg' %}" alt="" class="slider-image">
                 <div class="post-info">
                     <h4><a href="single.html">Sometimes the smallest things take up the most room in your heart</a></h4>
@@ -50,9 +50,10 @@
                     &nbsp;
                     <i class="far fa-calendar"> Mar 16, 2018</i>
                 </div>
-            </div>
+            </div> 
         </div>
     </div>
+    
     
     <!-- //Post Slider
     
@@ -63,68 +64,36 @@
         <h1 class="slider-title">FUTURA</h1>
     
     </div> -->
-    
-    {% comment %} Content  {% endcomment %}
-    <div class="content clearfix">
-        {% comment %} Main content {% endcomment %}
+    <section class="content">
         <div class="main-content">
             <h1 class="recent-post-title">Recent Posts</h1>
-    
+            {% for public_letter in latest_posts %}
             <div class="post">
-                
-                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
+                <!-- Display feature photo or default image -->
+                {% if public_letter.feature_photo %}
+                <img src="{{ public_letter.feature_photo.url }}" alt="Feature Photo" class="post-image">
+                {% else %}
+                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="Default Image" class="post-image">
+                {% endif %}
+    
                 <div class="post-preview">
                     <h2>
-                        <a href="single.html">Don’t cry because it’s over, smile because it happened</a>
+                        <a href="{% url 'post_detail' public_letter.id %}">{{ public_letter.title }}</a>
                     </h2>
-                    <i class="far fa-user"> PKD</i>
-                    &nbsp;
-                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <i class="far fa-user"> {{ public_letter.nickname }}</i>
+                    <i class="far fa-calendar"> {{ public_letter.shared_date|date:"F j, Y" }}</i>
                     <p class="preview-text">
-                        Dummy text in HTML is called "Lorem ipsum" and is used to fill empty spaces in a layout before content is added. It's commonly used in web development, graphic design, and publishing.
+                        {{ public_letter.description|truncatewords:30 }}
                     </p>
-                    <a href="single.html" class="btn read-more">Read More</a>
-    
+                    <a href="{% url 'post_detail' public_letter.id %}" class="btn btn-outline-dark btn-sm">Read More</a>
                 </div>
             </div>
+            {% endfor %}
+        </div>
+    </section>
     
-            <div class="post">
-                
-                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
-                <div class="post-preview">
-                    <h2>
-                        <a href="single.html">Don’t cry because it’s over, smile because it happened</a>
-                    </h2>
-                    <i class="far fa-user"> PKD</i>
-                    &nbsp;
-                    <i class="far fa-calendar"> Mar 16, 2018</i>
-                    <p class="preview-text">
-                        Dummy text in HTML is called "Lorem ipsum" and is used to fill empty spaces in a layout before content is added. It's commonly used in web development, graphic design, and publishing.
-                    </p>
-                    <a href="single.html" class="btn read-more">Read More</a>
-    
-                </div>
-            </div>
-    
-            <div class="post">
-                
-                <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
-                <div class="post-preview">
-                    <h2>
-                        <a href="single.html">Don’t cry because it’s over, smile because it happened</a>
-                    </h2>
-                    <i class="far fa-user"> PKD</i>
-                    &nbsp;
-                    <i class="far fa-calendar"> Mar 16, 2018</i>
-                    <p class="preview-text">
-                        Dummy text in HTML is called "Lorem ipsum" and is used to fill empty spaces in a layout before content is added. It's commonly used in web development, graphic design, and publishing.
-                    </p>
-                    <a href="single.html" class="btn read-more">Read More</a>
-    
-                </div>
-            </div>
-    
-            <div class="post">
+            <!--  -->
+            <!-- <div class="post">
                 
                 <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
                 <div class="post-preview">
@@ -175,9 +144,9 @@
                     <a href="single.html" class="btn read-more">Read More</a>
     
                 </div>
-            </div>
+            </div> -->
     
-            <div class="post">
+            <!-- <div class="post">
                 
                 <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="post-image">
                 <div class="post-preview">
@@ -194,21 +163,22 @@
                 </div>
             </div>
         </div>    
-    </div>
-        
+    </div>  -->
+    
+    <section class="content">
     
     <div class="email-section">
         <h2>FUTURA</h2>
         <h3>Wanna write a letter to future self???</h3>
         <form class="email-form">
-            <input type="email" placeholder="Please enter an email" required>
+            <!-- <input type="email" placeholder="Please enter an email" required> -->
             <button type="submit">
                 <span class="icon">&#9993;</span> <!-- Envelope icon -->
             </button>
         </form>
     </div>
-    
-</div>
+</section>
+<!-- </div> -->
 
 
 {% comment %} Footer {% endcomment %}
@@ -245,7 +215,7 @@
         <div class="footer-section contact-form">
             <h2>Contact us </h2>
             <br>
-            <form action="home.html" method="post">
+            <form action="vaultapp/home.html" method="post">
                 <input type="email" name="email" class="text-input contact-input" placeholder="Your email adress...">
                 <textarea name="message"  class="text-input contact-input" placeholder="Your message..."></textarea>
                 <button type="submit" class="btn btn-big contact-btn">

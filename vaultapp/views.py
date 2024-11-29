@@ -13,13 +13,13 @@ from django.db import models
 def home(request):
     return render(request, 'vaultapp/home.html')
 
-def trending_posts(request):
-    posts = PublicLetter.objects.all()[:6]  
-    return render(request, 'your_template.html', {'posts': posts})
+def home(request):
+    trending_post = PublicLetter.objects.filter(is_published= False).order_by('-shared_date')[:6]  # Example filter
+    return render(request, 'vaultapp/home.html', {'trending_post':trending_post})
 
-def latest_posts(request):
-    posts = PublicLetter.objects.all()[:6]  
-    return render(request, 'your_template.html', {'latest_posts': posts})
+def home(request):
+    latest_posts = PublicLetter.objects.filter(is_published= False).order_by('-shared_date')[:10]  # Example filter
+    return render(request, 'vaultapp/home.html', {'latest_posts': latest_posts})
 
 def about(request):
     return render(request,'vaultapp/about.html')

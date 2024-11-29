@@ -11,7 +11,7 @@
 </head>
 
 {% block content %}
-<div class="content-container">
+<div class="content">
     <!-- Main content section -->
     <div class="main-content">
         <div id="post_detail" class="post-detail">
@@ -28,7 +28,6 @@
 
         <!-- Reaction Section -->
         <div id="reaction" class="letter-reactions">
-            <h2>Reactions</h2>
             <div class="reaction-icons">
                 {% for reaction, count in reactions.items %}
                 <button class="reaction-button" data-reaction="{{ reaction }}">
@@ -37,45 +36,29 @@
                 {% endfor %}
             </div>
         </div>
-
-        <!-- blog recommendation section -->
-        <div class="recommended-blogs">
-            <h3>Recommended Blogs</h3>
-
-            {% for blog in recommended_blogs %}
-            <ul>
-                <div class="post">
-
-                    {% if blog.feature_photo %}
-                    <img src="{{ blog.feature_photo.url }}" alt="Feature Photo" class="post-image">
-                    {% else %}
-                    <img src="{% static 'vaultapp/images/5.jpg' %}" alt="Default Image" class="post-image">
-                    {% endif %}
-
-                    <div class="post-preview">
-                        <h2>
-                            <a href="{% url 'post_detail' blog.id %}">{{ blog.title }}</a>
-                        </h2>
-
-                        <i class="far fa-user"> {{ blog.nickname }}</i>
-                        &nbsp;
-                        <i class="far fa-calendar"> {{ blog.shared_date|date:"F j, Y" }}</i>
-
-                        <p class="preview-text">
-                            {{ blog.description|truncatewords:30 }}
-                        </p>
-
-                        <a href="{% url 'post_detail' blog.id %}" class="btn read-more">Read More</a>
-                    </div>
-                </div>
-                {% endfor %}
-            </ul>
+        <br>
+        <h2>You may also like </h2>
+        {% for blog in recommended_blogs %}
+        <div class="post">
+            {% if blog.feature_photo %}
+            <img src="{{ blog.feature_photo.url }}" alt="Feature Photo" class="post-image">
+            {% else %}
+            <img src="{% static 'vaultapp/images/5.jpg' %}" alt="Default Image" class="post-image">
+            {% endif %}
+            <div class="post-preview">
+                <h2>
+                    <a href="{% url 'post_detail' blog.id %}">{{ blog.title }}</a>
+                </h2>
+                <i class="far fa-user"> {{ blog.nickname }}</i>
+                <i class="far fa-calendar"> {{ blog.shared_date|date:"F j, Y" }}</i>
+                <p class="preview-text">{{ blog.description|truncatewords:30 }}</p>
+                <a href="{% url 'post_detail' blog.id %}" class="btn btn-outline-dark btn-sm">Read More</a>
+            </div>
         </div>
-
+        {% endfor %}
 
         <!-- Comment Section -->
         <div id="comment" class="comments-section">
-            <h2>Comments</h2>
             {% for comment in comments %}
             <div class="comment">
                 <p><strong>{{ comment.user.username }}:</strong></p>
@@ -83,8 +66,7 @@
                 <p><small>{{ comment.created_at|date:"F j, Y H:i" }}</small></p>
             </div>
             {% endfor %}
-            <form method="POST" action="{% url 'add_comment' post.id %}" {% if not user.is_authenticated %}
-                onsubmit="showLoginPrompt('comment'); return false;" {% endif %}>
+            <form method="POST" action="{% url 'add_comment' post.id %}" {% if not user.is_authenticated %} onsubmit="showLoginPrompt('comment'); return false;" {% endif %}>
                 {% csrf_token %}
                 <textarea name="content" placeholder="Add a comment..." required></textarea>
                 <button type="submit">Post Comment</button>
@@ -95,7 +77,9 @@
     <!-- Sidebar section -->
     <aside class="sidebar">
         <div class="recommended-blogs">
-            <h2>Recommended Blogs</h2>
+            <h2>Check out other letters</h2>
+            &nbsp
+            &nbsp
             <ul>
                 {% for blog in recommended_blogs2 %}
                 <li>
@@ -106,6 +90,7 @@
         </div>
     </aside>
 </div>
+
 
 <!-- Login Prompt Modal -->
 <div id="loginPrompt" class="modal" style="display: none;">
