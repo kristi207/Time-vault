@@ -4,20 +4,50 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login
+import pandas as pd
 from vaultapp.models import PublicLetter,LetterReaction,Comment
 from django.db import models
+from django.shortcuts import render, redirect
+from vaultapp.form import LetterForm
+from .models import Letter
+from django.contrib import messages
+
+def write_letter(request):
+    if request.method == 'POST':
+        form = LetterForm(request.POST)
+        if form.is_valid():
+            # Save the letter
+            letter = form.save(commit=False)
+            if request.user.is_authenticated:
+                letter.user = request.user  # Associate the letter with the logged-in user
+            letter.status = 'scheduled'  # Set status to scheduled by default
+            letter.save()
+
+            messages.success(request, "Your letter has been scheduled successfully.")
+            return redirect('vaultapp/letter_scheduled')  # Redirect to a confirmation page
+        else:
+            messages.error(request, "There was an error with your submission.")
+    else:
+        form = LetterForm()
+
+    return render(request, 'vaultapp/write_letter.html', {'form': form})
+
+
+def letter_scheduled(request):
+    return render(request, 'vaultapp/letter_scheduled.html')
+
 
 
 def home(request):
     return render(request, 'vaultapp/home.html')
 
-def trending_posts(request):
-    posts = PublicLetter.objects.all()[:6]  
-    return render(request, 'your_template.html', {'posts': posts})
+def home(request):
+    trending_post = PublicLetter.objects.filter(is_published= False).order_by('-shared_date')[:6]  # Example filter
+    return render(request, 'vaultapp/home.html', {'trending_post':trending_post})
 
-def latest_posts(request):
-    posts = PublicLetter.objects.all()[:6]  
-    return render(request, 'your_template.html', {'latest_posts': posts})
+def home(request):
+    latest_posts = PublicLetter.objects.filter(is_published= False).order_by('-shared_date')[:10]  # Example filter
+    return render(request, 'vaultapp/home.html', {'latest_posts': latest_posts})
 
 def about(request):
     return render(request,'vaultapp/about.html')
@@ -29,15 +59,38 @@ def post_list(request):
 
 def post_detail(request, id):
     post = PublicLetter.objects.get(id=id)
-    reactions = LetterReaction.objects.filter(public_letter=post).values('reaction_type').annotate(count=models.Count('reaction_type'))
+    reactions = (
+        LetterReaction.objects.filter(public_letter=post)
+        .values('reaction_type')
+        .annotate(count=models.Count('reaction_type'))
+    )   
     comments = Comment.objects.filter(public_letter=post, parent_comment__isnull=True).prefetch_related('replies')
-    recommended_blogs = PublicLetter.objects.filter(is_published=False).exclude(id=id)[:5]  # Fetch 5 recommended blogs
+    
+    public_letters = PublicLetter.objects.filter(is_published=False).values('id', 'description', 'title')
+    df = pd.DataFrame(public_letters)
+    df['description'] = df['description'].fillna('')  # Handle empty descriptions
+
+    # Apply the recommendation system
+    custom_tfidf = PublicLetter.recommend_blogs()  # Reuse the recommendation method from the model
+
+    # Extract recommendations for the current post
+    recommendations = next(
+        (rec['recommended_blogs'] for rec in custom_tfidf if rec['id'] == post.id),
+        []
+    )
+    
+    # Fetch recommended blog objects from IDs
+    recommended_blogs = PublicLetter.objects.filter(id__in=[rec['id'] for rec in recommendations])
+
+    recommended_blogs2 = PublicLetter.objects.filter(is_published=False).exclude(id=id)[:5]  # Fetch 5 recommended blogs
+    print("Recommendations:", recommendations)
 
     context = {
         'post': post,
         'reactions': {reaction['reaction_type']: reaction['count'] for reaction in reactions},
         'comments': comments,
         'recommended_blogs': recommended_blogs,
+        'recommended_blogs2': recommended_blogs2,
     }
     return render(request, 'vaultapp/post_detail.html', context)
 
