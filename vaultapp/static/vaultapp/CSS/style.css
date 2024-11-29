@@ -330,14 +330,14 @@ body .logo-text span {
 .content .main-content .post .post-preview h2 {
     margin: 0 0 10px;
     font-size: 1.5em;
-    color: #333; /* Original title color */
+    color:  #20014a; /* Original title color */
 }
 
 .content .main-content .post .post-preview i {
     display: block;
     margin-bottom: 10px;
     font-size: 0.9em;
-    color: #555; /* Original meta information color */
+    color: #191818; /* Original meta information color */
 }
 
 .content .main-content .post .post-preview .preview-text {
@@ -1111,7 +1111,7 @@ footer .footer-bottom {
 }
 
 #signup .message-container .success {
-    background-color: #4CAF50;
+    background-color: #20014a;
     color: white;
 }
 
@@ -1216,7 +1216,7 @@ footer .footer-bottom {
 }
 
 #signin .message-container .success {
-    background-color: #4CAF50;
+    background-color: #20014a;
     color: white;
 }
 
@@ -1335,4 +1335,124 @@ footer .footer-bottom {
 
 .reaction-icon.wow::before {
     content: '😮';  /* Unicode character for surprised face */
+}
+
+
+/* futura css */
+/* General Reset for margins and padding */
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+/* Body Styles */
+/* body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+} */
+
+/* Container for the form */
+.letter-form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Title of the form */
+.letter-form-container h1 {
+    text-align: center;
+    color: #20014a;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styling for each form input */
+/* Container for the entire form */
+.letter-form-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title styling */
+
+/* Style for form fields */
+.letter-form .form-field {
+    margin-bottom: 20px;
+}
+
+/* Style for the input fields */
+input[type="email"], textarea, input[type="datetime-local"], input[type="checkbox"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 150px;
+}
+
+/* Style for the checkbox */
+input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+/* Label styling for the fields */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Button styling */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #20014a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #20014a;
+}
+
+/* Adjustments for the title field */
+#titleField {
+    display: none;
+}
+
+/* Responsiveness: Ensure the form is mobile-friendly */
+@media screen and (max-width: 600px) {
+    .letter-form-container {
+        width: 90%;
+    }
+
+    .submit-btn {
+        font-size: 16px;
+    }
 }

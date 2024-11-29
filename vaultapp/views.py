@@ -6,8 +6,36 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 import pandas as pd
 from vaultapp.models import PublicLetter,LetterReaction,Comment
-
 from django.db import models
+from django.shortcuts import render, redirect
+from vaultapp.form import LetterForm
+from .models import Letter
+from django.contrib import messages
+
+def write_letter(request):
+    if request.method == 'POST':
+        form = LetterForm(request.POST)
+        if form.is_valid():
+            # Save the letter
+            letter = form.save(commit=False)
+            if request.user.is_authenticated:
+                letter.user = request.user  # Associate the letter with the logged-in user
+            letter.status = 'scheduled'  # Set status to scheduled by default
+            letter.save()
+
+            messages.success(request, "Your letter has been scheduled successfully.")
+            return redirect('vaultapp/letter_scheduled')  # Redirect to a confirmation page
+        else:
+            messages.error(request, "There was an error with your submission.")
+    else:
+        form = LetterForm()
+
+    return render(request, 'vaultapp/write_letter.html', {'form': form})
+
+
+def letter_scheduled(request):
+    return render(request, 'vaultapp/letter_scheduled.html')
+
 
 
 def home(request):
