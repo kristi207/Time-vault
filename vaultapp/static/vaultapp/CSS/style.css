@@ -33,6 +33,7 @@ a {
     clear:both;
 }
 
+
 .btn{
     padding:.5rem 1rem;
     background:rgb(241, 231, 241);
@@ -55,6 +56,7 @@ header {
     height: 66px;
     display: flex;
     align-items: center;
+    
     justify-content: space-between;
     padding: 0 1em;
 }
@@ -94,10 +96,12 @@ body .logo-text span {
     list-style: none;
     font-family: 'Lora', serif;
     gap: 1rem;
+
 }
 
 .nav li {
     position: relative;
+    /* font-family: 'Lora', serif; */
 }
 
 .nav li ul {
@@ -110,15 +114,18 @@ body .logo-text span {
     list-style: none;
     padding: 0.5rem 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Lora', serif;
 }
 
 .nav li ul li {
     padding: 0.5rem 1rem;
+    font-family: 'Lora', serif;
 }
 
 .nav li ul li a {
     text-decoration: none;
     color: rgb(6, 1, 49);
+    font-family: 'Lora', serif;
 }
 
 .nav li:hover ul {
@@ -131,6 +138,7 @@ body .logo-text span {
     color: rgb(4, 1, 66);
     padding: 10px 15px;
     display: inline-block;
+    font-family: 'Lora', serif;
     position: relative;
 }
 
@@ -234,7 +242,7 @@ body .logo-text span {
 }
 
 /* Content */
-/*\ .content{
+.content{
     width:90%;
     margin:30px auto 30px;
     
@@ -257,14 +265,14 @@ body .logo-text span {
     overflow: hidden; /* Prevents any content from overflowing */
 }
 
-.content .main-content .post .read-more{
+.content .main-content .post .read-more {
     position:absolute;
     bottom:10px;
     right:10px;
     /* border:1px solid rgb(127, 191, 231);
     border-radius: 0px;
     color:rgb(228, 197, 203) !important; */
-/* }
+}
 
 .content .main-content .post .post-image{
     width:40%;
@@ -278,7 +286,7 @@ body .logo-text span {
 }
 .content .main-content .recent-post-title{
     margin:20px;
-} */
+} 
  
 .content {
     width: 90%;
@@ -394,10 +402,10 @@ body .logo-text span {
 
 /* Header styling */
 .email-section h2 {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Times New Roman', Times, serif ;
     font-size: 1.5em;
     margin-bottom: 20px;
-    color: #1e3cb7;
+    color: #025f71;
     /* Blue color for heading */
 }
 
@@ -453,7 +461,7 @@ body .logo-text span {
     background:rgb(100, 98, 99);
     color:white;
     height:400px;
-    position:relative;
+    position:sticky;
     width:100%;
 }
 .footer .footer-content{
@@ -514,23 +522,18 @@ body .logo-text span {
 
 .footer .footer-content .contact-form .contact-input:focus{
     background:rgb(43, 41, 41);
+
 }
 .footer .footer-content .contact-form .contact-btn{
     float:right;
+    
 }
-/* footer .footer-bottom {
-    background: grey;
-    color: white;
-    height: 50px;
-    text-align: center; /* Horizontally centers the text 
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%; /* Ensures the footer spans the full width 
-    line-height: 50px; /* Vertically centers the text 
-    margin: 0;
-    padding: 0; /* Avoid extra spacing issues 
-} */
+
+
+.footer .footer-content .contact-form .contact-input::placeholder {
+    color: #ccc; /* Lighter placeholder text */
+    font-family:'Times New Roman', Times, serif ; /* Optional stylistic choice */
+}
 
 
 footer .footer-bottom {
