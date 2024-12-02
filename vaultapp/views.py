@@ -11,6 +11,43 @@ from django.shortcuts import render, redirect
 from vaultapp.form import LetterForm
 from .models import Letter
 from django.contrib import messages
+from django.shortcuts import render, redirect
+from .form import ScheduleEmailForm
+from django.shortcuts import render, redirect
+from django.utils import timezone
+from datetime import timedelta
+from django_q.tasks import async_task
+from .tasks import send_scheduled_email
+
+def schedule_email(request):
+    if request.method == 'POST':
+        form = ScheduleEmailForm(request.POST)
+        if form.is_valid():
+            # Save the form first
+            scheduled_email = form.save()
+
+            # Get the scheduled time
+            scheduled_time = scheduled_email.scheduled_time
+
+            # Calculate the delay (time difference between now and scheduled time)
+            delay = (scheduled_time - timezone.now()).total_seconds()
+
+            if delay > 0:
+                # Schedule the email to be sent at the scheduled time using Django Q
+                async_task(
+                    send_scheduled_email,
+                    scheduled_email.sender,
+                    scheduled_email.recipient,
+                    scheduled_email.subject,
+                    scheduled_email.content,
+                    schedule=timezone.now() + timedelta(seconds=delay)
+                )
+
+            return redirect('success')  # Redirect to success page after scheduling
+    else:
+        form = ScheduleEmailForm()
+
+    return render(request, 'letter_scheduled.html', {'form': form})
 
 def write_letter(request):
     if request.method == 'POST':
