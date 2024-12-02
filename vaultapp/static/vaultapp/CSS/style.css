@@ -8,22 +8,26 @@
 html,
 body {
     background: white;
-    font-family: 'Lora', serif;
+    font-family: 'Times New Roman', Times, serif;
 }
 
-h1,
-h2,
+h1
+/* h2,
 h3,
 h4,
 h5,
-h6 {
-    font-family: 'Great-vibes', cursive;
+h6 */
+{ 
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bolder;
+    /* font-family: 'Great-vibes', cursive; */
     color: #20014a;
     margin: 0px;
 }
 
 a {
     text-decoration: none;
+    /* font-family: 'Times New Roman', Times, serif; */
     color: inherit;
 }
 
@@ -49,6 +53,9 @@ a {
     background:rgb(61, 36, 61);
     color:white !important;
 }
+h2{
+    font-family: 'Times New Roman', Times, serif;
+}
 
 /* Header Styles */
 header {
@@ -56,7 +63,6 @@ header {
     height: 66px;
     display: flex;
     align-items: center;
-    
     justify-content: space-between;
     padding: 0 1em;
 }
@@ -94,42 +100,67 @@ body .logo-text span {
 .nav {
     display: flex;
     list-style: none;
-    font-family: 'Lora', serif;
-    gap: 1rem;
+    /* font-family: 'Lora', serif; */
+    gap: -0.5rem;
 
 }
 
 .nav li {
     position: relative;
-    /* font-family: 'Lora', serif; */
+    font-weight: bold;
+    font-size: large;
 }
 
 .nav li ul {
-    display: none;
     position: absolute;
+    top: calc(100% + 5px); /* Add some spacing below the parent */
+    left: 0; /* Align to the left edge of the parent element */
+    display: none; /* Hide by default */
+    right:0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure it appears above other content */
+    list-style: none;
+    padding: 0.5rem 0;
+    width: 150px;
+    border-radius: 4px; /* Add rounded corners for better aesthetics */
+}
+
+
+/* .nav li ul {
+    display: none;
+    position: absolute !important;
     top: 100%;
-    /* Position below parent */
+    
     left: 0;
     background: white;
     list-style: none;
     padding: 0.5rem 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: 'Lora', serif;
-}
+    
+} */
 
 .nav li ul li {
     padding: 0.5rem 1rem;
-    font-family: 'Lora', serif;
+    margin:0;
+    /* font-family: 'Lora', serif; */
 }
 
 .nav li ul li a {
+    display: block;
+    padding: 10px 15px;
     text-decoration: none;
-    color: rgb(6, 1, 49);
-    font-family: 'Lora', serif;
+    color:  rgb(1, 3, 40);
+    font-size: 15px;
+    white-space: nowrap;
+    transition: background 0.3s ease, color 0.3s ease;
+    
 }
 
 .nav li:hover ul {
-    display: block;
+    display: block ;
+    font-family: 'Times New Roman', Times, serif;
     /* Show submenu on hover (desktop) */
 }
 
@@ -138,8 +169,8 @@ body .logo-text span {
     color: rgb(4, 1, 66);
     padding: 10px 15px;
     display: inline-block;
-    font-family: 'Lora', serif;
-    position: relative;
+    /* font-family: 'Lora', serif; */
+    position: sticky !important ;
 }
 
 /* Hover Effect */
@@ -147,7 +178,7 @@ body .logo-text span {
     content: "";
     position: absolute;
     width: 0;
-    height: 2px;
+    height: 3px;
     bottom: -3px;
     left: 0;
     background-color: rgb(1, 6, 42);
@@ -156,6 +187,22 @@ body .logo-text span {
 
 .hover-line:hover::after {
     width: 100%;
+}
+.nav li ul li a:hover {
+    background-color: #007BFF;
+    color: #fff;
+   
+}
+
+
+/* Show dropdown on hover */
+.nav li:hover > ul {
+    display: block;
+}
+
+.nav li ul.center-dropdown {
+    left: 50%; /* Center horizontally relative to the parent */
+    transform: translateX(-50%); /* Adjust for exact centering */
 }
 
 .page-wrapper a:hover {
@@ -196,9 +243,9 @@ body .logo-text span {
 }
 
 .post-slider .post-wrapper {
-    width: 100%;
+    width: 90%;
     /* Ensure it takes full width */
-    height: 350px;
+    height: 270px;
     margin: 0px auto;
     overflow: hidden;
     padding: 10px 0px 10px 0px;
@@ -224,7 +271,7 @@ body .logo-text span {
     padding: 20px;
     margin: 0 10px;
     display: inline-block;
-    background: rgb(230, 207, 207);
+    background: rgb(244, 242, 242);
     border-radius: 5px;
     box-shadow: 1rem 1rem 1rem -1rem gray;
 }
@@ -310,19 +357,19 @@ body .logo-text span {
     display: flex; /* Align image and content horizontally */
     align-items: center; /* Center items vertically */
     justify-content: space-between; /* Add space between elements */
-    width: 95%; /* Post occupies 95% of the container */
-    height: 270px; /* Fixed height for posts */
+    width: 140%; /* Post occupies 95% of the container */
+    height: 270 px; /* Fixed height for posts */
     margin: 20px auto; /* Center the post horizontally */
     padding: 15px;
     border-radius: 5px;
-    background:  rgb(230, 207, 207);
+    background:  rgb(239, 233, 233);
     position: relative; /* For absolute positioning within */
     box-shadow: 0 4px 6px gray; /* Subtle shadow for aesthetics */
 }
 
 /* Post Image */
 .content .main-content .post img.post-image {
-    width: 30%; /* Image occupies 30% of the post width */
+    width: 40%; /* Image occupies 30% of the post width */
     height: 100%; /* Image fills the height of the post */
     object-fit: cover; /* Maintain aspect ratio without distortion */
     border-radius: 5px; /* Rounded corners for images */
@@ -405,7 +452,7 @@ body .logo-text span {
     font-family: 'Times New Roman', Times, serif ;
     font-size: 1.5em;
     margin-bottom: 20px;
-    color: #025f71;
+    color: #000e10;
     /* Blue color for heading */
 }
 
@@ -456,7 +503,7 @@ body .logo-text span {
     margin-right: 5px;
 }
 
-
+/* Footer */
 .footer {
     background:rgb(100, 98, 99);
     color:white;
@@ -552,6 +599,196 @@ footer .footer-bottom {
     margin: 0;
      /*z-index: 1000; /* Ensures footer stays above other content */
 }
+
+/* about us */
+/* About Section Styling */
+ #about-us {
+    background: linear-gradient(135deg, #f2f2f2, #ffffff);
+    padding: 5rem 2rem;
+    color: #03024e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  h3{
+    font-weight: bold;
+    font-size: 35px;
+  }
+  .container {
+    max-width: 900px;
+    width: 100%;
+    margin: auto;
+  }
+  
+ .about-section {
+    margin-bottom: 3rem;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  } 
+  
+  /* Heading for each section */
+  .about-section h3 {
+    font-size: 2.2rem;
+    color: #010333;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+  }
+  
+  .about-section h3::before {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    /* background-color: #3498db; */
+  }
+  
+  .about-section p,
+  .about-section ul li {
+    font-size: 1.1rem;
+    color: #0c0c0c;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  
+  .about-section ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  /* Style for each list item */
+  .about-section ul li {
+    display: flex;
+    align-items: center;
+  }
+  
+  .about-section ul li::before {
+    content: "✔";
+    margin-right: 10px;
+    color: #3498db;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  /* Hover effect for each section */
+  .about-section:hover {
+    transform: translateY(-10px);
+    opacity: 0.9;
+  }
+  
+  /* Adding some subtle animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Apply animation to sections */
+  .about-section:nth-child(odd) {
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .about-section:nth-child(even) {
+    animation: fadeIn 1.2s ease-out;
+  }
+  
+/* General Section Styling */
+/* General Section Styling */
+#what-we-do {
+    padding: 60px 20px;
+    background-color: #f9f9fb;
+    text-align: center;
+    /* font-family: 'Times New Roman', Times, serif; */
+    color: #040640;
+  }
+  
+  /* #what-we-do h3 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    /* color: #222; 
+  } */
+  
+  /* Grid Layout */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Card Wrapper */
+  .grid-item {
+    perspective: 1000px; /* Enables 3D effect */
+  }
+  
+  .card {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    transform-style: preserve-3d; /* Preserve 3D for child elements */
+    transition: transform 0.6s ease;
+  }
+  
+  .card:hover {
+    transform: rotateY(180deg); /* Flip on hover */
+  }
+  
+  /* Card Sides */
+  .card-front,
+  .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hides the back side when not visible */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-front {
+    background: #fff;
+  }
+  
+  .card-back {
+    background: #120039;
+    color: #fff;
+    transform: rotateY(180deg); /* Hide the back initially */
+  }
+  
+  /* Icon Styling */
+  .card-front .icon img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+  
+  /* Text Styling */
+  .card-front h3 {
+    font-size: 1.5rem;
+    color: #070132;
+  }
+  
+  .card-back p {
+    font-size: 1rem;
+    text-align: center;
+    line-height: 1.6;
+  }
+  
 
 
 
