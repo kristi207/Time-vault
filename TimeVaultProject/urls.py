@@ -28,6 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name= 'admin'),
     path('', home, name= 'home'),
     path('about/',about, name= 'about'),
+    path('blog/<int:id>/', views.blog_detail, name='blog_detail'),
     path('posts/', views.post_list, name='post_list'),
     path('post/<int:id>/', views.post_detail, name='post_detail'),
     path('post/<int:id>/add-reaction/', views.add_reaction, name='add_reaction'),
@@ -42,4 +43,6 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('write-letter/', views.write_letter, name='write_letter'),
     path('letter-scheduled/', views.letter_scheduled, name='letter_scheduled'),
+    path('post/<int:id>/', views.BlogPost, name='post_detail'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

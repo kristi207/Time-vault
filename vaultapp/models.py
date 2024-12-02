@@ -5,6 +5,36 @@ from collections import Counter
 import pandas as pd
 from django.utils.timezone import now
 
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils.timezone import now
+
+# Blog Post model for admin to post blogs
+class BlogPost(models.Model):
+    # Linking to the admin who is posting the blog
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
+    # Title of the blog
+    title = models.CharField(max_length=255)
+    # Content of the blog
+    content = models.TextField()
+    # Blog tags (optional)
+    tags = models.CharField(max_length=255, null=True, blank=True)
+    # Feature image for the blog (optional)
+    feature_image = models.ImageField(upload_to='blog_posts/images/', null=True, blank=True)
+    # Published status
+    is_published = models.BooleanField(default=False)
+    # Date when the blog post was created
+    created_at = models.DateTimeField(auto_now_add=True)
+    # Date when the blog post was last updated
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Blog Post: {self.title} by {self.author}"
+
+    class Meta:
+        ordering = ['-created_at']
+
+
 # for main letters section
 class Letter(models.Model):
     # Linking the letter to a user

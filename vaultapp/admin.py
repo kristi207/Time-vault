@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Letter, PublicLetter, Comment, LetterReaction
+from .models import Letter, PublicLetter, Comment, LetterReaction, BlogPost
 
 
 admin.site.register(PublicLetter)
 admin.site.register(LetterReaction)
+admin.site.register(BlogPost)
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):

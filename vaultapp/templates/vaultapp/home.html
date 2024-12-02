@@ -68,7 +68,7 @@
         <div class="main-content">
             <h1 class="recent-post-title">Recent Posts</h1>
             {% for public_letter in latest_posts %}
-            <div class="post">
+            <div class="fadeup post" >
                 <!-- Display feature photo or default image -->
                 {% if public_letter.feature_photo %}
                 <img src="{{ public_letter.feature_photo.url }}" alt="Feature Photo" class="post-image">
@@ -258,6 +258,16 @@
             ]
         });
     });
+    window.addEventListener('scroll', function() {
+  const posts = document.querySelectorAll('.fadeup.post');
+  posts.forEach(post => {
+    const rect = post.getBoundingClientRect();
+    if (rect.top <= window.innerHeight) {
+      post.classList.add('active');
+    }
+  });
+});
+
 </script>
 
 {% endblock %}

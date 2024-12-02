@@ -1350,6 +1350,17 @@ footer .footer-bottom {
     content: '😮';  /* Unicode character for surprised face */
 }
 
+.fadeup.post {
+    transform: translateX(-100%);  /* Start off-screen to the left */
+    opacity: 0;                    /* Start invisible */
+    transition: transform 0.5s ease, opacity 0.5s ease;  /* Smooth transition */
+  }
+  
+  /* When the post is in view (triggered by a class, like 'active') */
+  .fadeup.post.active {
+    transform: translateX(0);      /* Slide in */
+    opacity: 1;                    /* Make visible */
+  }
 
 /* futura css */
 /* General Reset for margins and padding */
