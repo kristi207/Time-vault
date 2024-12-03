@@ -19,9 +19,14 @@
                 <img src="{% static 'vaultapp/images/6.jpg' %}" alt="" class="slider-image">
                 <div class="post-info">
                     <h4><a href="single.html">Don’t cry because it’s over, smile because it happened</a></h4>
-                    <i class="far fa-user"> PKD</i>
-                    &nbsp;
-                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <div class="post-info">
+                        <i class="far fa-user"></i> 
+                        <span class="text-user">PKD</span>
+                        &nbsp;
+                        <i class="far fa-calendar"></i> 
+                        <span class="text-date">Mar 16, 2018</span>
+                    </div>
+                    
                 </div>
             </div> 
 
@@ -29,48 +34,55 @@
                 <img src="{% static 'vaultapp/images/6.jpg' %}" alt="" class="slider-image">
                 <div class="post-info">
                     <h4><a href="single.html">Sometimes the smallest things take up the most room in your heart</a></h4>
-                    <i class="far fa-user"> PKD</i>
-                    &nbsp;
-                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <div class="post-info">
+                        <i class="far fa-user"></i> 
+                        <span class="text-user">PKD</span>
+                        &nbsp;
+                        <i class="far fa-calendar"></i> 
+                        <span class="text-date">Mar 16, 2018</span>
+                    </div>
+                    
                 </div>
             </div>
             <div class="post">
                 <img src="{% static 'vaultapp/images/.jpg' %}" alt="" class="slider-image">
                 <div class="post-info">
                     <h4><a href="single.html">Our lives are defined by opportunities</a></h4>
-                    <i class="far fa-user"> PKD</i>
-                    &nbsp;
-                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <div class="post-info">
+                        <i class="far fa-user"></i> 
+                        <span class="text-user">PKD</span>
+                        &nbsp;
+                        <i class="far fa-calendar"></i> 
+                        <span class="text-date">Mar 16, 2018</span>
+                    </div>
+                    
                 </div>
             </div>
             <div class="post">
                 <img src="{% static 'vaultapp/images/5.jpg' %}" alt="" class="slider-image">
                 <div class="post-info">
                     <h4><a href="single.html">Don’t cry because it’s over, smile because it happened</a></h4>
-                    <i class="far fa-user"> PKD</i>
-                    &nbsp;
-                    <i class="far fa-calendar"> Mar 16, 2018</i>
+                    <div class="post-info">
+                        <i class="far fa-user"></i> 
+                        <span class="text-user">PKD</span>
+                        &nbsp;
+                        <i class="far fa-calendar"></i> 
+                        <span class="text-date">Mar 16, 2018</span>
+                    </div>
+                    
                 </div>
             </div> 
         </div>
     </div>
     
     
-    <!-- //Post Slider
-    
-    
-    </div>
-    //Page wrapper-->
-    <!-- <div class="Mail">
-        <h1 class="slider-title">FUTURA</h1>
-    
-    </div> -->
+    <!-- FOR LATEST POST -->
+     
     <section class="content">
         <div class="main-content">
             <h1 class="recent-post-title">Recent Posts</h1>
             {% for public_letter in latest_posts %}
-            <div class="fadeup post" >
-                <!-- Display feature photo or default image -->
+            <div class="fadeup post">
                 {% if public_letter.feature_photo %}
                 <img src="{{ public_letter.feature_photo.url }}" alt="Feature Photo" class="post-image">
                 {% else %}
@@ -81,8 +93,24 @@
                     <h2>
                         <a href="{% url 'post_detail' public_letter.id %}">{{ public_letter.title }}</a>
                     </h2>
-                    <i class="far fa-user"> {{ public_letter.nickname }}</i>
-                    <i class="far fa-calendar"> {{ public_letter.shared_date|date:"F j, Y" }}</i>
+                    <div class="post-info">
+                        <div class="info-group">
+                            <i class="far fa-user"></i>
+                            <span class="text-user">{{ public_letter.nickname }}</span>
+                        </div>
+                        <div class="info-group">
+                            <i class="far fa-calendar"></i>
+                            <span class="text-date">{{ public_letter.shared_date|date:"F j, Y" }}</span>
+                        </div>
+                    </div>
+                    
+                    {% comment %} <div class="post-info">
+                        <i class="far fa-user"></i> 
+                        <span class="text-user">{{ public_letter.nickname }}</span>
+                        &nbsp;
+                        <i class="far fa-calendar"></i>
+                        <span class="text-date">{{ public_letter.shared_date|date:"F j, Y" }}</span>
+                    </div> {% endcomment %}
                     <p class="preview-text">
                         {{ public_letter.description|truncatewords:30 }}
                     </p>
@@ -91,7 +119,7 @@
             </div>
             {% endfor %}
         </div>
-    </section>
+    </section> 
     
     
     <section class="content">

@@ -5,6 +5,12 @@
     padding: 0;
     box-sizing: border-box;
 }
+/* Style for user and date font */
+.text-user, .text-date {
+    font-family: "Times New Roman", Times, serif;
+}
+
+
 
 html,
 body {
@@ -101,7 +107,6 @@ body .logo-text span {
 .nav {
     display: flex;
     list-style: none;
-    /* font-family: 'Lora', serif; */
     gap: -0.5rem;
 
 }
@@ -133,7 +138,6 @@ body .logo-text span {
     display: none;
     position: absolute !important;
     top: 100%;
-    
     left: 0;
     background: white;
     list-style: none;
@@ -145,7 +149,6 @@ body .logo-text span {
 .nav li ul li {
     padding: 0.5rem 1rem;
     margin:0;
-    /* font-family: 'Lora', serif; */
 }
 
 .nav li ul li a {
@@ -170,7 +173,6 @@ body .logo-text span {
     color: rgb(4, 1, 66);
     padding: 10px 15px;
     display: inline-block;
-    /* font-family: 'Lora', serif; */
     position: sticky !important ;
 }
 
@@ -271,10 +273,13 @@ body .logo-text span {
     /* Adjust as per your layout */
     padding: 20px;
     margin: 0 10px;
+    font-family: 'Times New Roman', Times, serif;
     display: inline-block;
     background: rgb(244, 242, 242);
     border-radius: 5px;
     box-shadow: 1rem 1rem 1rem -1rem gray;
+
+    
 }
 
 .post-slider .post-wrapper .post .post-info {
@@ -288,6 +293,23 @@ body .logo-text span {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+
+.info-group {
+    display: flex;
+    /* align-items: center; */
+    font-size: 18px;
+    vertical-align: middle;
+    font-weight: bold;
+    gap: 5px; /* Spacing between the icon and the text */
+}
+
+.info-group i {
+    display: inline-block;
+    
+    vertical-align: middle; /* Ensures the icon behaves like inline text */
+}
+
+
 
 /* Content */
 .content{
@@ -348,7 +370,6 @@ body .logo-text span {
 
 .content .main-content .recent-post-title {
     text-align: left;
-    font-family: 'Great-vibes', cursive;
     color: #20014a;
     margin: 0px;
 }
@@ -504,7 +525,7 @@ body .logo-text span {
     margin-right: 5px;
 }
 
-/* Footer */
+/* Footer kristii*/
 .footer {
     background:rgb(100, 98, 99);
     color:white;
@@ -790,7 +811,7 @@ footer .footer-bottom {
     line-height: 1.6;
   }
   
-
+/* Kristiii */
 
 
 /* Menu Toggle for Mobile */
