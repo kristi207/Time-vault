@@ -217,7 +217,7 @@ body .logo-text span {
 }
 
 
-/*Post slider*/
+/*Post slider
 .post-slider {
     position: relative;
 }
@@ -247,14 +247,14 @@ body .logo-text span {
 
 .post-slider .post-wrapper {
     width: 90%;
-    /* Ensure it takes full width */
+    /* Ensure it takes full width 
     height: 270px;
     margin: 0px auto;
     overflow: hidden;
     padding: 10px 0px 10px 0px;
     display: flex;
     justify-content: space-between;
-    /* Align posts properly */
+    /* Align posts properly 
 }
 
 .slider-image {
@@ -266,7 +266,40 @@ body .logo-text span {
     display: flex;
     justify-content: center;
     align-items: center;
+}*/
+
+.post-slider {
+    position: relative;
+    margin: auto;
+    width: 90%;
+    max-width: 1200px;
+    padding: 20px 0;
 }
+
+.slider-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.post-wrapper {
+    display: flex;
+    gap: 20px;
+}
+
+.post {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+}
+
+.slider-image {
+    width: 100%;
+    height: auto;
+}
+
 
 .post {
     width: 300px;
@@ -325,7 +358,7 @@ body .logo-text span {
 }
 .content .main-content .post {
     width:130%; /* Ensures the post takes up 95% of its container width */
-    height: 300px; /* Fixed height for consistency */
+    height: 250px; /* Fixed height for consistency */
     margin: 20px auto; /* Centers the post horizontally with margin on top and bottom */
     border-radius: 10px; /* Rounds the corners for a smooth look */
     background: white; /* White background color for contrast */
@@ -379,7 +412,7 @@ body .logo-text span {
     display: flex; /* Align image and content horizontally */
     align-items: center; /* Center items vertically */
     justify-content: space-between; /* Add space between elements */
-    width: 140%; /* Post occupies 95% of the container */
+    width: 130%; /* Post occupies 95% of the container */
     height: 270 px; /* Fixed height for posts */
     margin: 20px auto; /* Center the post horizontally */
     padding: 15px;
@@ -391,7 +424,7 @@ body .logo-text span {
 
 /* Post Image */
 .content .main-content .post img.post-image {
-    width: 40%; /* Image occupies 30% of the post width */
+    width: 35%; /* Image occupies 30% of the post width */
     height: 100%; /* Image fills the height of the post */
     object-fit: cover; /* Maintain aspect ratio without distortion */
     border-radius: 5px; /* Rounded corners for images */
