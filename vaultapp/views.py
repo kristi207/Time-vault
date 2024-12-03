@@ -12,14 +12,9 @@ from vaultapp.form import LetterForm
 from .models import Letter
 from django.contrib import messages
 from django.shortcuts import render, redirect
-<<<<<<< HEAD
 from django.contrib import messages
 from vaultapp.form import LetterForm
 from vaultapp.models import BlogPost
-=======
-
-
->>>>>>> 3c3cd3590cb1db7710844578b09074995e0b5ca0
 
 def write_letter(request):
     # Fetch the latest 6 blog posts
