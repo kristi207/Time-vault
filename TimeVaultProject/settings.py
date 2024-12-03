@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+
 from pathlib import Path
 import os
 
@@ -38,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 ]
+
+
 
 EXTERNAL_APPS =[
     'vaultapp'
@@ -130,3 +134,23 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#email-section
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# SMTP settings
+EMAIL_HOST = 'smtp.gmail.com'  # SMTP server
+EMAIL_PORT = 587               # Port for TLS
+EMAIL_USE_TLS = True           # Use TLS encryption
+EMAIL_HOST_USER = 'yourthoughtsmatter87@gmail.com'       # Your email
+EMAIL_HOST_PASSWORD = 'iamb tyxx ivvj zczs'   # Your password or App Password
+
+# Default email for outgoing messages
+DEFAULT_FROM_EMAIL = 'yourthoughtsmatter87@gmail.com'
+
+# Admin email for error notifications
+ADMINS = [('aurablog', 'yourthoughtsmatter87@gmail.com')]
+
+# Email for system errors (like 500 Internal Server Error emails)
+SERVER_EMAIL = 'yourthoughtsmatter87@gmail.com'

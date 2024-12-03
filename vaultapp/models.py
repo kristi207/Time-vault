@@ -4,6 +4,7 @@ import numpy as np
 from collections import Counter
 import pandas as pd
 from django.utils.timezone import now
+<<<<<<< HEAD
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -35,6 +36,8 @@ class BlogPost(models.Model):
         ordering = ['-created_at']
 
 
+=======
+>>>>>>> 3c3cd3590cb1db7710844578b09074995e0b5ca0
 # for main letters section
 class Letter(models.Model):
     # Linking the letter to a user
