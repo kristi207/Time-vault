@@ -4,18 +4,6 @@ import numpy as np
 from collections import Counter
 import pandas as pd
 from django.utils.timezone import now
-
-#email-schedule
-class ScheduledEmail(models.Model):
-    sender = models.EmailField()
-    recipient = models.EmailField()
-    subject = models.CharField(max_length=255)
-    content = models.TextField()
-    scheduled_time = models.DateTimeField()
-    sent = models.BooleanField(default=False)  # Track if the email has been sent
-
-    def __str__(self):
-        return f"Email to {self.recipient} at {self.scheduled_time}"
 # for main letters section
 class Letter(models.Model):
     # Linking the letter to a user

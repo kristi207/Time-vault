@@ -1,13 +1,6 @@
 from django import forms
 from .models import Letter
 from django.utils import timezone
-from .models import ScheduledEmail
-#email-schedule
-class ScheduleEmailForm(forms.ModelForm):
-    class Meta:
-        model = ScheduledEmail
-        fields = ['sender', 'recipient', 'subject', 'content', 'scheduled_time']
-        
 
 
 #letterform
