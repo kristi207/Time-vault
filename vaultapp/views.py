@@ -79,12 +79,18 @@ def home(request):
     return render(request, 'vaultapp/home.html')
 
 def home(request):
-    trending_post = PublicLetter.objects.filter(is_published= False).order_by('-shared_date')[:6]  # Example filter
-    return render(request, 'vaultapp/home.html', {'trending_post':trending_post})
+    # Fetching trending posts (most shared, unpublished, limited to 6)
+    trending_posts = PublicLetter.objects.filter(is_published=False).order_by('-shared_date')[:6]
+    
+    # Fetching latest posts (most recent, unpublished, limited to 10)
+    latest_posts = PublicLetter.objects.filter(is_published=False).order_by('-shared_date')[:10]
+    
+    # Rendering the home page with both sets of posts
+    return render(request, 'vaultapp/home.html', {
+        'trending_posts': trending_posts,
+        'latest_posts': latest_posts
+    })
 
-def home(request):
-    latest_posts = PublicLetter.objects.filter(is_published= False).order_by('-shared_date')[:10]  # Example filter
-    return render(request, 'vaultapp/home.html', {'latest_posts': latest_posts})
 
 def about(request):
     return render(request,'vaultapp/about.html')

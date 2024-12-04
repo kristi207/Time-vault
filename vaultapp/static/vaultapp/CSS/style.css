@@ -1,10 +1,12 @@
-/* General Reset  kristiiii */
-/* Kristi */
+/* GENERAL RESET BY PRASANSHA OJHA  */
+
+/* CSS FOR ALL */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 /* Style for user and date font */
 .text-user, .text-date {
     font-family: "Times New Roman", Times, serif;
@@ -19,11 +21,11 @@ body {
 }
 
 h1
-/* h2,
+ h2,
 h3,
 h4,
 h5,
-h6 */
+h6 
 { 
     font-family: 'Times New Roman', Times, serif;
     font-weight: bolder;
@@ -46,9 +48,9 @@ a {
 
 
 .btn{
-    padding:.5rem 1rem;
-    background:rgb(241, 231, 241);
-    color:rgba(47, 1, 1, 0.95);
+    padding:.3rem 1.2rem;
+    background:rgb(121, 113, 121);
+    color:white !important ;
     border:1px solid transparent;
     border-radius:.25rem;
 }
@@ -134,17 +136,6 @@ body .logo-text span {
 }
 
 
-/* .nav li ul {
-    display: none;
-    position: absolute !important;
-    top: 100%;
-    left: 0;
-    background: white;
-    list-style: none;
-    padding: 0.5rem 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    
-} */
 
 .nav li ul li {
     padding: 0.5rem 1rem;
@@ -208,68 +199,45 @@ body .logo-text span {
     transform: translateX(-50%); /* Adjust for exact centering */
 }
 
-.page-wrapper a:hover {
-    color: #d90505;
-}
+/* CSS FOR ALL ENDS HERE  */
+
+/* FOR TENDING BLOG  */
 
 .page-wrapper{
     min-height:100%;
 }
 
 
-/*Post slider*/
 .post-slider {
     position: relative;
-}
-
-.post-slider .slider-title {
-    text-align: center;
-    margin: 30px;
-}
-
-.post-slider .next {
-    position: absolute;
-    top: 50%;
-    right: 30px;
-    font-size: 2em;
-    color: #20014a;
-    cursor: pointer;
-}
-
-.post-slider .prev {
-    position: absolute;
-    top: 50%;
-    left: 30px;
-    font-size: 2em;
-    color: #20014a;
-    cursor: pointer;
-}
-
-.post-slider .post-wrapper {
+    margin: auto;
     width: 90%;
-    /* Ensure it takes full width */
-    height: 270px;
-    margin: 0px auto;
-    overflow: hidden;
-    padding: 10px 0px 10px 0px;
-    display: flex;
-    justify-content: space-between;
-    /* Align posts properly */
+    max-width: 1200px;
+    padding: 20px 0;
 }
+
+.slider-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.post-wrapper {
+    display: flex;
+    gap: 20px;
+}
+
+
 
 .slider-image {
     width: 100%;
     height: auto;
 }
 
-.post-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.post {
+.page-wrapper .post {
     width: 300px;
+    height: 370px;
     /* Adjust as per your layout */
     padding: 20px;
     margin: 0 10px;
@@ -287,12 +255,43 @@ body .logo-text span {
     padding: 0px 5px;
 }
 
+
+
 .post-slider .post-wrapper .post .slider-image {
     width: 100%;
     height: 270px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+/* Styling for the <h4> tag */
+.post-info h4 {
+    font-size: 1.3rem; /* Adjust size as needed */
+    margin: 10px 0; /* Space around the heading */
+    font-family: 'Times New Roman', Times, serif; /* Choose your desired font */
+    font-weight: bold;
+    color: #333; /* Dark text color */
+}
+
+/* Styling for the link inside the <h4> */
+.post-info h4 a {
+    text-decoration: none; /* Remove underline */
+    color:#20014a; /* Blue link color */
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for the link */
+.post-info h4 a:hover {
+    color: #d90505; /* Darker blue on hover */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Focus or active state */
+.post-info h4 a:focus, .post-info h4 a:active {
+    outline: none; /* Remove default outline */
+    border-bottom: 2px solid #0056b3; /* Underline effect on focus */
+}
+
 
 .info-group {
     display: flex;
@@ -309,9 +308,12 @@ body .logo-text span {
     vertical-align: middle; /* Ensures the icon behaves like inline text */
 }
 
+/* TRENDING BLOG ENDS HERE */
 
 
-/* Content */
+/* LATEST BLOG STARTS HERE  */
+
+
 .content{
     width:90%;
     margin:30px auto 30px;
@@ -323,76 +325,32 @@ body .logo-text span {
   
 
 }
-.content .main-content .post {
-    width:130%; /* Ensures the post takes up 95% of its container width */
-    height: 300px; /* Fixed height for consistency */
-    margin: 20px auto; /* Centers the post horizontally with margin on top and bottom */
-    border-radius: 10px; /* Rounds the corners for a smooth look */
-    background: white; /* White background color for contrast */
-    position: relative; /* Allows positioning of child elements inside the post */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for better visual depth */
-    padding: 20px; /* Optional: Adds padding inside the post */
-    overflow: hidden; /* Prevents any content from overflowing */
-}
-
-.content .main-content .post .read-more {
-    position:absolute;
-    bottom:10px;
-    right:10px;
-    /* border:1px solid rgb(127, 191, 231);
-    border-radius: 0px;
-    color:rgb(228, 197, 203) !important; */
-}
-
-.content .main-content .post .post-image{
-    width:40%;
-    height:100%;
-    float:left;
-}
-.content .main-content .post .post-preview{
-    width:60%;
-    padding:10px;
-    float:right;
-}
-.content .main-content .recent-post-title{
-    margin:20px;
-} 
- 
-.content {
-    width: 90%;
-    margin: 30px auto;
-    overflow: hidden; /* Clear floats */
-}
-
-.content .main-content {
-    width: 100%; /* Ensure main content spans full width */
-}
 
 .content .main-content .recent-post-title {
     text-align: left;
-    color: #20014a;
-    margin: 0px;
+    font-size: 1.8rem; /* Responsive font size */
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
 }
 
 /* Individual Post */
 .content .main-content .post {
     display: flex; /* Align image and content horizontally */
-    align-items: center; /* Center items vertically */
-    justify-content: space-between; /* Add space between elements */
-    width: 140%; /* Post occupies 95% of the container */
-    height: 270 px; /* Fixed height for posts */
-    margin: 20px auto; /* Center the post horizontally */
+    align-items: flex-start; /* Top-align items vertically */
+    gap: 15px; /* Add spacing between elements */
+    width: 120%; /* Full container width */
+    margin-bottom: 20px; /* Space between posts */
     padding: 15px;
-    border-radius: 5px;
-    background:  rgb(239, 233, 233);
-    position: relative; /* For absolute positioning within */
-    box-shadow: 0 4px 6px gray; /* Subtle shadow for aesthetics */
+    border-radius: 8px;
+    background: rgb(239, 233, 233); /* Light gray background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 /* Post Image */
 .content .main-content .post img.post-image {
-    width: 40%; /* Image occupies 30% of the post width */
-    height: 100%; /* Image fills the height of the post */
+    width: 30%; /* Image occupies 30% of the post width */
+    max-height: 150px; /* Limit height for consistent sizing */
     object-fit: cover; /* Maintain aspect ratio without distortion */
     border-radius: 5px; /* Rounded corners for images */
     flex-shrink: 0; /* Prevent image from resizing */
@@ -400,55 +358,142 @@ body .logo-text span {
 
 /* Post Preview Section */
 .content .main-content .post .post-preview {
-    width: 60%; /* Original width for post preview */
-    padding: 10px;
-    float: right;
-    overflow: hidden; /* Prevent overflow if content exceeds bounds */
-    color: #333; /* Original text color */
+    flex-grow: 1; /* Allow content to expand */
+    padding: 10px 15px;
+    color: #333; /* Text color */
 }
 
+/* Post Title */
 .content .main-content .post .post-preview h2 {
     margin: 0 0 10px;
-    font-size: 1.5em;
-    color:  #20014a; /* Original title color */
+    font-size: 1.4rem;
+    color: #20014a; /* Title color */
+    text-align: left;
 }
 
+/* Post Title Link */
+.content .main-content .post .post-preview h2 a {
+    text-decoration: none; /* Remove underline */
+    color: #20014a;
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for the link */
+.content .main-content .post .post-preview h2 a:hover {
+    color: #d90505; /* Highlight color on hover */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* Post Metadata */
 .content .main-content .post .post-preview i {
     display: block;
-    margin-bottom: 10px;
-    font-size: 0.9em;
-    color: #191818; /* Original meta information color */
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #666; /* Subtle gray for metadata */
 }
 
+/* Preview Text */
 .content .main-content .post .post-preview .preview-text {
     margin-bottom: 10px;
-    color: #666; /* Original text color */
-    font-size: 0.95em;
-    line-height: 1.4;
-    max-height: 4.2em; /* Limit text height to 3 lines */
+    color: #555; /* Slightly darker gray for preview text */
+    font-size: 1rem;
+    line-height: 1.6;
+    max-height: 4.8rem; /* Limit text height to 3 lines */
     overflow: hidden; /* Hide overflowing text */
     text-overflow: ellipsis; /* Add ellipsis for overflow */
+    word-wrap: break-word; /* Ensure long words break */
 }
 
-/* Read More Button */
-.content .main-content .post .btn.read-more {
-    position: absolute;
-    bottom: 10px; /* Position button at the bottom-right */
-    right: 10px;
+/* LATEST POST SECTION ENDS HERE  */
+
+/* WANNA WRITE YOUR OWN BLOG? CSS SECTION  */
+
+.buttoncontent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    background: white; /* Gradient background */
+    color: black;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Style for the inner container */
+.futureselfbutton {
+    background: #f9f9f9; /* Semi-transparent black */
+    border-radius: 10px;
+    padding: 40px 20px;
+    max-width: 450px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Headings */
+.futureselfbutton h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.futureselfbutton h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Button styling */
+.futureselfbutton .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    color: rgb(228, 197, 203) !important;
-    /* background-color: #007BFF; */
-    padding: 8px 15px;
+    color: #fff;
+    background: #20014a; /* Bright orange */
+    padding: 12px 20px;
     border-radius: 5px;
-    font-size: 0.9em;
-    transition: background 0.3s;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.content .main-content .post .btn.read-more:hover {
-    background-color: #0056b3;
+/* Hover effects for the button */
+.futureselfbutton .submit-btn:hover {
+    background:   #20014a ; /* Darker orange */
+    transform: translateY(-2px);
 }
 
+/* Icon inside the button */
+.futureselfbutton .submit-btn .icon {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
 
+/* Responsive styling */
+@media (max-width: 600px) {
+    .futureselfbutton {
+        padding: 30px 15px;
+    }
+
+    .futureselfbutton h2 {
+        font-size: 1.8rem;
+    }
+
+    .futureselfbutton h3 {
+        font-size: 1rem;
+    }
+
+    .futureselfbutton .submit-btn {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+}
+
+/* WRITE LETTER TO YOUR FUTURE SELF ENDS HERE */
 
 /* Email Section */
 .email-section {
@@ -621,16 +666,17 @@ footer .footer-bottom {
     margin: 0;
      /*z-index: 1000; /* Ensures footer stays above other content */
 }
+/* FOOTER ENDS HERE */
 
 /* about us */
+
 /* About Section Styling */
  #about-us {
     background: linear-gradient(135deg, #f2f2f2, #ffffff);
     padding: 5rem 2rem;
     color: #03024e;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center;align-items: center;
     flex-direction: column;
     text-align: center;
   }
@@ -999,206 +1045,116 @@ footer .footer-bottom {
     color: #05809c;
 }
 
-/* .slick-prev:before,
-.slick-next:before {
-    font-family: "slick";
-    font-size: 30px;
-    color: #20014a;
-}
-
-.slick-prev {
-    left: -25px;
-}
-
-.slick-next {
-    right: -25px;
-}
-
-
-/* Slick CSS */
-/* .slick-slider {
-    position: relative;
-    display: block;
-    box-sizing: border-box;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.slick-list {
-    position: relative;
-    display: block;
-    overflow: hidden;
-}
-
-.slick-track {
+/* CSS FOR READ LETTER SECTION  */
+/* Wrapper for Posts */
+.post-wrapper-unique {
     display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap; /* Allow wrapping to the next row */
+    gap: 20px; /* Space between posts */
+    justify-content: space-between; /* Distribute posts evenly */
+    margin: 20px auto; /* Center the wrapper */
+    width: 100%; /* Adjust the wrapper width */
+    max-width: 1200px; /* Limit max width for responsiveness */
 }
 
-.slick-slide {
-    display: block;
-    float: left;
-    height: auto;
-    min-height: 1px;
+/* Individual Post */
+.post-unique {
+    width: calc(50% - 10px); /* Two posts per row, with spacing */
+    background-color: #f9f9f9; /* Light gray background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: hidden; /* Prevent overflow from content */
+    display: flex;
+    font-family: 'Times New Roman', Times, serif;
+    flex-direction: column; /* Stack content vertically */
+    padding: 15px;
+    justify-content: flex-start; /* Align content at the top */
 }
 
-.slick-prev,
-.slick-next {
-    font-size: 0;
-    line-height: 0;
-    position: absolute;
-    top: 50%;
-    z-index: 1;
-    color: transparent;
-    border: none;
-    background: none;
+/* Post Image */
+.post-unique .image-unique {
+    width: 100%; /* Full width for the image */
+    max-height: 250px; /* Limit image height */
+    object-fit: cover; /* Maintain aspect ratio without distortion */
+    border-radius: 5px; /* Rounded corners for the image */
+}
+
+/* Post Info */
+.post-unique .post-info-unique {
+    padding: 10px 0;
+    color: #333; /* Text color */
+    text-align: left; /* Align text to the left */
+}
+
+/* Post Title */
+.post-unique .post-info-unique h4 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+    color: #20014a; /* Title color */
+    text-align: left;
+    text-decoration: none; /* No underline by default */
+    transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover Effect for Title */
+.post-unique .post-info-unique h4:hover {
+    text-decoration: underline; /* Add underline on hover */
+    color: #d90505; /* Change color on hover */
     cursor: pointer;
 }
 
-.slick-prev {
-    left: 15px;
-}
-
-.slick-next {
-    right: 15px;
-}
-
-.slick-prev:focus,
-.slick-next:focus {
-    outline: none;
-} */
-
-/* Slick Theme CSS */
-/* .slick-prev:before,
-.slick-next:before {
-    font-family: "slick";
-    font-size: 30px;
-    color: #20014a;
-}
-
-.slick-prev {
-    left: -25px;
-}
-
-.slick-next {
-    right: -25px;
-}
-
-.slick-prev:focus,
-.slick-next:focus {
-    outline: none;
-}
-
-/* Arrow Hover Effects */
-/* .slick-prev:hover,
-.slick-next:hover {
-    color: #05809c;
-} */
-/*  */
-/*  additional styles for the slider images */
-/* .slick-slide img {
-    display: block;
-    width: 100%;
-    object-fit: cover;
-} */ 
-
-/* CSS for unique post classes */
-.post-wrapper-unique {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.post-unique {
-    width: 100%;
-    max-width: 600px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.slider-image-unique {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-bottom: 2px solid #f0f0f0;
-}
-
-.post-info-unique {
-    padding: 15px;
-}
-
-.post-info-unique h4 {
-    font-size: 22px;
-    font-weight: 600;
-    color: #333;
+/* Post Description */
+.post-unique .post-info-unique p {
     margin-bottom: 10px;
-}
-
-.post-info-unique h4 a {
-    text-decoration: none;
-    color: #333;
-}
-
-.post-info-unique h4 a:hover {
-    color: #007bff;
-}
-
-.post-info-unique p {
-    color: #666;
-    font-size: 16px;
+    color: #555; /* Slightly darker gray for text */
+    font-size: 1rem;
     line-height: 1.5;
-    margin-bottom: 10px;
+    max-height: 4.8rem; /* Limit text height to 3 lines */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis for overflow */
+    word-wrap: break-word; /* Ensure long words break */
 }
 
-.post-info-unique .far {
-    color: #777;
-    font-size: 14px;
+/* Metadata (Author and Date) */
+.post-unique .post-info i {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #666; /* Subtle gray for metadata */
 }
 
-.card-footer-unique {
-    padding: 10px;
-    background-color: #f8f9fa;
-    text-align: center;
-    border-top: 1px solid #f0f0f0;
+/* Card Footer */
+.post-unique .card-footer {
+    margin-top: 10px; /* Add spacing above the button */
+    text-align: left; /* Align to the left */
 }
 
-.card-footer-unique a {
+/* Read More Button */
+.post-unique .card-footer a {
     text-decoration: none;
-    color: #007bff;
-    padding: 10px 20px;
-    border: 1px solid #007bff;
-    border-radius: 20px;
-    font-size: 14px;
-    transition: background-color 0.3s;
+    color: #333; /* Default button text color */
+    border: 1px solid #333; /* Button border */
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    border-radius: 5px; /* Rounded corners */
+    transition: all 0.3s ease; /* Smooth hover effect */
+    display: inline-block; /* Keep the button inline */
 }
 
-.card-footer-unique a:hover {
-    background-color: #007bff;
-    color: #fff;
+/* Hover Effect for Button */
+.post-unique .card-footer a:hover {
+    background-color: #333; /* Button background on hover */
+    color: #fff; /* Text color on hover */
+    cursor: pointer; /* Pointer cursor on hover */
 }
 
-.card-footer-unique a:active {
-    background-color: #0056b3;
-}
-
-
-/* Responsive Styling */
-@media (max-width: 768px) {
-    .post-wrapper-unique {
-        flex-direction: column;
-        align-items: center;
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .post-unique {
+        width: 100%; /* Single post per row on smaller screens */
     }
 }
+
 
 /* css for postdetail */
 /* for feature photo adjustment */
@@ -1399,8 +1355,7 @@ footer .footer-bottom {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #ffffff;
-    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;font-family: 'Arial', sans-serif;
 }
 
 
@@ -1609,6 +1564,8 @@ footer .footer-bottom {
     content: '😮';  /* Unicode character for surprised face */
 }
 
+/* CSS THATS CAUSING FADING OF BLOG */
+
 .fadeup.post {
     transform: translateX(-100%);  /* Start off-screen to the left */
     opacity: 0;                    /* Start invisible */
@@ -1739,3 +1696,4 @@ label {
         font-size: 16px;
     }
 }
+
