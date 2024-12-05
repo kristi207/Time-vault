@@ -15,24 +15,37 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from vaultapp.form import LetterForm
 from vaultapp.models import BlogPost
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from .models import BlogPost, Letter
 
 def write_letter(request):
-    # Fetch the latest 6 blog posts
+    # Fetch the latest 6 blog posts to display
     blogs = BlogPost.objects.all().order_by('-created_at')[:6]
 
+    # Handle form submission
     if request.method == 'POST':
         form = LetterForm(request.POST)
+        
         if form.is_valid():
-            # Save the letter
-            letter = form.save(commit=False)
+            letter = form.save(commit=False)  # Don't save to DB yet
+
+            # Check if user is authenticated
             if request.user.is_authenticated:
                 letter.user = request.user  # Associate the letter with the logged-in user
+            else:
+                # If the user is not logged in, inform them and redirect to login
+                messages.info(request, "You need to log in before sending the letter.")
+                return redirect('vaultapp/signin.html')  # Redirect to your login view (replace 'login' with your actual URL name)
+            
             letter.status = 'scheduled'  # Set status to scheduled by default
             letter.save()
 
             messages.success(request, "Your letter has been scheduled successfully.")
-            return redirect('vaultapp/letter_scheduled')  # Redirect to a confirmation page
+            return redirect('vaultapp/letter_scheduled.html')  # Redirect to a confirmation page after scheduling
         else:
+            # If form is invalid, display an error message
             messages.error(request, "There was an error with your submission.")
     else:
         form = LetterForm()
@@ -40,24 +53,6 @@ def write_letter(request):
     return render(request, 'vaultapp/write_letter.html', {'form': form, 'blogs': blogs})
 
 
-# def write_letter(request):
-#     if request.method == 'POST':
-#         form = LetterForm(request.POST)
-#         if form.is_valid():
-#             # Save the letter
-#             letter = form.save(commit=False)
-#             if request.user.is_authenticated:
-#                 letter.user = request.user  # Associate the letter with the logged-in user
-#             letter.status = 'scheduled'  # Set status to scheduled by default
-#             letter.save()
-
-#             messages.success(request, "Your letter has been scheduled successfully.")
-#             return redirect('vaultapp/letter_scheduled')  # Redirect to a confirmation page
-#         else:
-#             messages.error(request, "There was an error with your submission.")
-#     else:
-#         form = LetterForm()
-#     return render(request, 'vaultapp/write_letter.html', {'form': form})
 
 def letter_scheduled(request):
     return render(request, 'vaultapp/letter_scheduled.html')
@@ -80,10 +75,10 @@ def home(request):
 
 def home(request):
     # Fetching trending posts (most shared, unpublished, limited to 6)
-    trending_posts = PublicLetter.objects.filter(is_published=False).order_by('-shared_date')[:6]
+    trending_posts = PublicLetter.objects.filter(is_published=True).order_by('-shared_date')[:6]
     
     # Fetching latest posts (most recent, unpublished, limited to 10)
-    latest_posts = PublicLetter.objects.filter(is_published=False).order_by('-shared_date')[:10]
+    latest_posts = PublicLetter.objects.filter(is_published=True).order_by('-shared_date')[:10]
     
     # Rendering the home page with both sets of posts
     return render(request, 'vaultapp/home.html', {
@@ -96,7 +91,7 @@ def about(request):
     return render(request,'vaultapp/about.html')
 
 def post_list(request):
-    posts = PublicLetter.objects.filter(is_published= False)
+    posts = PublicLetter.objects.filter(is_published= True)
     return render(request, 'vaultapp/post.html', {'object_list': posts})
 
 

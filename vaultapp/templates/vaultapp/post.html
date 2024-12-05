@@ -9,7 +9,7 @@ Post
 <div class="post-wrapper-unique">
     <!-- Loop through the posts -->
     {% for public_letter in object_list %}
-    <div class="post-unique">
+    <div class="fadeup post-unique">
         <!-- Display feature photo if available -->
         {% if public_letter.feature_photo %}
         <img src="{{ public_letter.feature_photo.url }}" alt="Feature Photo" class="image-unique">
@@ -33,4 +33,5 @@ Post
     </div>
     {% endfor %}
 </div>
+<script src="{% static 'vaultapp/js/home.js' %}" defer></script>
 {% endblock content %}
