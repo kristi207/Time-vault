@@ -39,7 +39,7 @@
 });
     
     window.addEventListener('scroll', function() {
-  const posts = document.querySelectorAll('.fadeup.post');
+  const posts = document.querySelectorAll('.fadeup');
   posts.forEach(post => {
     const rect = post.getBoundingClientRect();
     if (rect.top <= window.innerHeight) {

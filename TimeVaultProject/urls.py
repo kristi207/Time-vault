@@ -42,7 +42,8 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('write-letter/', views.write_letter, name='write_letter'),
-    path('write-letter/vaultapp/letter_scheduled', views.letter_scheduled, name='letter_scheduled'),
+    path('write-letter/vaultapp/signin.html', views.signup, name='signup'),
+    path('write-letter/vaultapp/letter_scheduled.html', views.letter_scheduled, name='letter_scheduled'),
     path('post/<int:id>/', views.BlogPost, name='post_detail'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
