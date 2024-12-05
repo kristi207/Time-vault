@@ -13,20 +13,23 @@
     
     <form method="POST" class="letter-form">
         {% csrf_token %}
-        
-        <div class="form-field">
-            {{ form.recipient_email }}
-        </div>
-        
+
         <div class="form-field">
             {{ form.content }}
         </div>
+        
+        <div class="form-field"><p>Email</p>
+            {{ form.recipient_email }}
+        </div>
+        
+      
 
         <div class="form-field">
             {{ form.send_date }}
         </div>
 
         <div class="form-field">
+            <p>Post Publicly?</p>
             {{ form.is_public }}
         </div>
 

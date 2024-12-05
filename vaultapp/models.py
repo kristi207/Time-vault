@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import numpy as np
 from collections import Counter
 import pandas as pd
@@ -94,7 +96,7 @@ class PublicLetter(models.Model):
 
     def __str__(self):
         return f"Public Letter: {self.title or self.original_letter.title or 'The Letter From {self.shared_date}'}"
-
+    
     @staticmethod
     def recommend_blogs():
         """
@@ -159,6 +161,39 @@ class PublicLetter(models.Model):
 
         # Return the dataframe for use in views or APIs
         return df[['id', 'title', 'recommended_blogs']].to_dict(orient='records')
+# Signal to Sync PublicLetter with Letter
+
+@receiver(post_save, sender=Letter)
+def sync_to_public_letter(sender, instance, created, **kwargs):
+    """
+    Automatically create or update a PublicLetter when a Letter is saved with is_public=True.
+    Deletes the PublicLetter if is_public=False.
+    """
+    if instance.is_public:
+        public_letter, created = PublicLetter.objects.get_or_create(
+            original_letter=instance,
+            defaults={
+                'shared_by': instance.user,
+                'title': instance.title,
+                'description': instance.content,
+                'is_published': False,
+            }
+        )
+        if not created:
+            public_letter.title = instance.title or public_letter.title
+            public_letter.description = instance.content or public_letter.description
+            public_letter.shared_by = instance.user or public_letter.shared_by
+            public_letter.is_published = False
+            public_letter.save()
+        
+        if instance.user:
+            public_letter.nickname = instance.user.username
+        else:
+            public_letter.nickname = "Anonymous"
+        
+        public_letter.save()
+    else:
+        PublicLetter.objects.filter(original_letter=instance).delete()
 
 # rection of letter
 
