@@ -20,13 +20,13 @@
                     <img src="{% static 'vaultapp/images/6.jpg' %}" alt="" class="slider-image">
                     <div class="post-info">
                         <h4><a href="{% url 'post_detail' public_letter.id %}">{{ public_letter.title }}</a></h4>  <!-- Link to the post detail page -->
-                     
+                        <div class="info-group">
                             <i class="far fa-user"></i>
                             <span class="text-user">{{ public_letter.nickname }}</span>  <!-- Assuming there is an 'author' field -->
                             &nbsp;
                             <i class="far fa-calendar"></i>
                             <span class="text-date">{{ public_letter.shared_date|date:"F j, Y" }}</span>  <!-- Formatting the date -->
-                      
+                        </div>
                     </div>
                 </div>
             {% endfor %}

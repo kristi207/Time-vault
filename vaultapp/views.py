@@ -70,8 +70,8 @@ def blog_detail(request, id):
     return render(request, 'vaultapp/blog_detail.html', {'blog': blog})
 
 
-def home(request):
-    return render(request, 'vaultapp/home.html')
+# def home(request):
+#     return render(request, 'vaultapp/home.html')
 
 def home(request):
     # Fetching trending posts (most shared, unpublished, limited to 6)
@@ -177,18 +177,18 @@ def signup(request):
         login(request, user)
 
         messages.success(request, "Account created successfully! You are now logged in.")
-        return redirect('vaultapp/home.html')  # Redirect to the homepage or dashboard
+        return redirect('home')  # Redirect to the homepage or dashboard
 
     return render(request, 'vaultapp/signup.html')
 
 #signin
 def signin(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
         # Authenticate the user
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             # Login the user
@@ -198,7 +198,7 @@ def signin(request):
             messages.success(request, "Logged in successfully!")
 
             # Redirect to the home page or dashboard
-            return redirect('vaultapp/home.html')  # Replace 'home' with your desired URL name
+            return redirect('home')  # Replace 'home' with your desired URL name
         else:
             # Invalid credentials
             messages.error(request, "Invalid email or password.")

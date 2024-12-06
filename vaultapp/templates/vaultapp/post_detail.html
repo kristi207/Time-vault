@@ -49,9 +49,11 @@
             <div class="post-preview">
                 <h2>
                     <a href="{% url 'post_detail' blog.id %}">{{ blog.title }}</a>
-                </h2>
-                <i class="far fa-user"> {{ blog.nickname }}</i>
-                <i class="far fa-calendar"> {{ blog.shared_date|date:"F j, Y" }}</i>
+                </h2>                    
+                <div class="info-group">
+                <i class="far fa-user"></i> {{ blog.nickname }}
+                <i class="far fa-calendar"> </i>{{ blog.shared_date|date:"F j, Y" }}
+                </div>
                 <p class="preview-text">{{ blog.description|truncatewords:30 }}</p>
                 <a href="{% url 'post_detail' blog.id %}" class="btn btn-outline-dark btn-sm">Read More</a>
             </div>
