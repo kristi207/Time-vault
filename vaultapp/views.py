@@ -104,7 +104,7 @@ def post_detail(request, id):
     )   
     comments = Comment.objects.filter(public_letter=post, parent_comment__isnull=True).prefetch_related('replies')
     
-    public_letters = PublicLetter.objects.filter(is_published=False).values('id', 'description', 'title')
+    public_letters = PublicLetter.objects.filter(is_published=True).values('id', 'description', 'title')
     df = pd.DataFrame(public_letters)
     df['description'] = df['description'].fillna('')  # Handle empty descriptions
 
