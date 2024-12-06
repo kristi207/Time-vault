@@ -45,5 +45,9 @@ urlpatterns = [
     path('write-letter/vaultapp/signin.html', views.signup, name='signup'),
     path('write-letter/vaultapp/letter_scheduled.html', views.letter_scheduled, name='letter_scheduled'),
     path('post/<int:id>/', views.BlogPost, name='post_detail'),
+   # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+   
+
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
