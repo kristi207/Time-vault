@@ -104,7 +104,7 @@ class PublicLetter(models.Model):
         """
 
         # Fetch descriptions of published blogs
-        public_letters = PublicLetter.objects.filter(is_published=False).values('id', 'description', 'title')
+        public_letters = PublicLetter.objects.filter(is_published=True).values('id', 'description', 'title')
         df = pd.DataFrame(public_letters)
         df['description'] = df['description'].fillna('')  # Handle null descriptions
 
