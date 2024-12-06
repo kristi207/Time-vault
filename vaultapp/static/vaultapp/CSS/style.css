@@ -1156,6 +1156,303 @@ footer .footer-bottom {
 }
 
 
+
+
+/* Css for read letter section */
+
+/* Wrapper for all posts */
+.post-wrapper-unique {
+    display: flex; /* Use flexbox */
+    flex-wrap: wrap; /* Allow wrapping to the next line */
+    gap: 20px; /* Space between posts */
+    justify-content: center; /* Center-align posts */
+    margin: 20px auto; /* Add spacing around the wrapper */
+    max-width: 1200px; /* Optional: Limit width */
+    padding: 10px;
+    background: linear-gradient(145deg, #f8f9fa, #ececec); /* Subtle gradient background */
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for the wrapper */
+    animation: fadeInWrapper 1s ease-in-out; /* Fade-in animation */
+}
+
+/* Individual post cards */
+.post-unique {
+    position: relative;
+    flex: 1 1 calc(30% - 20px); /* Responsive width (adjust % as needed) */
+    max-width: 300px; /* Optional: Limit max width */
+    background: #fff; /* Card background */
+    border: 1px solid #ddd; /* Optional: Border styling */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: hidden; /* Clip content */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space content evenly */
+    margin: 10px 0; /* Space between posts (vertical) */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation for hover effect */
+    opacity: 0; /* Start with hidden cards */
+    transform: translateY(20px); /* Start slightly off-screen */
+    animation: fadeInCard 0.8s ease-in-out forwards; /* Fade-in and slide-up animation */
+    animation-delay: calc(var(--card-index) * 0.2s); /* Staggered animation for cards */
+}
+
+/* Add hover effect for the cards */
+.post-unique:hover {
+    transform: translateY(-5px); /* Lift effect */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Image styling */
+.image-unique {
+    width: 100%; /* Full width */
+    height: 200px; /* Fixed height */
+    object-fit: cover; /* Maintain aspect ratio and cover area */
+    border-bottom: 1px solid #ddd;
+    transition: transform 0.3s ease; /* Smooth zoom effect */
+    animation: fadeInImage 1s ease forwards; /* Fade-in animation for images */
+    opacity: 0; /* Start hidden */
+}
+
+/* Add zoom effect for the image on hover */
+.post-unique:hover .image-unique {
+    transform: scale(1.05); /* Slight zoom-in */
+}
+
+/* Post information (title, description) */
+.post-info-unique {
+    padding: 15px;
+    text-align: left;
+    opacity: 0; /* Start hidden */
+    animation: fadeUpText 1s ease forwards; /* Fade-up animation for text */
+    animation-delay: 0.4s; /* Delay to match other elements */
+}
+
+/* Title styling */
+.post-info-unique h4 {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    color: #333;
+    font-family: 'Times New Roman', Times, serif; /* Add modern font */
+    text-transform: capitalize;
+    transition: color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Title hover effect */
+.post-unique:hover h4 {
+    color: #010e1c; /* Change title color on hover */
+}
+
+/* Truncated description */
+.post-info-unique p {
+    color: #666;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+/* Footer (Read More button) */
+.card-footer {
+    margin-top: auto; /* Push footer to the bottom */
+    padding: 10px;
+    background: #f8f9fa;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Button styling */
+.card-footer .btn {
+    margin: 5px 0;
+    font-size: 0.85em;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: #01162c;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Animation for hover effect */
+}
+
+/* Button hover effect */
+.card-footer .btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* Slight zoom-in */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Add glow effect */
+}
+
+/* Keyframes for Animations */
+@keyframes fadeInWrapper {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInCard {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInImage {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeUpText {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .post-wrapper-unique {
+        gap: 15px;
+    }
+    .post-unique {
+        flex: 1 1 calc(45% - 15px); /* Adjust post size for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .post-unique {
+        flex: 1 1 100%; /* Full width for very small screens */
+    }
+}
+
+/* FUTURA */
+
+h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.letter-form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(3, 15, 56, 0.3);
+}
+
+.letter-form .form-field {
+    margin-bottom: 15px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #080101;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 5px #fff;
+}
+
+.submit-btn {
+    background-color: #090110;
+    color: #0f0101;
+    padding: 10px 20px;
+    font-family: 'Times New Roman', Times, serif;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.post-wrapper-unique {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.post-unique {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.post-unique img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.post-info-unique {
+    padding: 15px;
+}
+
+.post-info-unique h5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.post-info-unique p {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.read-more {
+    display: inline-block;
+    background-color: #16181b;
+    color: #fff;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.read-more:hover {
+    background-color: #5d5b5f;
+    transform: scale(1.05);
+}
+
+
+
+/* letter scheduled */
+
+
+
+
+
+
+/* donot touch */
 /* css for postdetail */
 /* for feature photo adjustment */
 .content-container {
