@@ -20,6 +20,9 @@ from django.shortcuts import get_object_or_404
 def letter_scheduled(request):
     return render(request, 'vaultapp/letter_scheduled.html')
 
+def letter_scheduled(request):
+    return render(request, 'vaultapp/letter_scheduled.html')
+
 def write_letter(request):
     # Fetch the latest 6 blog posts to display
     blogs = BlogPost.objects.all().order_by('-created_at')[:6]
@@ -37,7 +40,7 @@ def write_letter(request):
             else:
                 # If the user is not logged in, inform them and redirect to login
                 messages.info(request, "You need to log in before sending the letter.")
-                return redirect('vaultapp/signin.html')  # Redirect to your login view (replace 'login' with your actual URL name)
+                return redirect('signin1')  # Redirect to your login view (replace 'login' with your actual URL name)
             
             letter.status = 'scheduled'  # Set status to scheduled by default
             letter.save()
@@ -54,6 +57,8 @@ def write_letter(request):
 
 
 
+<<<<<<< HEAD
+=======
 def blog_interaction(request, public_letter_id):
     public_letter = PublicLetter.objects.get(id=public_letter_id)
 
@@ -76,6 +81,7 @@ def blog_interaction(request, public_letter_id):
 
 
 
+>>>>>>> c5d2aedff7818e92a2ec05af1382228b6326c1d3
 
 
 def blog_detail(request, id):

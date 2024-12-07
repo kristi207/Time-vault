@@ -37,6 +37,10 @@ urlpatterns = [
     # path('', views.home, name='home'),
     path('signin/', views.signin, name='signin'),
     path('write-letter/signin/', views.signin, name='signin1'),
+<<<<<<< HEAD
+
+=======
+>>>>>>> c5d2aedff7818e92a2ec05af1382228b6326c1d3
     # path('home/', views.home, name='home'),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
@@ -47,4 +51,8 @@ urlpatterns = [
     # path('write-letter/vaultapp/signin.html', views.signup, name='signup'),
     # path('write-letter/vaultapp/letter_scheduled.html', views.letter_scheduled, name='letter_scheduled'),
     path('post/<int:id>/', views.BlogPost, name='post_detail'),
+<<<<<<< HEAD
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+>>>>>>> c5d2aedff7818e92a2ec05af1382228b6326c1d3
