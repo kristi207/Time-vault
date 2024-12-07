@@ -10,6 +10,12 @@ from django.utils.timezone import now
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+from django.db import models
+import pandas as pd
+import numpy as np
+from collections import Counter
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # Blog Post model for admin to post blogs
@@ -74,12 +80,7 @@ class Letter(models.Model):
 
 # read letter section
 
-from django.db import models
-import pandas as pd
-import numpy as np
-from collections import Counter
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
 
 class PublicLetter(models.Model):
     # Linking to the original letter
