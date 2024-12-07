@@ -20,6 +20,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import BlogPost, Letter
 
+def letter_scheduled(request):
+    return render(request, 'vaultapp/letter_scheduled.html')
+
 def write_letter(request):
     # Fetch the latest 6 blog posts to display
     blogs = BlogPost.objects.all().order_by('-created_at')[:6]
@@ -37,13 +40,13 @@ def write_letter(request):
             else:
                 # If the user is not logged in, inform them and redirect to login
                 messages.info(request, "You need to log in before sending the letter.")
-                return redirect('vaultapp/signin.html')  # Redirect to your login view (replace 'login' with your actual URL name)
+                return redirect('signin1')  # Redirect to your login view (replace 'login' with your actual URL name)
             
             letter.status = 'scheduled'  # Set status to scheduled by default
             letter.save()
 
             messages.success(request, "Your letter has been scheduled successfully.")
-            return redirect('vaultapp/letter_scheduled.html')  # Redirect to a confirmation page after scheduling
+            return redirect('letter_scheduled')  # Redirect to a confirmation page after scheduling
         else:
             # If form is invalid, display an error message
             messages.error(request, "There was an error with your submission.")
@@ -53,9 +56,6 @@ def write_letter(request):
     return render(request, 'vaultapp/write_letter.html', {'form': form, 'blogs': blogs})
 
 
-
-def letter_scheduled(request):
-    return render(request, 'vaultapp/letter_scheduled.html')
 
 
 # def write_letter(request): 
