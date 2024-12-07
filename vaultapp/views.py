@@ -57,8 +57,6 @@ def write_letter(request):
 
 
 
-<<<<<<< HEAD
-=======
 def blog_interaction(request, public_letter_id):
     public_letter = PublicLetter.objects.get(id=public_letter_id)
 
@@ -78,10 +76,6 @@ def blog_interaction(request, public_letter_id):
         )
     
     return HttpResponse("Interaction created.")
-
-
-
->>>>>>> c5d2aedff7818e92a2ec05af1382228b6326c1d3
 
 
 def blog_detail(request, id):
