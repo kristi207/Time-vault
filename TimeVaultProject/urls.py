@@ -31,8 +31,8 @@ urlpatterns = [
     path('blog/<int:id>/', views.blog_detail, name='blog_detail'),
     path('posts/', views.post_list, name='post_list'),
     path('post/<int:id>/', views.post_detail, name='post_detail'),
-    path('post/<int:id>/add-reaction/', views.add_reaction, name='add_reaction'),
     path('post/<int:id>/add-comment/', views.add_comment, name='add_comment'),
+    path('like/<int:id>/', views.like_post, name='like_post'),
     path('signup/', views.signup, name='signup'), 
     # path('', views.home, name='home'),
     path('signin/', views.signin, name='signin'),
@@ -42,12 +42,8 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('write-letter/', views.write_letter, name='write_letter'),
+    path('write-letter/scheduled/',  views.letter_scheduled, name='letter_scheduled'),
     # path('write-letter/vaultapp/signin.html', views.signup, name='signup'),
-    path('write-letter/vaultapp/letter_scheduled.html', views.letter_scheduled, name='letter_scheduled'),
+    # path('write-letter/vaultapp/letter_scheduled.html', views.letter_scheduled, name='letter_scheduled'),
     path('post/<int:id>/', views.BlogPost, name='post_detail'),
-   # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-   
-
-
-
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
