@@ -18,25 +18,26 @@
         <div id="post_detail" class="post-detail">
             <h1>{{ post.title }}</h1>
             {% if post.feature_photo %}
-            <img src="{{ post.feature_photo.url }}" alt="Feature Photo" class="slider-image">
+            <img src="{{ post.feature_photo.url }}" alt="Feature Photo" class="slider-image1">
             {% else %}
-            <img src="{% static 'vaultapp/images/5.jpg' %}" alt="Default Image" class="slider-image-unique">
+            <img src="{% static 'vaultapp/images/5.jpg' %}" alt="Default Image" class="slider-image1">
             {% endif %}
             <p>{{ post.description }}</p>
             <p><strong>Shared by:</strong> {{ post.nickname }}</p>
             <p><strong>Shared on:</strong> {{ post.shared_date|date:"F j, Y" }}</p>
         </div>
+        <!-- Like Icon -->
+        <i id="like-icon" 
+        class="{% if user_reacted %}fas fa-thumbs-up{% else %}far fa-thumbs-up{% endif %}" 
+        onclick="handleLikeClick('{{ public_letter_id }}')">
+        
 
-        <!-- Reaction Section -->
-        <div id="reaction" class="letter-reactions">
-            <div class="reaction-icons">
-                {% for reaction, count in reactions.items %}
-                <button class="reaction-button" data-reaction="{{ reaction }}">
-                    <i class="reaction-icon {{ reaction }}"></i> {{ count }}
-                </button>
-                {% endfor %}
-            </div>
-        </div>
+        </i>
+        <span id="like-count">{{ public_letter.reactions.count }} Likes</span>
+
+        <p><strong>Views:</strong> {{ post.view_count }}</p>  
+        
+
         <br>
         <h2>You may also like </h2>
         {% for blog in recommended_blogs %}
@@ -104,16 +105,58 @@
 </div>
 <script src="{% static 'vaultapp/js/home.js' %}" defer></script>
 
-{% endblock content %}
+
 
 <script>
-    function showLoginPrompt(action) {
-        document.getElementById('loginPrompt').style.display = 'block';
-        var promptText = action === 'react' ? 'react to this post' : 'comment on this post';
-        document.getElementById('loginPromptText').innerHTML = 'Please <a href="{% url "signin" %}">login</a> to ' + promptText + '.';
-    }
+  
 
-    function closeLoginPrompt() {
-        document.getElementById('loginPrompt').style.display = 'none';
-    }
+function handleLikeClick(public_Letter_id) {
+    const likeIcon = document.getElementById('like-icon');
+    const likeCountElement = document.getElementById('like-count');
+    const csrfToken = getCSRFToken();
+
+    fetch(`/like/${public_Letter_id}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error && data.error === 'User not authenticated') {
+            // If the user is not authenticated, show the login prompt
+            showLoginPrompt('react');
+        } else if (data.error) {
+            alert(data.error);
+        } else {
+            // Update the like icon and count dynamically
+            likeIcon.className = data.liked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up';
+            likeCountElement.textContent = `${data.like_count} Likes`;
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function showLoginPrompt(action) {
+    document.getElementById('loginPrompt').style.display = 'block';
+    var promptText = action === 'react' ? 'react to this post' : 'comment on this post';
+    document.getElementById('loginPromptText').innerHTML = 'Please <a href="{% url "signin" %}">login</a> to ' + promptText + '.';
+}
+
+function closeLoginPrompt() {
+    document.getElementById('loginPrompt').style.display = 'none';
+}
+
+
+
+
+
+// Utility to get CSRF token from the cookie
+function getCSRFToken() {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    return csrfToken;
+}
+
 </script>
+{% endblock content %}
