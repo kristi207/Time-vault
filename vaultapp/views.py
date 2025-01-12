@@ -17,6 +17,7 @@ from django.shortcuts import get_object_or_404
 
 
 
+
 def letter_scheduled(request):
     return render(request, 'vaultapp/letter_scheduled.html')
 
@@ -54,6 +55,7 @@ def write_letter(request):
         form = LetterForm()
 
     return render(request, 'vaultapp/write_letter.html', {'form': form, 'blogs': blogs})
+
 
 
 
