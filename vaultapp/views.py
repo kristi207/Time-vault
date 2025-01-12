@@ -325,3 +325,13 @@ def signin(request):
 
     return render(request, 'vaultapp/signin.html')
 
+
+from django.shortcuts import render
+from django.views.generic import TemplateView
+
+
+# def home(request):
+#     return render(request, 'home.html')
+
+class Blog(TemplateView):
+    template_name = 'blog.html'
