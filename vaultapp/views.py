@@ -15,6 +15,35 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
+# views.py
+from django.http import HttpResponse
+from .models import Letter
+from .utils import calculate_combined_priority
+
+def create_or_schedule_letter(request):
+    # Example of creating a letter (you might be receiving this from a form or API)
+    letter_content = request.POST['content']
+    letter_send_time = request.POST['send_date']
+    is_public = request.POST.get('is_public', False)
+    recipient_email = request.POST['recipient_email']
+    
+    # Create a letter object
+    letter = Letter(
+        recipient_email=recipient_email,
+        content=letter_content,
+        send_date=letter_send_time,
+        is_public=is_public
+    )
+    
+    # Calculate priority dynamically
+    letter.priority = calculate_combined_priority(letter)
+
+    # Save the letter with priority
+    letter.save()
+
+    return HttpResponse("Letter Scheduled Successfully!")
+
+
 
 
 

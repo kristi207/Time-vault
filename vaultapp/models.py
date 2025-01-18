@@ -44,7 +44,7 @@ class BlogPost(models.Model):
         ordering = ['-created_at']
 
 
-
+#modified the letter model for priority
 # for main letters section
 class Letter(models.Model):
     # Linking the letter to a user
@@ -75,8 +75,22 @@ class Letter(models.Model):
         """Ensure the send date is in the future."""
         return self.send_date > now()
 
+    # PRIORITY of the letter
+    PRIORITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+    
+    priority = models.CharField(
+        max_length=10,
+        choices=PRIORITY_CHOICES,
+        default='low'
+    )
+
     def __str__(self):
-        return f"Letter to {self.recipient_email} scheduled for {self.send_date}"
+        return f"Letter to {self.recipient_email} scheduled for {self.send_date} with {self.priority} priority"
+
 
 # read letter section
 
