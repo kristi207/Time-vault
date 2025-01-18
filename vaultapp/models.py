@@ -182,19 +182,36 @@ class PublicLetter(models.Model):
     def collaborative_recommend_blogs(self, top_n=5):
         """
         Generate blog recommendations for a public letter (blog post) based on collaborative filtering using 
-        user interactions and custom cosine similarity. If not enough interactions exist, return the latest top N blogs.
+        user interactions and custom cosine similarity.
         """
-        # Fetch interactions related to the current blog post (public letter)
-        interactions = BlogInteraction.objects.filter(public_letter=self)
-        interaction_data = interactions.values('user', 'public_letter', 'interaction_type')
+        # Fetch likes (LetterReaction), comments (Comment), and views (view_count) data
+        likes = LetterReaction.objects.filter(public_letter=self)
+        comments = Comment.objects.filter(public_letter=self)
+        views = BlogInteraction.objects.filter(public_letter=self, interaction_type='view')
 
-        # Check if any interactions exist for the current post
-        if not interaction_data:
-            print("No interactions found for this blog post.")
-            # Fallback: Return the latest top N published blogs (most recent)
-            fallback_blogs = PublicLetter.objects.filter(is_published=True).exclude(id=self.id).order_by('-shared_date')[:top_n]
-            print(f"Returning fallback blogs: {[blog.title for blog in fallback_blogs]}")
-            return fallback_blogs
+        # Prepare the data for the collaborative filtering matrix
+        interaction_data = []
+
+        # Add likes (interaction_type='like') to the interaction data
+        interaction_data.extend([{
+            'user': reaction.user.id,
+            'public_letter': self.id,
+            'interaction_type': 'like'
+        } for reaction in likes])
+
+        # Add comments (interaction_type='comment') to the interaction data
+        interaction_data.extend([{
+            'user': comment.user.id if comment.user else None,  # Handle anonymous users
+            'public_letter': self.id,
+            'interaction_type': 'comment'
+        } for comment in comments])
+
+        # Add views (interaction_type='view') to the interaction data
+        interaction_data.extend([{
+            'user': interaction.user.id if interaction.user else None,  # Handle anonymous users
+            'public_letter': self.id,
+            'interaction_type': 'view'
+        } for interaction in views])
 
         # Create a DataFrame from the interaction data
         df = pd.DataFrame(interaction_data)
@@ -208,20 +225,14 @@ class PublicLetter(models.Model):
         # Handle case with no or limited interactions
         if df.empty or df.shape[0] < 2:
             print("Not enough interactions to generate meaningful recommendations.")
-            # Fallback: Return the latest top N published blogs (most recent)
-
-            fallback_blogs = PublicLetter.objects.filter(is_published=True).exclude(id=self.id) \
-                .annotate(comment_count=Count('comment')) \
-                .order_by('-comment_count')[:top_n]            
-            print(f"Returning fallback blogs: {[blog.title for blog in fallback_blogs]}")
-            return fallback_blogs
+            return []  # Return empty if not enough interactions
 
         # Pivot table to create the user-item interaction matrix
         interaction_matrix = df.pivot_table(
             index='user', 
             columns='public_letter', 
             values='interaction_type', 
-            aggfunc=lambda x: 1
+            aggfunc=lambda x: 1  # Treat any interaction as a '1' (interaction exists)
         )
 
         # Debugging: Check if the pivot table is created correctly
@@ -232,10 +243,8 @@ class PublicLetter(models.Model):
 
         # Ensure there are at least two unique blog posts to calculate similarity
         if interaction_matrix.shape[1] < 2:
-            print("Not enough blog posts to calculate similarities. Returning fallback blogs.")
-            fallback_blogs = PublicLetter.objects.filter(is_published=True).exclude(id=self.id).order_by('-shared_date')[:top_n]
-            print(f"Returning fallback blogs: {[blog.title for blog in fallback_blogs]}")
-            return fallback_blogs
+            print("Not enough blog posts to calculate similarities.")
+            return []  # Return empty if not enough blog posts to calculate similarities
 
         # Compute the cosine similarity between users using the custom function
         user_similarity = PublicLetter.cosine_similarity(interaction_matrix.values)
@@ -288,7 +297,6 @@ class PublicLetter(models.Model):
         print(f"Recommended blogs: {[blog.title for blog in recommended_blogs]}")
 
         return recommended_blogs
-
 # Signal to Sync PublicLetter with Letter
 @receiver(post_save, sender=Letter)
 def sync_to_public_letter(sender, instance, created, **kwargs):
