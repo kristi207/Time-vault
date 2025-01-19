@@ -7,7 +7,7 @@
 {% endblock title %}
 
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'your_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vaultapp/CSS/style.css' %}">
 </head>
 
 {% block content %}
@@ -49,9 +49,11 @@
             <div class="post-preview">
                 <h2>
                     <a href="{% url 'post_detail' blog.id %}">{{ blog.title }}</a>
-                </h2>
-                <i class="far fa-user"> {{ blog.nickname }}</i>
-                <i class="far fa-calendar"> {{ blog.shared_date|date:"F j, Y" }}</i>
+                </h2>                    
+                <div class="info-group">
+                <i class="far fa-user"></i> {{ blog.nickname }}
+                <i class="far fa-calendar"> </i>{{ blog.shared_date|date:"F j, Y" }}
+                </div>
                 <p class="preview-text">{{ blog.description|truncatewords:30 }}</p>
                 <a href="{% url 'post_detail' blog.id %}" class="btn btn-outline-dark btn-sm">Read More</a>
             </div>
@@ -100,6 +102,7 @@
         <p id="loginPromptText">Please <a href="{% url 'signin' %}">login</a> to <span id="actionType"></span>.</p>
     </div>
 </div>
+<script src="{% static 'vaultapp/js/home.js' %}" defer></script>
 
 {% endblock content %}
 

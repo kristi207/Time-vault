@@ -154,3 +154,7 @@ ADMINS = [('aurablog', 'yourthoughtsmatter87@gmail.com')]
 
 # Email for system errors (like 500 Internal Server Error emails)
 SERVER_EMAIL = 'yourthoughtsmatter87@gmail.com'
+# # settings.py
+# LOGIN_URL = '/signin/'  # Custom login URL
+# # settings.py
+# LOGIN_REDIRECT_URL = '/'  # This will redirect them to the home page after login

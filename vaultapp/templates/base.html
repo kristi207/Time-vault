@@ -40,10 +40,55 @@
             <li><a href="{% url 'about' %}" class="hover-line">About</a></li>
             <li><a href="{% url 'post_list' %}" class="hover-line">Read Letters</a></li>
             <li><a href="{% url 'write_letter' %}" class="hover-line">Futura</a></li>
+            
+          <!-- Check if the user is authenticated deeps--> 
+         
+            {% if user.is_authenticated %}
+                <!-- User is logged in -->
+                <li><a href="">
+                     <i class="fa fa-user"></i>
+                    {{ user.username }}
+                    <i class="fa fa-chevron-down" style="font-size: .8em;"></i>
+                </a>
+
+                    <ul>
+                        <li><a href="{% url 'signin' %}" class="Signout">Signout</a></li>
+                    </ul>
+                </li>
+            {% else %}
+            <li>
+                <a href="">
+                <i class="fa fa-user"></i>
+                PKD
+                <i class="fa fa-chevron-down" style="font-size: .8em;"></i>
+            
+            </a>
+            <ul>
+                <li><a href="{% url 'signin' %}" class="Signin">Signin</a></li>
+                <li><a href="{% url 'signup' %}" class="Signup">Signup</a></li>
+            </ul>
+        </li>
+
+            {% endif %}
+        </ul>
+        
+        <!-- {% if user.is_authenticated %} 
+        <li><a href="#">
+                <i class="fa fa-user"></i>
+                {{ user.first_name }}
+                <i class="fa fa-chevron-down" style="font-size: .8em;"></i>
+            </a>
+            <ul>
+                <li><a href="{% url 'signin' %}" class="Signout">Signout</a></li>
+            </ul>
+        </li>
+        {% endif %}  -->
+   <!--user signout deeps-->
+    
             <!-- <li><a href="#">Sign-up</a>
             </li>
             <li><a href="#">Login</a>
-            </li> -->
+            </li>
             <li><a href="#">
                     <i class="fa fa-user"></i>
                     PKD
@@ -55,8 +100,8 @@
                 </ul>
             </li>
 
-        </ul>
-    </header>
+        </ul> -->
+    </header> 
     
 
     
@@ -115,4 +160,4 @@
         &copy; yourthoughtsmatter.com | Designed by AuraBLog
     </div>
 </div>
-</html>
+</html> 

@@ -70,8 +70,8 @@ def blog_detail(request, id):
     return render(request, 'vaultapp/blog_detail.html', {'blog': blog})
 
 
-def home(request):
-    return render(request, 'vaultapp/home.html')
+# def home(request):
+#     return render(request, 'vaultapp/home.html')
 
 def home(request):
     # Fetching trending posts (most shared, unpublished, limited to 6)
@@ -104,7 +104,7 @@ def post_detail(request, id):
     )   
     comments = Comment.objects.filter(public_letter=post, parent_comment__isnull=True).prefetch_related('replies')
     
-    public_letters = PublicLetter.objects.filter(is_published=False).values('id', 'description', 'title')
+    public_letters = PublicLetter.objects.filter(is_published=True).values('id', 'description', 'title')
     df = pd.DataFrame(public_letters)
     df['description'] = df['description'].fillna('')  # Handle empty descriptions
 
@@ -184,11 +184,11 @@ def signup(request):
 #signin
 def signin(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
         # Authenticate the user
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             # Login the user
@@ -205,3 +205,4 @@ def signin(request):
             return render(request, 'vaultapp/signin.html')
 
     return render(request, 'vaultapp/signin.html')
+

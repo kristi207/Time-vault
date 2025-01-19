@@ -34,16 +34,20 @@ urlpatterns = [
     path('post/<int:id>/add-reaction/', views.add_reaction, name='add_reaction'),
     path('post/<int:id>/add-comment/', views.add_comment, name='add_comment'),
     path('signup/', views.signup, name='signup'), 
-    path('', views.home, name='home'),
+    # path('', views.home, name='home'),
     path('signin/', views.signin, name='signin'),
-    path('home/', views.home, name='home'),
+    # path('home/', views.home, name='home'),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('write-letter/', views.write_letter, name='write_letter'),
-    path('write-letter/vaultapp/signin.html', views.signup, name='signup'),
+    # path('write-letter/vaultapp/signin.html', views.signup, name='signup'),
     path('write-letter/vaultapp/letter_scheduled.html', views.letter_scheduled, name='letter_scheduled'),
     path('post/<int:id>/', views.BlogPost, name='post_detail'),
+   # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+   
+
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
