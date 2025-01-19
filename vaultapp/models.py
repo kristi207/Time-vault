@@ -43,7 +43,7 @@ class BlogPost(models.Model):
     class Meta:
         ordering = ['-created_at']
 
-
+#deeps
 #modified the letter model for priority
 # for main letters section
 class Letter(models.Model):
