@@ -1,0 +1,14 @@
+name,seq
+django_migrations,28
+django_admin_log,40
+django_content_type,14
+auth_permission,56
+auth_group,0
+auth_user,1242
+vaultapp_letter,474
+vaultapp_blogpost,2
+vaultapp_publicletter,667
+vaultapp_comment,14086
+vaultapp_bloginteraction,760
+vaultapp_letterreaction,19709
+vaultapp_blogview,12420

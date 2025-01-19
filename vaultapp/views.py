@@ -5,7 +5,9 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 import pandas as pd
-from django.http import HttpResponse
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import HttpResponse , HttpResponseRedirect
 from django.db.models import Count, Q
 from vaultapp.models import PublicLetter,LetterReaction,Comment, BlogPost, BlogInteraction
 from django.db import models
@@ -123,9 +125,8 @@ def home(request):
     # Fetching trending posts (most shared, unpublished, limited to 6)
     trending_posts = PublicLetter.objects.filter(is_published=True).order_by('-shared_date')[6:]
     
-    # Fetching latest posts (most recent, unpublished, limited to 10)
-    latest_posts = PublicLetter.objects.filter(is_published=True).order_by('-shared_date')[10:]
-    
+    latest_posts = PublicLetter.objects.filter(is_published=True).order_by('-shared_date')[:10]
+
     # Rendering the home page with both sets of posts
     return render(request, 'vaultapp/home.html', {
         'trending_posts': trending_posts,
@@ -165,11 +166,11 @@ def post_detail(request, id):
     # Increment the view count for the post
     post.view_count += 1
     post.save()
-    # like_count = LetterReaction.objects.filter(public_letter=post).count()
+    user_reacted = LetterReaction.objects.filter(public_letter=post, user=request.user).exists()
 
-    # Optionally, check if the current user has already reacted
-    # user_reacted = LetterReaction.objects.filter(public_letter=post, user=request.user).exists()
+    like_count = LetterReaction.objects.filter(public_letter=post).count()
 
+    
     public_letters = PublicLetter.objects.filter(is_published=True).values('id', 'description', 'title')
     df = pd.DataFrame(public_letters)
     df['description'] = df['description'].fillna('')  # Handle empty descriptions
@@ -194,10 +195,40 @@ def post_detail(request, id):
         'comments': comments,
         'recommended_blogs': recommended_blogs,
         'recommended_blogs2': recommended_blogs2,
-        # 'like_count': like_count,
-        # 'user_reacted': user_reacted
+         'like_count': like_count,
+        'user_reacted': user_reacted,
     }
     return render(request, 'vaultapp/post_detail.html', context)
+
+
+
+@login_required
+def toggle_like(request, public_letter_id):
+    try:
+        public_letter = PublicLetter.objects.get(id=public_letter_id)
+        
+        # Check if the user has already reacted to this post
+        user_reacted = LetterReaction.objects.filter(public_letter=public_letter, user=request.user).exists()
+        
+        # Toggle the like status
+        if user_reacted:
+            # If the user already liked, remove the like
+            reaction = LetterReaction.objects.get(public_letter=public_letter, user=request.user)
+            reaction.delete()  # Unlike the post
+            liked = False
+        else:
+            # If the user has not reacted, create a new reaction
+            reaction = LetterReaction.objects.create(public_letter=public_letter, user=request.user)
+            liked = True
+
+        # Get the total like count for the post
+        like_count = LetterReaction.objects.filter(public_letter=public_letter).count()
+
+        # Return the response with the updated like status and like count
+        return JsonResponse({'liked': liked, 'like_count': like_count, 'user_reacted': user_reacted})
+
+    except PublicLetter.DoesNotExist:
+        return JsonResponse({'error': 'Public letter not found'}, status=404)
 
 
 def like_post(request, id):
@@ -355,12 +386,33 @@ def signin(request):
     return render(request, 'vaultapp/signin.html')
 
 
-from django.shortcuts import render
-from django.views.generic import TemplateView
 
 
-# def home(request):
-#     return render(request, 'home.html')
 
-class Blog(TemplateView):
-    template_name = 'blog.html'
+def contact_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        # Check if email and message are provided
+        if email and message:
+            # Sending email
+            send_mail(
+                'Contact Us Message',  # Subject
+                message,  # Message content
+                email,  # From email
+                ['your_email@example.com'],  # To email (can be your admin email)
+                fail_silently=False,
+            )
+            return HttpResponseRedirect('/success/')  # Redirect to a success page
+        
+        # If email or message is missing, return an error message
+        else:
+            return HttpResponse("Both email and message are required.", status=400)
+    
+    return render(request, 'contact.html')  # Return the contact form page
+# views.py
+def success_view(request):
+    return render(request, 'vaultapp/success.html')  # Display a success message page
+
+

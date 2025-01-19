@@ -123,18 +123,21 @@
 
         </div>
         <div class="footer-section contact-form">
-            <h2>Contact us </h2>
+            <h2>Contact us</h2>
             <br>
-            <form action="vaultapp/home.html" method="post">
-                <input type="email" name="email" class="text-input contact-input" placeholder="Your email adress...">
-                <textarea name="message"  class="text-input contact-input" placeholder="Your message..."></textarea>
+            <form action="{% url 'contact' %}" method="post">
+                {% csrf_token %}
+                <input type="email" name="email" class="text-input contact-input" placeholder="Your email address...">
+                <textarea name="message" class="text-input contact-input" placeholder="Your message..."></textarea>
                 <button type="submit" class="btn btn-big contact-btn">
                     <i class="fas fa-envelope"></i>
-                    
                 </button>
             </form>
         </div>
+        
+        
     </div>
+    
     
     <div class="footer-bottom">
         &copy; yourthoughtsmatter.com | Designed by AuraBLog
@@ -148,5 +151,6 @@
 
         </ul>
     </header>
+    
 </body>
 </html>
