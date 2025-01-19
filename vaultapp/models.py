@@ -170,7 +170,7 @@ class PublicLetter(models.Model):
 
         # Return the dataframe for use in views or APIs
         return df[['id', 'title', 'recommended_blogs']].to_dict(orient='records')
-    
+ 
     @staticmethod
     def cosine_similarity(matrix):
         dot_product = np.dot(matrix, matrix.T)
@@ -182,36 +182,21 @@ class PublicLetter(models.Model):
     def collaborative_recommend_blogs(self, top_n=5):
         """
         Generate blog recommendations for a public letter (blog post) based on collaborative filtering using 
-        user interactions and custom cosine similarity.
+        user interactions from BlogInteraction and custom cosine similarity.
         """
-        # Fetch likes (LetterReaction), comments (Comment), and views (view_count) data
-        likes = LetterReaction.objects.filter(public_letter=self)
-        comments = Comment.objects.filter(public_letter=self)
-        views = BlogInteraction.objects.filter(public_letter=self, interaction_type='view')
+        # Fetch interactions from BlogInteraction model
+        interactions = BlogInteraction.objects.all()
 
         # Prepare the data for the collaborative filtering matrix
-        interaction_data = []
-
-        # Add likes (interaction_type='like') to the interaction data
-        interaction_data.extend([{
-            'user': reaction.user.id,
-            'public_letter': self.id,
-            'interaction_type': 'like'
-        } for reaction in likes])
-
-        # Add comments (interaction_type='comment') to the interaction data
-        interaction_data.extend([{
-            'user': comment.user.id if comment.user else None,  # Handle anonymous users
-            'public_letter': self.id,
-            'interaction_type': 'comment'
-        } for comment in comments])
-
-        # Add views (interaction_type='view') to the interaction data
-        interaction_data.extend([{
-            'user': interaction.user.id if interaction.user else None,  # Handle anonymous users
-            'public_letter': self.id,
-            'interaction_type': 'view'
-        } for interaction in views])
+        interaction_data = [
+            {
+                'user': interaction.user.id if interaction.user else None,  # Handle anonymous users
+                'public_letter': interaction.public_letter.id,
+                'interaction_type': interaction.interaction_type,
+                'weight': self.get_interaction_weight(interaction.interaction_type)
+            }
+            for interaction in interactions
+        ]
 
         # Create a DataFrame from the interaction data
         df = pd.DataFrame(interaction_data)
@@ -221,18 +206,19 @@ class PublicLetter(models.Model):
 
         # Filter out any rows with NaN users (incomplete or invalid interactions)
         df = df.dropna(subset=['user'])
+        print(f"Filtered NaN user:\n{df.head()}")
 
         # Handle case with no or limited interactions
         if df.empty or df.shape[0] < 2:
             print("Not enough interactions to generate meaningful recommendations.")
             return []  # Return empty if not enough interactions
 
-        # Pivot table to create the user-item interaction matrix
+        # Pivot table to create the user-item interaction matrix, weighted by interaction type
         interaction_matrix = df.pivot_table(
-            index='user', 
-            columns='public_letter', 
-            values='interaction_type', 
-            aggfunc=lambda x: 1  # Treat any interaction as a '1' (interaction exists)
+            index='user',
+            columns='public_letter',
+            values='weight',
+            aggfunc='sum'  # Aggregate by summing the weights of interactions
         )
 
         # Debugging: Check if the pivot table is created correctly
@@ -253,9 +239,11 @@ class PublicLetter(models.Model):
         print(f"Cosine Similarity Matrix:\n{user_similarity}")
 
         # Convert to DataFrame for easier access
-        user_similarity_df = pd.DataFrame(user_similarity, 
-                                        index=interaction_matrix.index, 
-                                        columns=interaction_matrix.index)
+        user_similarity_df = pd.DataFrame(
+            user_similarity,
+            index=interaction_matrix.index,
+            columns=interaction_matrix.index
+        )
 
         # Check if we can find similar users
         if self.id not in user_similarity_df.columns:
@@ -263,7 +251,7 @@ class PublicLetter(models.Model):
             return []  # Return empty if no similarity could be computed
 
         # Get the similarity scores for the target blog (self.id)
-        similar_users = user_similarity_df[self.id].sort_values(ascending=False)[1:top_n+1].index
+        similar_users = user_similarity_df[self.id].sort_values(ascending=False)[1:top_n + 1].index
 
         # Debugging: Check if similar users are found
         print(f"Similar Users: {similar_users}")
@@ -287,7 +275,7 @@ class PublicLetter(models.Model):
         # Debugging: Check the recommended posts (after filtering)
         print(f"Recommended Posts (after filtering): {recommended_posts}")
 
-        # Get the top N recommended blog posts
+        # Get the top N recommended blog posts (limit to top_n)
         top_recommended_posts = recommended_posts.head(top_n)
 
         # Fetch the recommended blog details
@@ -297,7 +285,20 @@ class PublicLetter(models.Model):
         print(f"Recommended blogs: {[blog.title for blog in recommended_blogs]}")
 
         return recommended_blogs
-# Signal to Sync PublicLetter with Letter
+
+    @staticmethod
+    def get_interaction_weight(interaction_type):
+            """
+            Assign weights to interaction types.
+            """
+            weights = {
+                'view': 1,
+                'click': 2,
+                'like': 3,
+                'comment': 4,
+            }
+            return weights.get(interaction_type, 1)  # Default weight is 1
+
 @receiver(post_save, sender=Letter)
 def sync_to_public_letter(sender, instance, created, **kwargs):
     """
@@ -352,7 +353,27 @@ class BlogInteraction(models.Model):
     def __str__(self):
         return f"{self.interaction_type} by {'Anonymous' if not self.user else self.user} on {self.public_letter.title}"
 
+class BlogView(models.Model):
+    public_letter = models.ForeignKey(
+        'PublicLetter',
+        on_delete=models.CASCADE,
+        related_name='views'  # Allows reverse querying: `public_letter.views.all()`
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,  # Allow NULL for anonymous users
+        blank=True  # Allow blank for forms
+    )
+    viewed_at = models.DateTimeField(auto_now_add=True)  # Automatically set to the timestamp of creation
 
+    class Meta:
+        unique_together = ('public_letter', 'user')  # Prevents duplicate views by the same user
+        ordering = ['-viewed_at']  # Orders views by most recent first
+
+    def __str__(self):
+        user_display = f"User {self.user.id}" if self.user else "Anonymous User"
+        return f"View by {user_display} on {self.public_letter}"
 
 class LetterReaction(models.Model):
     public_letter = models.ForeignKey(
