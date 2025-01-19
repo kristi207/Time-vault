@@ -18,7 +18,8 @@ Post
         {% endif %}
 
         <div class="post-info-unique">
-            <h4>{{ public_letter.title }}</h4>
+            <a href="{% url 'post_detail' public_letter.id %}"><h4>{{ public_letter.title }}</h4></a>
+            
             <p class="my-2">{{ public_letter.description|truncatewords:50 }}</p>
             <i class="far fa-user"> </i>
             <span class="text-user">{{ public_letter.nickname }}</span>

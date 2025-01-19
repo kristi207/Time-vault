@@ -4,13 +4,19 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import numpy as np
 from collections import Counter
+from django.db.models import Count
 import pandas as pd
 from django.utils.timezone import now
-
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+from django.db import models
+import pandas as pd
+import numpy as np
+from collections import Counter
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 # Blog Post model for admin to post blogs
 class BlogPost(models.Model):
@@ -74,6 +80,8 @@ class Letter(models.Model):
 
 # read letter section
 
+
+
 class PublicLetter(models.Model):
     # Linking to the original letter
     original_letter = models.OneToOneField(
@@ -93,16 +101,17 @@ class PublicLetter(models.Model):
     shared_date = models.DateTimeField(auto_now_add=True)
     # Whether the blog is active/published
     is_published = models.BooleanField(default=False)
+    # View count
+    view_count = models.IntegerField(default=0)
 
     def __str__(self):
         return f"Public Letter: {self.title or self.original_letter.title or 'The Letter From {self.shared_date}'}"
-    
+
     @staticmethod
     def recommend_blogs():
         """
         Generate blog recommendations based on the description field using TF-IDF and cosine similarity.
         """
-
         # Fetch descriptions of published blogs
         public_letters = PublicLetter.objects.filter(is_published=True).values('id', 'description', 'title')
         df = pd.DataFrame(public_letters)
@@ -150,7 +159,7 @@ class PublicLetter(models.Model):
         def recommend_blogs(blog_index, similarity_matrix, df, top_n=5):
             similarity_scores = similarity_matrix[blog_index]
             similar_indices = similarity_scores.argsort()[-(top_n + 1):-1][::-1]  # Exclude the blog itself
-            recommended_blogs = df.iloc[similar_indices][['id','title', 'description']]
+            recommended_blogs = df.iloc[similar_indices][['id', 'title', 'description']]
             return recommended_blogs
 
         # Add Recommendations to DataFrame
@@ -161,8 +170,134 @@ class PublicLetter(models.Model):
 
         # Return the dataframe for use in views or APIs
         return df[['id', 'title', 'recommended_blogs']].to_dict(orient='records')
-# Signal to Sync PublicLetter with Letter
+    
+    @staticmethod
+    def cosine_similarity(matrix):
+        dot_product = np.dot(matrix, matrix.T)
+        magnitude = np.linalg.norm(matrix, axis=1)
+        denominator = np.outer(magnitude, magnitude)
+        denominator[denominator == 0] = 1  # Avoid division by zero
+        return dot_product / denominator
 
+    def collaborative_recommend_blogs(self, top_n=5):
+        """
+        Generate blog recommendations for a public letter (blog post) based on collaborative filtering using 
+        user interactions and custom cosine similarity.
+        """
+        # Fetch likes (LetterReaction), comments (Comment), and views (view_count) data
+        likes = LetterReaction.objects.filter(public_letter=self)
+        comments = Comment.objects.filter(public_letter=self)
+        views = BlogInteraction.objects.filter(public_letter=self, interaction_type='view')
+
+        # Prepare the data for the collaborative filtering matrix
+        interaction_data = []
+
+        # Add likes (interaction_type='like') to the interaction data
+        interaction_data.extend([{
+            'user': reaction.user.id,
+            'public_letter': self.id,
+            'interaction_type': 'like'
+        } for reaction in likes])
+
+        # Add comments (interaction_type='comment') to the interaction data
+        interaction_data.extend([{
+            'user': comment.user.id if comment.user else None,  # Handle anonymous users
+            'public_letter': self.id,
+            'interaction_type': 'comment'
+        } for comment in comments])
+
+        # Add views (interaction_type='view') to the interaction data
+        interaction_data.extend([{
+            'user': interaction.user.id if interaction.user else None,  # Handle anonymous users
+            'public_letter': self.id,
+            'interaction_type': 'view'
+        } for interaction in views])
+
+        # Create a DataFrame from the interaction data
+        df = pd.DataFrame(interaction_data)
+
+        # Debugging: Check if the dataframe has any data
+        print(f"Interaction DataFrame:\n{df.head()}")
+
+        # Filter out any rows with NaN users (incomplete or invalid interactions)
+        df = df.dropna(subset=['user'])
+
+        # Handle case with no or limited interactions
+        if df.empty or df.shape[0] < 2:
+            print("Not enough interactions to generate meaningful recommendations.")
+            return []  # Return empty if not enough interactions
+
+        # Pivot table to create the user-item interaction matrix
+        interaction_matrix = df.pivot_table(
+            index='user', 
+            columns='public_letter', 
+            values='interaction_type', 
+            aggfunc=lambda x: 1  # Treat any interaction as a '1' (interaction exists)
+        )
+
+        # Debugging: Check if the pivot table is created correctly
+        print(f"Interaction Matrix:\n{interaction_matrix.head()}")
+
+        # Replace NaNs with 0 (no interaction)
+        interaction_matrix = interaction_matrix.fillna(0)
+
+        # Ensure there are at least two unique blog posts to calculate similarity
+        if interaction_matrix.shape[1] < 2:
+            print("Not enough blog posts to calculate similarities.")
+            return []  # Return empty if not enough blog posts to calculate similarities
+
+        # Compute the cosine similarity between users using the custom function
+        user_similarity = PublicLetter.cosine_similarity(interaction_matrix.values)
+
+        # Debugging: Check if the cosine similarity matrix is created
+        print(f"Cosine Similarity Matrix:\n{user_similarity}")
+
+        # Convert to DataFrame for easier access
+        user_similarity_df = pd.DataFrame(user_similarity, 
+                                        index=interaction_matrix.index, 
+                                        columns=interaction_matrix.index)
+
+        # Check if we can find similar users
+        if self.id not in user_similarity_df.columns:
+            print("No similar users found.")
+            return []  # Return empty if no similarity could be computed
+
+        # Get the similarity scores for the target blog (self.id)
+        similar_users = user_similarity_df[self.id].sort_values(ascending=False)[1:top_n+1].index
+
+        # Debugging: Check if similar users are found
+        print(f"Similar Users: {similar_users}")
+
+        # Get blog posts interacted with by similar users
+        similar_users_interactions = interaction_matrix.loc[similar_users]
+
+        # Sum the interactions for each blog post across these similar users
+        post_scores = similar_users_interactions.sum(axis=0)
+
+        # Sort blog posts by score in descending order
+        recommended_posts = post_scores.sort_values(ascending=False)
+
+        # Debugging: Check the recommended posts (before filtering)
+        print(f"Recommended Posts (before filtering): {recommended_posts}")
+
+        # Filter out posts the user has already interacted with
+        user_interactions = interaction_matrix.loc[self.id]
+        recommended_posts = recommended_posts[user_interactions == 0]
+
+        # Debugging: Check the recommended posts (after filtering)
+        print(f"Recommended Posts (after filtering): {recommended_posts}")
+
+        # Get the top N recommended blog posts
+        top_recommended_posts = recommended_posts.head(top_n)
+
+        # Fetch the recommended blog details
+        recommended_blogs = PublicLetter.objects.filter(id__in=top_recommended_posts.index)
+
+        # Debugging: Check if recommended blogs are returned
+        print(f"Recommended blogs: {[blog.title for blog in recommended_blogs]}")
+
+        return recommended_blogs
+# Signal to Sync PublicLetter with Letter
 @receiver(post_save, sender=Letter)
 def sync_to_public_letter(sender, instance, created, **kwargs):
     """
@@ -195,31 +330,54 @@ def sync_to_public_letter(sender, instance, created, **kwargs):
     else:
         PublicLetter.objects.filter(original_letter=instance).delete()
 
-# rection of letter
 
-class LetterReaction(models.Model):
-    # Linking the reaction to a public letter
-    public_letter = models.ForeignKey(PublicLetter, on_delete=models.CASCADE, related_name='reactions')
-    # Type of reaction (e.g., like, love, etc.)
-    REACTION_CHOICES = [
+
+
+class BlogInteraction(models.Model):
+    """
+    Model to store the interaction data of a user with a blog post.
+    """
+    public_letter = models.ForeignKey(PublicLetter, on_delete=models.CASCADE, related_name='interactions')
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='blog_interactions')  # Make this field nullable
+    session_id = models.CharField(max_length=255, null=True, blank=True)  # For anonymous users
+    interaction_type = models.CharField(max_length=50, choices=[
+        ('view', 'View'),
+        ('click', 'Click'),
         ('like', 'Like'),
-        ('love', 'Love'),
-        ('inspired', 'Inspired'),
-        ('wow', 'Wow'),
-    ]
-    reaction_type = models.CharField(max_length=20, choices=REACTION_CHOICES)
-    # User who reacted (optional for anonymous reactions)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    # Date of the reaction
-    reacted_at = models.DateTimeField(auto_now_add=True)
+        ('comment', 'Comment'),
+        # Add any other interactions you want to track
+    ])
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.reaction_type} by {self.user or 'Anonymous'} on {self.public_letter}"
+        return f"{self.interaction_type} by {'Anonymous' if not self.user else self.user} on {self.public_letter.title}"
 
+
+
+class LetterReaction(models.Model):
+    public_letter = models.ForeignKey(
+        'PublicLetter',
+        on_delete=models.CASCADE,
+        related_name='likes'
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,  # Allow NULL values in the database
+        blank=True  # Allow empty values in forms
+    )
+    reacted_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('public_letter', 'user')  # Ensures one like per user per letter
+
+    def __str__(self):
+        return f"Like by {self.user} on {self.public_letter}"
 # letter comments
 
 class Comment(models.Model):
     # Linking the comment to a public letter
+
     public_letter = models.ForeignKey(PublicLetter, on_delete=models.CASCADE, related_name='comments')
     # User who wrote the comment
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -233,3 +391,10 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment by {self.user or 'Anonymous'} on {self.public_letter}"
     
+# Create your models here.
+class Post(models.Model):
+    title = models.CharField(max_length=255)
+    author = models.ForeignKey(User, on_delete= models.CASCADE)
+    body = models.TextField()
+def __str__(self):
+    return self.title + '|' + str(self.author)

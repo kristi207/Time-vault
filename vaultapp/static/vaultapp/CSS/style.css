@@ -227,7 +227,12 @@ body .logo-text span {
     gap: 20px;
 }
 
+.slider-image1{
+    width: 80%;
+    height: 300px;
+    position: left;
 
+}
 
 .slider-image {
     width: 100%;
@@ -237,7 +242,7 @@ body .logo-text span {
 
 .page-wrapper .post {
     width: 300px;
-    height: 370px;
+    height: 350px;
     /* Adjust as per your layout */
     padding: 20px;
     margin: 0 10px;
@@ -251,7 +256,7 @@ body .logo-text span {
 }
 
 .post-slider .post-wrapper .post .post-info {
-    height: 130px;
+    height: 150px;
     padding: 0px 5px;
 }
 
@@ -259,7 +264,7 @@ body .logo-text span {
 
 .post-slider .post-wrapper .post .slider-image {
     width: 100%;
-    height: 270px;
+    height: 200px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
@@ -1795,6 +1800,7 @@ input:focus, textarea:focus {
 
 #comment textarea {
     width: 100%;
+    height: 45px;
     padding: 10px;
     margin-top: 10px;
     border: 1px solid #ccc;
@@ -1821,7 +1827,17 @@ input:focus, textarea:focus {
     background-color: #0056b3;
 }
 
-/* Styling for reaction buttons */
+#like-icon {
+    cursor: pointer;
+    color: grey;
+}
+
+#like-icon.liked {
+    color: red; /* Change color when liked */
+}
+
+
+
 .reaction-button {
     display: flex;
     align-items: center;
@@ -1837,29 +1853,15 @@ input:focus, textarea:focus {
     transform: scale(1.1);
 }
 
-/* Styling for the reaction icons */
 .reaction-icon {
-    font-size: 24px;  /* Adjust the size of the emoji/icon */
-    display: inline-block;
-    margin-right: 8px;  /* Space between the icon and the count */
+    font-size: 24px;
+    margin-right: 8px;
 }
 
-/* Define the specific reactions */
-.reaction-icon.like::before {
-    content: '👍';  /* Unicode character for thumbs up */
-}
-
-.reaction-icon.love::before {
-    content: '❤️';  /* Unicode character for heart */
-}
-
-.reaction-icon.inspired::before {
-    content: '✨';  /* Unicode character for sparkles */
-}
-
-.reaction-icon.wow::before {
-    content: '😮';  /* Unicode character for surprised face */
-}
+.reaction-icon.like::before { content: '👍'; }
+.reaction-icon.love::before { content: '❤️'; }
+.reaction-icon.inspired::before { content: '✨'; }
+.reaction-icon.wow::before { content: '😮'; }
 
 /* CSS THATS CAUSING FADING OF BLOG */
 
