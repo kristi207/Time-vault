@@ -272,9 +272,11 @@ class PublicLetter(models.Model):
 
         # Get blog posts interacted with by similar users
         similar_users_interactions = interaction_matrix.loc[similar_users]
+      
 
         # Sum the interactions for each blog post across these similar users
         post_scores = similar_users_interactions.sum(axis=0)
+        
 
         # Sort blog posts by score in descending order
         recommended_posts = post_scores.sort_values(ascending=False)
@@ -298,7 +300,23 @@ class PublicLetter(models.Model):
         # Debugging: Check if recommended blogs are returned
         print(f"Recommended blogs: {[blog.title for blog in recommended_blogs]}")
 
-        return recommended_blogs
+        recommendation_info = {
+            'interaction_matrix': interaction_matrix.head().to_html(),  # Display first rows of the matrix
+            'user_similarity': user_similarity_df.head().to_html(),
+            'df_filter'  : df.head().to_html,
+                # Display similarity scores
+            'recommended_blogs': [
+                {
+                    'id': blog.id,
+                    'title': blog.title,
+                    'description': blog.description,
+                    'view_count': blog.view_count
+                }
+                for blog in recommended_blogs
+            ]
+        }
+
+        return recommendation_info
 
     @staticmethod
     def get_interaction_weight(interaction_type):

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
 
 
 EXTERNAL_APPS =[
-    'vaultapp'
+    'vaultapp',
+    
 ]
 INSTALLED_APPS.extend(EXTERNAL_APPS)
 
@@ -94,6 +96,8 @@ DATABASES = {
     }
 }
 
+
+ 
 
 
 # Password validation

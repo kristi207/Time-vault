@@ -22,6 +22,12 @@ from django.http import HttpResponse
 from .models import Letter
 from .utils import calculate_combined_priority
 
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import Letter, PublicLetter, BlogInteraction
+
+from django.http import JsonResponse
+
+
 def create_or_schedule_letter(request):
     # Example of creating a letter (you might be receiving this from a form or API)
     letter_content = request.POST['content']
@@ -141,20 +147,19 @@ def post_list(request):
     posts = PublicLetter.objects.filter(is_published= True)
     return render(request, 'vaultapp/post.html', {'object_list': posts})
 
-
 def post_detail(request, id):
     post = PublicLetter.objects.get(id=id)
     comments = Comment.objects.filter(public_letter=post, parent_comment__isnull=True).prefetch_related('replies')
+    
+    # Track the view interaction for authenticated and unauthenticated users
     if not request.session.get(f'viewed_post_{id}', False):
         if request.user.is_authenticated:
-            # For authenticated users
             BlogInteraction.objects.create(
                 public_letter=post,
                 user=request.user,  # Assign the authenticated user
                 interaction_type='view'
             )
         else:
-            # For unauthenticated (anonymous) users
             BlogInteraction.objects.create(
                 public_letter=post,
                 session_id=request.session.session_key,  # Track anonymous users with session_id
@@ -166,16 +171,17 @@ def post_detail(request, id):
     # Increment the view count for the post
     post.view_count += 1
     post.save()
-    user_reacted = LetterReaction.objects.filter(public_letter=post, user=request.user).exists()
 
+    # Check if the user has reacted to the post (like/dislike)
+    user_reacted = LetterReaction.objects.filter(public_letter=post, user=request.user).exists()
     like_count = LetterReaction.objects.filter(public_letter=post).count()
 
-    
+    # Fetch blog recommendations using TF-IDF (based on description similarity)
     public_letters = PublicLetter.objects.filter(is_published=True).values('id', 'description', 'title')
     df = pd.DataFrame(public_letters)
     df['description'] = df['description'].fillna('')  # Handle empty descriptions
 
-    # Apply the recommendation system
+    # Apply TF-IDF recommendation system
     custom_tfidf = PublicLetter.recommend_blogs()  # Reuse the recommendation method from the model
 
     # Extract recommendations for the current post
@@ -184,22 +190,120 @@ def post_detail(request, id):
         []
     )
     
-    # Fetch recommended blog objects from IDs
+    # Fetch recommended blog objects from IDs (based on TF-IDF recommendations)
     recommended_blogs = PublicLetter.objects.filter(id__in=[rec['id'] for rec in recommendations])
 
-    recommended_blogs2 = post.collaborative_recommend_blogs(top_n=5)
+    # -- Collaborative Filtering Section --
+    
+    # 1. Fetch all interactions (user-blog interactions)
+    interactions = BlogInteraction.objects.all()
+    
+    # 2. Prepare the interaction matrix
+    interaction_data = [
+        {
+            'user': interaction.user.id if interaction.user else None,
+            'public_letter': interaction.public_letter.id,
+            'interaction_type': interaction.interaction_type,
+            'weight': post.get_interaction_weight(interaction.interaction_type)
+        }
+        for interaction in interactions
+    ]
+    
+    # Create the interaction matrix DataFrame
+    df_interactions = pd.DataFrame(interaction_data)
+    
+    # Remove rows where 'user' is NaN (for anonymous users without interaction)
+    df_interactions = df_interactions.dropna(subset=['user'])
+    
+    # Pivot table to create the interaction matrix (users x blogs)
+    interaction_matrix = df_interactions.pivot_table(
+        index='user',
+        columns='public_letter',
+        values='weight',
+        aggfunc='sum'
+    )
+    
+    # Ensure no NaN values (representing no interaction) in the interaction matrix
+    interaction_matrix = interaction_matrix.fillna(0)
 
+    # 3. Compute the user similarity matrix (cosine similarity)
+    user_similarity = PublicLetter.cosine_similarity(interaction_matrix.values)
+    
+    # Convert to DataFrame for easier access
+    user_similarity_df = pd.DataFrame(
+        user_similarity,
+        index=interaction_matrix.index,
+        columns=interaction_matrix.index
+    )
+    
+    # Find similar users to the current user (i.e., the user who is viewing the post)
+    if request.user.is_authenticated:
+        similar_users = user_similarity_df[request.user.id].sort_values(ascending=False).iloc[1:6].index
+    else:
+        similar_users = user_similarity_df.iloc[:, 0].sort_values(ascending=False).iloc[1:6].index
+    
+    # Fetch blog posts interacted with by similar users
+    similar_users_interactions = interaction_matrix.loc[similar_users]
+    
+    # Sum the interactions for each blog post across these similar users
+    post_scores = similar_users_interactions.sum(axis=0)
+    
+    # Sort blog posts by score in descending order
+    recommended_posts = post_scores.sort_values(ascending=False)
+    
+    # Filter out posts the user has already interacted with
+    user_interactions = interaction_matrix.loc[request.user.id]
+    recommended_posts = recommended_posts[user_interactions == 0]
 
+    # Get the top N recommended blog posts (limit to top 5)
+    recommended_blogs2 = PublicLetter.objects.filter(id__in=recommended_posts.head(5).index)
+    df_list = df_interactions.reset_index().to_dict(orient='records')
+    interaction_matrix_list = interaction_matrix.reset_index().to_dict(orient='records')
+
+# Convert user_similarity_matrix to a list of dictionaries
+    user_similarity_matrix_list = user_similarity_df.reset_index().to_dict(orient='records')
+    top_10_df_list = [
+    {key: row[key] for key in list(row.keys())[:10]}  # Get the first 10 keys
+    for row in df_list[:10]
+    ]
+    # -- End Collaborative Filtering --
+    top_10_interactions = interaction_data[:10]
+    # Slice the interaction_matrix_list to get top 10 rows and top 10 columns
+    top_10_interaction_matrix_list = [
+    {key: row[key] for key in list(row.keys())[:10]}  # Get the first 10 keys
+    for row in interaction_matrix_list[:10]
+    ]
+
+# Slice the user_similarity_matrix_list to get top 10 rows and top 10 columns
+    top_10_similarity_matrix_list = [
+        {key: row[key] for key in list(row.keys())[:10]}  # Get the first 10 keys
+        for row in user_similarity_matrix_list[:10]
+    ]
+
+    similar_users_interactions_list = similar_users_interactions.reset_index().to_dict(orient='records')
+
+# If you want to limit the rows and columns to the first 10, you can use this:
+    top_10_similar_users_interactions_list = [
+        {key: row[key] for key in list(row.keys())[:1]}  # Get the first 10 columns (keys)
+        for row in similar_users_interactions_list[:10]  # Limit to first 10 rows
+    ]
+
+    
     context = {
         'post': post,
         'comments': comments,
-        'recommended_blogs': recommended_blogs,
-        'recommended_blogs2': recommended_blogs2,
-         'like_count': like_count,
+        'recommended_blogs': recommended_blogs,  # TF-IDF based recommendations
+        'recommended_blogs2': recommended_blogs2,  # Collaborative filtering recommendations
+        'like_count': like_count,
         'user_reacted': user_reacted,
+        'interactions': top_10_interactions,
+        'interaction_matrix': top_10_interaction_matrix_list,
+        'user_similarity_matrix': top_10_similarity_matrix_list,
+        'top_10_similar_users_interactions': top_10_similar_users_interactions_list,
+        
     }
-    return render(request, 'vaultapp/post_detail.html', context)
 
+    return render(request, 'vaultapp/post_detail.html', context)
 
 
 @login_required
