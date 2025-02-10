@@ -1,6 +1,10 @@
+<<<<<<< Updated upstream
 /* GENERAL RESET BY PRASANSHA OJHA  */
 
 /* CSS FOR ALL */
+=======
+/* General Reset    kristiii*/
+>>>>>>> Stashed changes
 * {
     margin: 0;
     padding: 0;
@@ -20,8 +24,14 @@ body {
     font-family: 'Times New Roman', Times, serif;
 }
 
+<<<<<<< Updated upstream
 h1
  h2,
+=======
+h1,
+h2
+/*  
+>>>>>>> Stashed changes
 h3,
 h4,
 h5,
@@ -62,9 +72,7 @@ a {
     background:rgb(61, 36, 61);
     color:white !important;
 }
-h2{
-    font-family: 'Times New Roman', Times, serif;
-}
+
 
 /* Header Styles */
 header {
@@ -330,6 +338,7 @@ body .logo-text span {
   
 
 }
+<<<<<<< Updated upstream
 
 .content .main-content .recent-post-title {
     text-align: left;
@@ -337,6 +346,59 @@ body .logo-text span {
     font-weight: bold;
     margin-bottom: 30px;
     color: #333;
+=======
+.content .main-content .post {
+    width:130%; /* Ensures the post takes up 95% of its container width */
+    height: 300px; /* Fixed height for consistency */
+    margin: 20px auto; /* Centers the post horizontally with margin on top and bottom */
+    border-radius: 10px; /* Rounds the corners for a smooth look */
+    background: white; /* White background color for contrast */
+    position: relative; /* Allows positioning of child elements inside the post */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for better visual depth */
+    padding: 20px; /* Optional: Adds padding inside the post */
+    overflow: hidden; /* Prevents any content from overflowing */
+}
+
+.content .main-content .post .read-more {
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    /* border:1px solid rgb(127, 191, 231);
+    border-radius: 0px;
+    color:rgb(228, 197, 203) !important; */
+}
+
+.content .main-content .post .post-image{
+    width:40%;
+    height:100%;
+    float:left;
+}
+.content .main-content .post .post-preview{
+    width:60%;
+    padding:10px;
+    float:right;
+}
+.content .main-content .recent-post-title{
+    margin:20px;
+    font-family: 'Times New Roman', Times, serif;
+} 
+ 
+.content {
+    width: 90%;
+    margin: 30px auto;
+    overflow: hidden; /* Clear floats */
+}
+
+.content .main-content {
+    width: 100%; /* Ensure main content spans full width */
+}
+
+.content .main-content .recent-post-title {
+    text-align: left;
+    font-family: 'Times New Roman', Times, serif;
+    color: #20014a;
+    margin: 0px;
+>>>>>>> Stashed changes
 }
 
 /* Individual Post */
