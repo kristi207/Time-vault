@@ -2058,3 +2058,15 @@ label {
     }
 }
 
+/* Default thumbs-up icon color */
+.far.fa-heart {
+    color: white;
+}
+
+/* Blue color for liked thumbs-up icon */
+.fas.fa-thumbs-up.liked {
+    color: blue;
+}
+#like-icon {
+    pointer-events: auto;
+}

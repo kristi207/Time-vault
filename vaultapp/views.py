@@ -5,7 +5,9 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 import pandas as pd
-from django.http import HttpResponse
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import HttpResponse , HttpResponseRedirect
 from django.db.models import Count, Q
 from vaultapp.models import PublicLetter,LetterReaction,Comment, BlogPost, BlogInteraction
 from django.db import models
@@ -14,6 +16,41 @@ from vaultapp.form import LetterForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+
+# views.py
+from django.http import HttpResponse
+from .models import Letter
+from .utils import calculate_combined_priority
+
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import Letter, PublicLetter, BlogInteraction
+
+from django.http import JsonResponse
+
+
+def create_or_schedule_letter(request):
+    # Example of creating a letter (you might be receiving this from a form or API)
+    letter_content = request.POST['content']
+    letter_send_time = request.POST['send_date']
+    is_public = request.POST.get('is_public', False)
+    recipient_email = request.POST['recipient_email']
+    
+    # Create a letter object
+    letter = Letter(
+        recipient_email=recipient_email,
+        content=letter_content,
+        send_date=letter_send_time,
+        is_public=is_public
+    )
+    
+    # Calculate priority dynamically
+    letter.priority = calculate_combined_priority(letter)
+
+    # Save the letter with priority
+    letter.save()
+
+    return HttpResponse("Letter Scheduled Successfully!")
+
 
 
 
@@ -94,9 +131,8 @@ def home(request):
     # Fetching trending posts (most shared, unpublished, limited to 6)
     trending_posts = PublicLetter.objects.filter(is_published=True).order_by('-shared_date')[6:]
     
-    # Fetching latest posts (most recent, unpublished, limited to 10)
-    latest_posts = PublicLetter.objects.filter(is_published=True).order_by('-shared_date')[10:]
-    
+    latest_posts = PublicLetter.objects.filter(is_published=True).order_by('-shared_date')[:10]
+
     # Rendering the home page with both sets of posts
     return render(request, 'vaultapp/home.html', {
         'trending_posts': trending_posts,
@@ -111,20 +147,19 @@ def post_list(request):
     posts = PublicLetter.objects.filter(is_published= True)
     return render(request, 'vaultapp/post.html', {'object_list': posts})
 
-
 def post_detail(request, id):
     post = PublicLetter.objects.get(id=id)
     comments = Comment.objects.filter(public_letter=post, parent_comment__isnull=True).prefetch_related('replies')
+    
+    # Track the view interaction for authenticated and unauthenticated users
     if not request.session.get(f'viewed_post_{id}', False):
         if request.user.is_authenticated:
-            # For authenticated users
             BlogInteraction.objects.create(
                 public_letter=post,
                 user=request.user,  # Assign the authenticated user
                 interaction_type='view'
             )
         else:
-            # For unauthenticated (anonymous) users
             BlogInteraction.objects.create(
                 public_letter=post,
                 session_id=request.session.session_key,  # Track anonymous users with session_id
@@ -136,16 +171,17 @@ def post_detail(request, id):
     # Increment the view count for the post
     post.view_count += 1
     post.save()
-    # like_count = LetterReaction.objects.filter(public_letter=post).count()
 
-    # Optionally, check if the current user has already reacted
-    # user_reacted = LetterReaction.objects.filter(public_letter=post, user=request.user).exists()
+    # Check if the user has reacted to the post (like/dislike)
+    user_reacted = LetterReaction.objects.filter(public_letter=post, user=request.user).exists()
+    like_count = LetterReaction.objects.filter(public_letter=post).count()
 
+    # Fetch blog recommendations using TF-IDF (based on description similarity)
     public_letters = PublicLetter.objects.filter(is_published=True).values('id', 'description', 'title')
     df = pd.DataFrame(public_letters)
     df['description'] = df['description'].fillna('')  # Handle empty descriptions
 
-    # Apply the recommendation system
+    # Apply TF-IDF recommendation system
     custom_tfidf = PublicLetter.recommend_blogs()  # Reuse the recommendation method from the model
 
     # Extract recommendations for the current post
@@ -154,21 +190,149 @@ def post_detail(request, id):
         []
     )
     
-    # Fetch recommended blog objects from IDs
+    # Fetch recommended blog objects from IDs (based on TF-IDF recommendations)
     recommended_blogs = PublicLetter.objects.filter(id__in=[rec['id'] for rec in recommendations])
 
-    recommended_blogs2 = post.collaborative_recommend_blogs(top_n=5)
+    # -- Collaborative Filtering Section --
+    
+    # 1. Fetch all interactions (user-blog interactions)
+    interactions = BlogInteraction.objects.all()
+    
+    # 2. Prepare the interaction matrix
+    interaction_data = [
+        {
+            'user': interaction.user.id if interaction.user else None,
+            'public_letter': interaction.public_letter.id,
+            'interaction_type': interaction.interaction_type,
+            'weight': post.get_interaction_weight(interaction.interaction_type)
+        }
+        for interaction in interactions
+    ]
+    
+    # Create the interaction matrix DataFrame
+    df_interactions = pd.DataFrame(interaction_data)
+    
+    # Remove rows where 'user' is NaN (for anonymous users without interaction)
+    df_interactions = df_interactions.dropna(subset=['user'])
+    
+    # Pivot table to create the interaction matrix (users x blogs)
+    interaction_matrix = df_interactions.pivot_table(
+        index='user',
+        columns='public_letter',
+        values='weight',
+        aggfunc='sum'
+    )
+    
+    # Ensure no NaN values (representing no interaction) in the interaction matrix
+    interaction_matrix = interaction_matrix.fillna(0)
 
+    # 3. Compute the user similarity matrix (cosine similarity)
+    user_similarity = PublicLetter.cosine_similarity(interaction_matrix.values)
+    
+    # Convert to DataFrame for easier access
+    user_similarity_df = pd.DataFrame(
+        user_similarity,
+        index=interaction_matrix.index,
+        columns=interaction_matrix.index
+    )
+    
+    # Find similar users to the current user (i.e., the user who is viewing the post)
+    if request.user.is_authenticated:
+        similar_users = user_similarity_df[request.user.id].sort_values(ascending=False).iloc[1:6].index
+    else:
+        similar_users = user_similarity_df.iloc[:, 0].sort_values(ascending=False).iloc[1:6].index
+    
+    # Fetch blog posts interacted with by similar users
+    similar_users_interactions = interaction_matrix.loc[similar_users]
+    
+    # Sum the interactions for each blog post across these similar users
+    post_scores = similar_users_interactions.sum(axis=0)
+    
+    # Sort blog posts by score in descending order
+    recommended_posts = post_scores.sort_values(ascending=False)
+    
+    # Filter out posts the user has already interacted with
+    user_interactions = interaction_matrix.loc[request.user.id]
+    recommended_posts = recommended_posts[user_interactions == 0]
 
+    # Get the top N recommended blog posts (limit to top 5)
+    recommended_blogs2 = PublicLetter.objects.filter(id__in=recommended_posts.head(5).index)
+    df_list = df_interactions.reset_index().to_dict(orient='records')
+    interaction_matrix_list = interaction_matrix.reset_index().to_dict(orient='records')
+
+# Convert user_similarity_matrix to a list of dictionaries
+    user_similarity_matrix_list = user_similarity_df.reset_index().to_dict(orient='records')
+    top_10_df_list = [
+    {key: row[key] for key in list(row.keys())[:10]}  # Get the first 10 keys
+    for row in df_list[:10]
+    ]
+    # -- End Collaborative Filtering --
+    top_10_interactions = interaction_data[:10]
+    # Slice the interaction_matrix_list to get top 10 rows and top 10 columns
+    top_10_interaction_matrix_list = [
+    {key: row[key] for key in list(row.keys())[:10]}  # Get the first 10 keys
+    for row in interaction_matrix_list[:10]
+    ]
+
+# Slice the user_similarity_matrix_list to get top 10 rows and top 10 columns
+    top_10_similarity_matrix_list = [
+        {key: row[key] for key in list(row.keys())[:10]}  # Get the first 10 keys
+        for row in user_similarity_matrix_list[:10]
+    ]
+
+    similar_users_interactions_list = similar_users_interactions.reset_index().to_dict(orient='records')
+
+# If you want to limit the rows and columns to the first 10, you can use this:
+    top_10_similar_users_interactions_list = [
+        {key: row[key] for key in list(row.keys())[:1]}  # Get the first 10 columns (keys)
+        for row in similar_users_interactions_list[:10]  # Limit to first 10 rows
+    ]
+
+    
     context = {
         'post': post,
         'comments': comments,
-        'recommended_blogs': recommended_blogs,
-        'recommended_blogs2': recommended_blogs2,
-        # 'like_count': like_count,
-        # 'user_reacted': user_reacted
+        'recommended_blogs': recommended_blogs,  # TF-IDF based recommendations
+        'recommended_blogs2': recommended_blogs2,  # Collaborative filtering recommendations
+        'like_count': like_count,
+        'user_reacted': user_reacted,
+        'interactions': top_10_interactions,
+        'interaction_matrix': top_10_interaction_matrix_list,
+        'user_similarity_matrix': top_10_similarity_matrix_list,
+        'top_10_similar_users_interactions': top_10_similar_users_interactions_list,
+        
     }
+
     return render(request, 'vaultapp/post_detail.html', context)
+
+
+@login_required
+def toggle_like(request, public_letter_id):
+    try:
+        public_letter = PublicLetter.objects.get(id=public_letter_id)
+        
+        # Check if the user has already reacted to this post
+        user_reacted = LetterReaction.objects.filter(public_letter=public_letter, user=request.user).exists()
+        
+        # Toggle the like status
+        if user_reacted:
+            # If the user already liked, remove the like
+            reaction = LetterReaction.objects.get(public_letter=public_letter, user=request.user)
+            reaction.delete()  # Unlike the post
+            liked = False
+        else:
+            # If the user has not reacted, create a new reaction
+            reaction = LetterReaction.objects.create(public_letter=public_letter, user=request.user)
+            liked = True
+
+        # Get the total like count for the post
+        like_count = LetterReaction.objects.filter(public_letter=public_letter).count()
+
+        # Return the response with the updated like status and like count
+        return JsonResponse({'liked': liked, 'like_count': like_count, 'user_reacted': user_reacted})
+
+    except PublicLetter.DoesNotExist:
+        return JsonResponse({'error': 'Public letter not found'}, status=404)
 
 
 def like_post(request, id):
@@ -326,12 +490,33 @@ def signin(request):
     return render(request, 'vaultapp/signin.html')
 
 
-from django.shortcuts import render
-from django.views.generic import TemplateView
 
 
-# def home(request):
-#     return render(request, 'home.html')
 
-class Blog(TemplateView):
-    template_name = 'blog.html'
+def contact_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        # Check if email and message are provided
+        if email and message:
+            # Sending email
+            send_mail(
+                'Contact Us Message',  # Subject
+                message,  # Message content
+                email,  # From email
+                ['your_email@example.com'],  # To email (can be your admin email)
+                fail_silently=False,
+            )
+            return HttpResponseRedirect('/success/')  # Redirect to a success page
+        
+        # If email or message is missing, return an error message
+        else:
+            return HttpResponse("Both email and message are required.", status=400)
+    
+    return render(request, 'contact.html')  # Return the contact form page
+# views.py
+def success_view(request):
+    return render(request, 'vaultapp/success.html')  # Display a success message page
+
+

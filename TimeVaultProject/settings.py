@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
 
 
 EXTERNAL_APPS =[
-    'vaultapp'
+    'vaultapp',
+    
 ]
 INSTALLED_APPS.extend(EXTERNAL_APPS)
 
@@ -85,10 +87,17 @@ WSGI_APPLICATION = 'TimeVaultProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mydb',  # The database you created
+        'USER': 'myuser',  # The user you created
+        'PASSWORD': 'mypassword',  # The password for the user
+        'HOST': 'localhost',  # Localhost because the MySQL server is on your machine
+        'PORT': '3306',  # Default MySQL port
     }
 }
+
+
+ 
 
 
 # Password validation
