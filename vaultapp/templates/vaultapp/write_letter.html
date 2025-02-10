@@ -9,49 +9,63 @@
 
 {% block content %}
 <div class="letter-form-container">
-    <h3>Write a Letter to Your Future Self</h3>
-    {% comment %} krsiti {% endcomment %}
+    <h1>Write a Letter to Your Future Self</h1>
+    
     <form method="POST" class="letter-form">
         {% csrf_token %}
+
         <div class="form-field">
-            <label for="content">Your Message</label>
             {{ form.content }}
         </div>
-        <div class="form-field">
-            <label for="email">Email</label>
+        
+        <div class="form-field"><p>Email</p>
             {{ form.recipient_email }}
         </div>
+        
+      
+
         <div class="form-field">
-            <label for="send_date">Send Date</label>
             {{ form.send_date }}
         </div>
+
         <div class="form-field">
-            <label for="is_public">Post Publicly?</label>
+            <p>Post Publicly?</p>
             {{ form.is_public }}
         </div>
+
+        <!-- Title Field (Initially Hidden) -->
         <div id="titleField" class="form-field" style="display:none;">
-            <label for="title">Title</label>
             {{ form.title }}
         </div>
+
         <button type="submit" class="submit-btn">Schedule Letter</button>
     </form>
 </div>
 
 <section class="content">
-    <div class="post-wrapper-unique">
+<div class="post-wrapper-unique">
+
+        
         {% for blog in blogs %}
         <div class="post-unique">
-            <img src="{{ blog.feature_photo|default:'vaultapp/images/5.jpg' }}" alt="Feature Photo" class="slider-image-unique">
+            {% if blog.feature_photo %}
+            <img src="{{ blog.feature_image.url }}" alt="Feature Photo" class="slider-image">
+            {% else %}
+            <img src="{% static 'vaultapp/images/5.jpg' %}" alt="Default Image" class="slider-image-unique">
+            {% endif %}
             <div class="post-info-unique">
-                <h5>{{ blog.title }}</h5>
-                <p>{{ blog.description|truncatewords:20 }}</p>
-                <a href="{% url 'blog_detail' blog.id %}" class="btn read-more">Read More</a>
-            </div>
+            <h3>{{ blog.title }}</h3>
+            <p>{{ blog.description|truncatewords:20 }}</p>
+            <div class="info-group">
+
+            <a href="{% url 'blog_detail' blog.id %}" class="btn read-more">Read More</a>
+        </div>
+    </div>
         </div>
         {% endfor %}
-    </div>
-</section>
 
+</div>
+</section>
 
 {% endblock %}
 

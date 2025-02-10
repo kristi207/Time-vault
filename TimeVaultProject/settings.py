@@ -33,7 +33,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "unfold",
+    'django_light',
+    'admin_tools_stats',
+    'django_nvd3',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -97,7 +99,6 @@ DATABASES = {
 }
 
 
- 
 
 
 # Password validation
